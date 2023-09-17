@@ -1,0 +1,128 @@
+/* Diet.css */
+
+/* Estilos para pantallas grandes */
+.diet-container {
+  align-items: center;
+  text-align: center;
+  padding: 120px;
+  margin-top: -60px;
+}
+
+.filter-buttons {
+  margin-top: 20px;
+}
+
+.filter-buttons button {
+  margin: 5px;
+  padding: 10px 15px;
+  background-color: transparent;
+  color: #007bff;
+  border: 2px solid #007bff;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  width: 150px;
+  text-align: center;
+}
+
+.filter-buttons button:active {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+  transition: background-color 0.1s ease, color 0.1s ease, border-color 0.1s ease;
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.category-items {
+  justify-content: center;
+}
+
+.column {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+
+.item-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  max-width: 290px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.item-card:hover {
+  transform: scale(1.05);
+}
+
+.item-card img {
+  height: 150px;
+  object-fit: cover;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.item-card h5 {
+  padding: 10px;
+  margin: 0;
+  font-size: 16px;
+}
+
+.modal-body {
+  text-align: center;
+}
+
+.modal-footer {
+  justify-content: center;
+}
+
+/* Estilos para pantallas pequeñas (móvil) */
+@media screen and (max-width: 768px) {
+  .diet-container {
+    padding: 12px;
+    margin-top: 20px;
+    text-align: center;
+    align-items: center;
+  }
+
+  .filter-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+    margin-bottom: 40px;
+    text-align: center;
+    margin: 0px;
+  }
+
+  .filter-buttons button {
+    padding: 0px;
+    font-size: 13px;
+    width: auto;
+    height: 100%;
+  }
+
+  .item-card {
+    max-width: 300%; /* Hacer que las tarjetas ocupen todo el ancho de la pantalla */
+  }
+  .item-card img {
+    width: auto; /* Hacer que la imagen ocupe todo el ancho de la tarjeta */
+    height: auto;
+    object-fit: cover;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+}
