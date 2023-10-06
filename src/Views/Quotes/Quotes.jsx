@@ -10,6 +10,7 @@ function Citas() {
   return (<>
     <div className='home'>
       <h1>Citas</h1>
+      <p>prueba</p>
       <IoIosAddCircle className='icon-add' variant="primary" onClick={() => setShowModal(true)} />
       <div className='containers'>
         <Quote />
@@ -24,7 +25,6 @@ function Citas() {
           onClick={() => setShowModal(false)}
           className="close-icon"
         />
-        
       </Modal.Header>
       <Modal.Body>
         <Form>
