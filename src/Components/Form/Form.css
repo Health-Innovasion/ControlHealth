@@ -29,7 +29,7 @@
     padding: 0 20px; 
   }
 
-.modal {
+.modal-form {
   position: fixed;
   top: 0;
   left: 0;
@@ -42,7 +42,7 @@
   z-index: 999;
 }
 
-.modal-content {
+.modal-content-form {
   background-color: #fff;
   padding: 20px;
   border-radius: 5px;
@@ -50,7 +50,7 @@
   max-width: 600px;
 }
 
-.modal-content button {
+.modal-content-form button {
   margin-top: 10px;
   padding: 5px 10px;
   background-color: #007bff;
@@ -61,13 +61,13 @@
 }
 
 
-.modal-content ul {
+.modal-content-form ul {
   list-style: none;
   padding: 0;
 }
 
 
-.modal-content li {
+.modal-content-form li {
   margin-bottom: 10px;
 }
 
@@ -108,3 +108,57 @@
 .medico-card button:hover {
   background-color: #0056b3;
 } 
+/* Estilos para el icono de flecha hacia atrás */
+.back-icon {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 1.5rem; /* Tamaño del icono */
+  cursor: pointer;
+}
+
+/* Estilos para el encabezado del modal */
+.modal-header {
+  position: relative;
+  text-align: center;
+  padding: 10px 0;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+/* Estilos para el contenido del modal */
+.modal-content-form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  position: relative; /* Permite alinear el contenido centralmente */
+}
+
+.modal-content-form p {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.modal-content-form div {
+  text-align: center; /* Centra los botones */
+}
+
+.modal-content-form button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.modal-content-form button:hover {
+  background-color: #0056b3;
+}

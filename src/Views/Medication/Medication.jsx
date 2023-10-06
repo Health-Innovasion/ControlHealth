@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
-import { Modal, Button, Form, Row, Col, Card } from 'react-bootstrap'; // Importa los componentes de React Bootstrap
-import { IoIosAddCircle, IoIosCloseCircle} from 'react-icons/io'; // Importa los íconos de react-icons
+import React, { useState, useEffect } from 'react';
+import { Modal, Button, Form, Row, Col, Card } from 'react-bootstrap';
+import { IoIosAddCircle, IoIosCloseCircle } from 'react-icons/io';
 import { CiPill } from 'react-icons/ci';
 import { AiFillInfoCircle } from 'react-icons/ai';
 import './Medication.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Medication() {
   const [medicines, setMedicines] = useState([]);
@@ -18,6 +20,8 @@ function Medication() {
   const [showModal, setShowModal] = useState(false);
   const [selectedMedicine, setSelectedMedicine] = useState(null);
   const [showDetailsModal, setShowDetailsModal] = useState(false);
+  const [showDetails, setShowDetails] = useState([]);
+  const [notificationTracker, setNotificationTracker] = useState({});
 
   function getCurrentTime() {
     const now = new Date();
@@ -51,10 +55,62 @@ function Medication() {
       alarmTime: getCurrentTime(),
     });
     setShowModal(false);
+
+    const alarmTime = new Date(newMedicine.startDate + 'T' + newMedicine.alarmTime);
+    const currentTime = new Date();
+
+    if (alarmTime > currentTime) {
+      const timeDiff = alarmTime - currentTime;
+      const medicineName = newMedicine.name;
+      
+      if (!notificationTracker[medicineName]) {
+        // Configurar la notificación solo si no existe ya para este medicamento
+        setTimeout(() => {
+          toast.info(`¡Es hora de tomar ${medicineName}!`, {
+            autoClose: false,
+            closeButton: <button onClick={handleCloseNotification}>Detener</button>,
+          });
+          // Marcar el medicamento como notificado
+          setNotificationTracker((prevTracker) => ({
+            ...prevTracker,
+            [medicineName]: true,
+          }));
+        }, timeDiff);
+      }
+    }
   };
 
-  // Agrega un estado para controlar si se deben mostrar los detalles de cada medicamento
-  const [showDetails] = useState([]);
+  const handleCloseNotification = () => {
+    toast.dismiss();
+  };
+
+  useEffect(() => {
+    // Al montar el componente, mostrar las notificaciones pendientes
+    medicines.forEach((medicine) => {
+      const alarmTime = new Date(medicine.startDate + 'T' + medicine.alarmTime);
+      const currentTime = new Date();
+
+      if (alarmTime > currentTime) {
+        const timeDiff = alarmTime - currentTime;
+        const medicineName = medicine.name;
+        
+        if (!notificationTracker[medicineName]) {
+          // Configurar la notificación solo si no existe ya para este medicamento
+          setTimeout(() => {
+            toast.info(`¡Es hora de tomar ${medicineName}!`, {
+              autoClose: false,
+              closeButton: <button onClick={handleCloseNotification}>Detener</button>,
+            });
+            // Marcar el medicamento como notificado
+            setNotificationTracker((prevTracker) => ({
+              ...prevTracker,
+              [medicineName]: true,
+            }));
+          }, timeDiff);
+        }
+      }
+    });
+  }, [medicines, notificationTracker]);
 
   const handleShowDetails = (medicine) => {
     setSelectedMedicine(medicine);
@@ -68,6 +124,8 @@ function Medication() {
 
   return (
     <div className="medication-container">
+      <ToastContainer />
+
       <h1>Medicamentos</h1>
       <IoIosAddCircle className='icon-add' variant="primary" onClick={() => setShowModal(true)} />
 
@@ -77,26 +135,24 @@ function Medication() {
             <Card.Body>
               <Card.Text>
                 <div className='card-text1'>
-                <strong>
-                  <CiPill className='icon-pill' /> {medicine.name}
-                </strong>
-                <strong className='dosis'>
-                {medicine.dose}
-                </strong>
+                  <strong>
+                    <CiPill className='icon-pill' /> {medicine.name}
+                  </strong>
+                  <strong className='dosis'>
+                    {medicine.dose}
+                  </strong>
                 </div>
                 <div className='card-text2'>
-                <strong>Unidad</strong> {medicine.units}<br />
-                <strong>Hora</strong> {medicine.alarmTime}
-                <strong>Detalles:</strong>
-                <span
-                  onClick={() => handleShowDetails(medicine)}
-                  className="toggle-details-icon"
+                  <strong>Unidad</strong> {medicine.units}<br />
+                  <strong>Hora</strong> {medicine.alarmTime}
+                  <strong>Detalles:</strong>
+                  <span
+                    onClick={() => handleShowDetails(medicine)}
+                    className="toggle-details-icon"
                   >
-                <AiFillInfoCircle className='icon-info' />
-                
-                </span>
-                  </div>
-                  
+                    <AiFillInfoCircle className='icon-info' />
+                  </span>
+                </div>
                 {showDetails[index] && (
                   <div className="details">
                     Veces al día: {medicine.timesPerDay}<br />
@@ -104,7 +160,6 @@ function Medication() {
                   </div>
                 )}
               </Card.Text>
-               
             </Card.Body>
           </Card>
         ))}

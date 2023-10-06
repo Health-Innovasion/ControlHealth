@@ -6,6 +6,7 @@ import Diet from './Views/Diet/Diet';
 import Medication from './Views/Medication/Medication';
 import Routines from './Views/Routines/Routines';
 import Login from './Views/Login/Login';
+import HomeDr from './Views/HomeDr/HomeDr';
 import Register from './Views/Register/Register';
 import Profile from './Views/Profile/Profile';
 import Navbar from './Components/NavBar/Navbar'; // Importa tu barra de navegación aquí
@@ -19,6 +20,7 @@ function App() {
         {/* Las rutas Login y Register no tendrán la barra de navegación */}
         <Route path="/login" exact component={Login} />
         <Route path="/register" component={Register} />
+        <Route path="/homedr" component={HomeDr} />
 
         {/* Todas las demás rutas tendrán la barra de navegación */}
         <Route>

@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { loginInitiate } from "../../redux/action/action";
 import { useHistory } from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './Login.css';
 import logo from '../../Assets/Images/logo.png';
 import Modal from 'react-modal';
@@ -103,8 +102,8 @@ const Login = () => {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Inicio Exitoso"
-        className="custom-modal"
-        overlayClassName="custom-modal-overlay"
+        className="custom-modal-login"
+        overlayClassName="custom-modal-overlay-login"
       >
         <div className="modal-content">
               <div className="loading-icon">

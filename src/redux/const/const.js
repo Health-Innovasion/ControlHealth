@@ -14,6 +14,5 @@ export const GET_DOCTORS = "GET_DOCTORS"
 export const COMPLETED_GET_DOCTORS = "COMPLETED_GET_DOCTORS"
 export const FAILED_COMPLETED_GET_DOCTORS = "FAILED_COMPLETED_GET_DOCTORS"
 
-
 //TODO: ELIMINAR CITAS DE LA VISTA DEL USUARIO
 // citas: state.citas.filter((cita) => cita.id !== action.payload)
