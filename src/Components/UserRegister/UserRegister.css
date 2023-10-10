@@ -1,0 +1,62 @@
+
+/* Estilo para el contenedor del input */
+.custom-file-input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+.custom-file-input-container p {
+    margin: 0;
+  }
+  
+  /* Estilo para el texto personalizado */
+  .custom-file-label {
+    background-color: #f8f9fa; /* Fondo del texto personalizado */
+    border: 1px solid #ced4da; /* Borde del texto personalizado */
+    border-radius: 4px;
+    padding: 6px;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .custom-file-input {
+    display: none;
+  }
+  .custom-file-input span {
+    margin: 0;
+  }
+  
+  .selected-file {
+    background-color: var(--color-primary);
+
+  }
+
+  .selected-file p {
+    color: #fff
+  }
+
+  .text-invalid {
+    margin-top: 5px;
+    color: red;
+    text-align: initial;
+    font-weight: 300;
+  }
+
+  .form-user {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .input-invalid {
+    border: 1px red solid;
+  }
+
+  .input-invalid::placeholder {
+    color: red; /* Reemplaza con el color que desees */
+  }
+
+  .container-input-file {
+    text-align: center;
+    margin-top: 10px;
+  }
