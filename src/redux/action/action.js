@@ -16,8 +16,9 @@ import {
   signOut
 } from 'firebase/auth'
 import { auth } from "../../firebase_config";
-import { doc, setDoc, addDoc,collection, query, where, onSnapshot  } from "firebase/firestore";
-import { db } from "../../firebase_config";
+import { doc, setDoc, addDoc, collection, query, where, onSnapshot, updateDoc } from "firebase/firestore";
+import {ref, uploadBytesResumable, getDownloadURL,deleteObject  } from "firebase/storage";
+import { db,storage } from "../../firebase_config";
 
 const registerUser = () => ({
   type: Register_User,
@@ -134,8 +135,8 @@ export const logout = () => {
 
 export const createAppointment = async (data) => {
   try {
-  
-     await addDoc(collection(db, "citas"), {data})
+
+    await addDoc(collection(db, "citas"), { data })
 
   } catch (error) {
     console.error('Error al crear la cita en Firebase', error);
@@ -170,5 +171,41 @@ export const getCitas = (id, callback) => {
   } catch (error) {
     console.error('Error al obtener los documentos:', error);
     throw error;
+  }
+};
+
+
+export const updateUserDataAndPhoto = async (currentUser, userData, file) => {
+  try {
+    const storageRef = ref(storage, 'images/' + currentUser.uid);
+    const metadata = {
+      contentType: 'image/jpeg'
+    };
+
+    // Verifica si el usuario ya tiene una foto almacenada
+    if (currentUser.photoURL) {
+      // Elimina la foto anterior del almacenamiento
+      await deleteObject(storageRef);
+    }
+    console.log(auth.currentUser)
+    // Actualiza el perfil del usuario con los nuevos datos
+    await updateProfile(auth.currentUser, userData);
+
+    // Si se proporciona un archivo de imagen, cárgalo al almacenamiento
+    if (file) {
+      const uploadTask = uploadBytesResumable(storageRef, file.name, metadata);
+      await uploadTask;
+      userData.photoURL = await getDownloadURL(storageRef);
+    }
+
+    // Actualiza el documento del usuario en tu base de datos (por ejemplo, Firestore)
+    // con los nuevos datos, incluida la URL de la imagen actualizada
+    // (deberás adaptar esto a tu base de datos específica)
+    const userDocRef = doc(db, 'users', currentUser.uid);
+    await updateDoc(userDocRef, userData);
+
+    console.log('Usuario actualizado correctamente.');
+  } catch (error) {
+    console.error('Error al actualizar el usuario:', error);
   }
 };
