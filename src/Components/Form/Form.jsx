@@ -1,65 +1,56 @@
 import React, { useState, useEffect } from 'react';
-import './Form.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import './Form.css'; // Asegúrate de que este archivo contenga tus estilos CSS
+import { useDispatch, useSelector } from 'react-redux';
+import { Container, Form, Row, Col, Button, Modal } from 'react-bootstrap';
+import { IoIosAddCircle, IoIosCloseCircle } from 'react-icons/io'; // Importa el ícono IoIosCloseCircle
 import { GetDoctors } from '../../redux/action/DoctorAction';
-import { useDispatch, useSelector } from "react-redux";
-import { combineData } from '../../redux/action/action';
-import { createAppointment } from '../../redux/action/action';
+import { combineData, createAppointment } from '../../redux/action/action';
 
-
-const Form = () => {
-
-  const dispatch = useDispatch()
+const FormQuotes = () => {
+  const dispatch = useDispatch();
   const { doctors } = useSelector((state) => state.doctors);
   const { currentUser } = useSelector((state) => state.user);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isMedicoDetailsOpen, setIsMedicoDetailsOpen] = useState(false);
+  const [isFormModalOpen, setIsFormModalOpen] = useState(false);
+  const [isMedicoSelectModalOpen, setIsMedicoSelectModalOpen] = useState(false);
   const [selectedMedico, setSelectedMedico] = useState(null);
-  const [selectedMedicoDetails, setSelectedMedicoDetails] = useState(null);
-  const [infoForm, setinfoForm] = useState({
+  const [infoForm, setInfoForm] = useState({
     name: '',
     date: '',
     cedula: '',
     numTelef: '',
     Tip_Diabe: '',
-    descriction: '',
+    description: '',
   });
-
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
 
   useEffect(() => {
     dispatch(GetDoctors());
   }, [dispatch]);
 
-  const closeModal = () => {
-    setIsModalOpen(false);
+  const openFormModal = () => {
+    setIsFormModalOpen(true);
   };
 
-  const openMedicoDetailsModal = (doctor) => {
-    setSelectedMedicoDetails(doctor.location);
-    setIsMedicoDetailsOpen(true);
+  const closeFormModal = () => {
+    setIsFormModalOpen(false);
   };
 
-  const closeMedicoDetailsModal = () => {
-    console.log(selectedMedico)
-    setIsMedicoDetailsOpen(false);
+  const openMedicoSelectModal = () => {
+    setIsMedicoSelectModalOpen(true);
+  };
+
+  const closeMedicoSelectModal = () => {
+    setIsMedicoSelectModalOpen(false);
   };
 
   const handleMedicoSelect = (doctor) => {
-
-    //TODO: MEJORAR ESTA PARTE 
-    setSelectedMedico(doctors.find((m) => m.displayName === doctor));
-    closeModal();
-    openMedicoDetailsModal(doctors.find((m) => m.displayName === doctor));
+    const selectedDoctor = doctors.find((m) => m.displayName === doctor);
+    setSelectedMedico(selectedDoctor);
+    closeMedicoSelectModal();
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
 
     const areAllFieldsFilled = Object.values(infoForm).every((value) => value.trim() !== '');
 
@@ -72,149 +63,146 @@ const Form = () => {
 
     await createAppointment(data);
 
-    setinfoForm({
+    setInfoForm({
       name: '',
       date: '',
       cedula: '',
       numTelef: '',
       Tip_Diabe: '',
-      descriction: '',
-    })
+      description: '',
+    });
 
-    setSelectedMedico(null)
+    setSelectedMedico(null);
   };
 
   const handleChange = (e) => {
-    let { name, value } = e.target;
-    setinfoForm({ ...infoForm, [name]: value });
+    const { name, value } = e.target;
+    setInfoForm({ ...infoForm, [name]: value });
   };
 
   return (
-    <div className="formulario">
-      <form onSubmit={handleSubmit} className="appointment-form">
-        <div className="columnas">
-          <div className="columna">
-            <h1>Agendar cita</h1>
-            <div className="form-group">
-              <label htmlFor="name">Nombre</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Nombre"
-                id="name"
-                name="name"
-                value={infoForm.name}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="date">Fecha de Nacimiento</label>
-              <input
-                type="date"
-                id="date"
-                name="date"
-                value={infoForm.date}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="cedula">Cédula</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Cédula"
-                id="cedula"
-                name="cedula"
-                value={infoForm.cedula}
-                onChange={handleChange}
-                required
-              />
-            </div>
-          </div>
-          <div className="columna">
-            <div className="form-group">
-              <label htmlFor="numTelef">Número de Teléfono</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Número de Teléfono"
-                value={infoForm.numTelef}
-                onChange={handleChange}
-                id="numTelef"
-                name="numTelef"
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="Tip_Diabe">Tipo de Diabetes</label>
-              <select name="Tip_Diabe" id="Tip_Diabe" value={infoForm.Tip_Diabe} onChange={handleChange} >
-                <option value="--selelect">--Seleccionar--</option>
-                <option value="Tipo 1">Tipo 1</option>
-                <option value="Tipo 2">Tipo 2</option>
-                <option value="Otro">Otro</option>
-              </select>
-            </div>
-            <div className="form-group">
-              <label htmlFor="descriction">Motivo de la Cita</label>
-              <br />
-              <textarea
-                name="descriction"
-                id="descriction"
-                rows="4"
-                value={infoForm.descriction}
-                onChange={handleChange}
-                placeholder="Ingrese el motivo aquí..."
-              >
-              </textarea>
-            </div>
-            <div>
-              <button type="button" className="btn btn-primary" onClick={openModal}>
-                Seleccionar medico
-              </button>
-            </div>
-          </div>
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Crear Cita
-        </button>
-      </form>
+    <Container className="formquotes-container">
+      <h1 className="formquotes-title">Citas</h1>
+      <IoIosAddCircle className="formquotes-icon-add" onClick={openFormModal} />
+      <Modal className='formquotes-modal-container' show={isFormModalOpen} onHide={closeFormModal}>
+        <Modal.Header className="formquotes-modal-header">
+          <Modal.Title className="formquotes-modal-title">Agendar cita</Modal.Title>
+          <IoIosCloseCircle className="formquotes-close-icon" onClick={closeFormModal} />
+        </Modal.Header>
+        <Form onSubmit={handleSubmit} className="formquotes-modal-body">
+          <Row>
+            <Col>
+              <Form.Group controlId="name">
+                <Form.Label className="formquotes-form-label">Nombre</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Nombre"
+                  name="name"
+                  value={infoForm.name}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
+              <Form.Group controlId="date">
+                <Form.Label className="formquotes-form-label">Fecha de Nacimiento</Form.Label>
+                <Form.Control
+                  type="date"
+                  name="date"
+                  value={infoForm.date}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
+              <Form.Group controlId="cedula">
+                <Form.Label className="formquotes-form-label">Cédula</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Cédula"
+                  name="cedula"
+                  value={infoForm.cedula}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group controlId="numTelef">
+                <Form.Label className="formquotes-form-label">Número de Teléfono</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Número de Teléfono"
+                  name="numTelef"
+                  value={infoForm.numTelef}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
+              <Form.Group controlId="Tip_Diabe">
+                <Form.Label className="formquotes-form-label">Tipo de Diabetes</Form.Label>
+                <Form.Select
+                  name="Tip_Diabe"
+                  value={infoForm.Tip_Diabe}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="--selelect">--Seleccionar--</option>
+                  <option value="Tipo 1">Tipo 1</option>
+                  <option value="Tipo 2">Tipo 2</option>
+                  <option value="Otro">Otro</option>
+                </Form.Select>
+              </Form.Group>
+              <Form.Group controlId="description">
+                <Form.Label className="formquotes-form-label col-mb3">Motivo de la Cita</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={4}
+                  name="description"
+                  value={infoForm.description}
+                  onChange={handleChange}
+                  placeholder="Ingrese el motivo aquí..."
+                />
+              </Form.Group>
+              <div>
+                <Button className="formquotes-doctor-save-btn" variant="primary" onClick={openMedicoSelectModal}>
+                  Seleccionar médico
+                </Button>
+                {selectedMedico && (
+                  <div className="formquotes-selected-medico">
+                    <h4>Médico seleccionado:</h4>
+                    <p>{selectedMedico.displayName}</p>
+                  </div>
+                )}
+              </div>
+            </Col>
+          </Row>
+          <Modal.Footer className="formquotes-modal-footer">
+            <Button type="submit" className="formquotes-save-btn">
+              Crear Cita
+            </Button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
 
       {/* Primer modal para seleccionar médico */}
-      {isModalOpen && (
-        <div className="modal">
-          <div className="modal-content">
-            <h2>Selecciona un médico</h2>
-            <div className="medicos-list-container">
-              <div className="medicos-list">
-                {doctors?.map((doctor, index) => (
-                  <div className="medico-card" key={index}>
-                    <h3>{doctor.displayName}</h3>
-                    <button onClick={() => handleMedicoSelect(doctor.displayName)}>
-                      Seleccionar
-                    </button>
-                  </div>
-                ))}
-              </div>
+      <Modal show={isMedicoSelectModalOpen} onHide={closeMedicoSelectModal}>
+        <Modal.Header className="formquotes-modal-header">
+          <Modal.Title>Selecciona un médico</Modal.Title>
+          <IoIosCloseCircle className="formquotes-close-icon" onClick={closeMedicoSelectModal} />
+        </Modal.Header>
+        <Modal.Body className='fomquotes-card-body'>
+          {doctors?.map((doctor, index) => (
+            <div className="formquotes-card" key={index}>
+              <h3>{doctor.displayName}</h3>
+              <p>{doctor.location}</p>
+              <Button className="formquotes-save-btn" variant="primary" onClick={() => handleMedicoSelect(doctor.displayName)}>
+                Seleccionar
+              </Button>
             </div>
-            <button onClick={closeModal}>Cerrar</button>
-          </div>
-        </div>
-      )}
-
-      {/* Segundo modal para ver detalles del médico */}
-      {isMedicoDetailsOpen && (
-        <div className="modal">
-          <div className="modal-content">
-            <h2>Detalles del Médico</h2>
-            <p>{selectedMedicoDetails}</p>
-            <button onClick={closeMedicoDetailsModal}>Cerrar</button>
-          </div>
-        </div>
-      )}
-    </div>
+          ))}
+        </Modal.Body>
+      </Modal>
+    </Container>
   );
 };
 
-export default Form;
+export default FormQuotes;

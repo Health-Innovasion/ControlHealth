@@ -11,7 +11,7 @@ import Register from './Views/Register/Register';
 import Profile from './Views/Profile/Profile';
 import Navbar from './Components/NavBar/Navbar'; // Importa tu barra de navegación aquí
 import ProtectedRoute from './Utils/ProtectedRoute';
-
+import Admin from './Views/Admin/Admin';
 
 function App() {
   return (
@@ -21,6 +21,7 @@ function App() {
         <Route path="/login" exact component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/homedr" component={HomeDr} />
+        <Route path="/admin" component={Admin} />
 
         {/* Todas las demás rutas tendrán la barra de navegación */}
         <Route>

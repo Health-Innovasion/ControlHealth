@@ -1,164 +1,149 @@
-.formulario{
-    flex: 2;
-     display: flex;
-     justify-content: center;
-}
-.formulario {
-    display: flex;
-    justify-content: center;
-    align-items: center;
- 
-  }
-  
-  .appointment-form {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    max-width: 900px; 
-    margin: 0 auto;
-  }
-  
-  .columnas {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .columna {
-    flex: 1;
-    padding: 0 20px; 
-  }
+/* FormQuotes.css */
 
-.modal-form {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+/* Contenedor principal */
+.formquotes-container {
+  text-align: center;
+  justify-content: center;
+  margin-top: 20px;
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.formquotes-modal-container{
+  width: 300%;
+  height: auto;
+}
+
+/* Título */
+.formquotes-title {
+  font-size: 28px;
+  margin-bottom: 20px;
+  flex: 1;
   justify-content: center;
   align-items: center;
-  z-index: 999;
+}
+.fomquotes-card-body{
+  width: 400px; /* Ancho deseado de las tarjetas */
+  height: auto;
+}
+/* Tarjeta de médico */
+.formquotes-card {
+  width: 300px; /* Ancho deseado de las tarjetas */
+  height: 200px;
+  margin: 10px; /* Espacio entre las tarjetas */
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;  
+  background-color: #fff;
 }
 
-.modal-content-form {
-  background-color: #fff;
+/* Encabezado del Modal */
+.formquotes-modal-header {
+  background-color: #ffffff;
+  color: #000000;
+  border: none;
+}
+
+/* Título del Modal */
+.formquotes-modal-title {
+  font-size: 24px;
+}
+
+/* Cuerpo del Modal */
+.formquotes-modal-body {
   padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  max-width: 600px;
 }
 
-.modal-content-form button {
-  margin-top: 10px;
-  padding: 5px 10px;
-  background-color: #007bff;
-  color: #fff;
+/* Etiqueta del Formulario */
+.formquotes-form-label {
+  font-weight: bold;
+}
+
+/* Pie del Modal */
+.formquotes-modal-footer {
   border: none;
-  border-radius: 3px;
-  cursor: pointer;
 }
 
-
-.modal-content-form ul {
-  list-style: none;
-  padding: 0;
-}
-
-
-.modal-content-form li {
-  margin-bottom: 10px;
-}
-
-.medicos-list-container {
-  width: 100%;
-  overflow-x: auto; /* Habilita el desplazamiento horizontal */
-  white-space: nowrap; /* Evita que las tarjetas se dividan en múltiples líneas */
-}
-
-/* Estilos para las tarjetas de médicos */
-.medico-card {
-  display: inline-block; /* Las tarjetas se mostrarán en línea */
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  margin-right: 10px; /* Espacio entre las tarjetas */
-  width: 200px; /* Ancho de cada tarjeta */
-  text-align: center;
-  padding: 10px;
-  transition: transform 0.3s; /* Efecto de transición al hacer hover */
-}
-
-.medico-card h3 {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-}
-
-.medico-card button {
-  background-color: #007bff;
-  color: #fff;
+/* Botón Guardar */
+.formquotes-save-btn {
+  background-color: var(--color-primary);
+  width: 150px;
+  height: 50px;
+  font-size: 16px;
   border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  font-size: 0.9rem;
+  margin: 0 auto;
+  display: block;
 }
 
-.medico-card button:hover {
-  background-color: #0056b3;
-} 
-/* Estilos para el icono de flecha hacia atrás */
-.back-icon {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  font-size: 1.5rem; /* Tamaño del icono */
-  cursor: pointer;
-}
-
-/* Estilos para el encabezado del modal */
-.modal-header {
-  position: relative;
-  text-align: center;
-  padding: 10px 0;
-}
-
-.modal-header h2 {
-  margin: 0;
-  font-size: 1.5rem;
-}
-
-/* Estilos para el contenido del modal */
-.modal-content-form {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  max-width: 600px;
-  position: relative; /* Permite alinear el contenido centralmente */
-}
-
-.modal-content-form p {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.modal-content-form div {
-  text-align: center; /* Centra los botones */
-}
-
-.modal-content-form button {
-  margin-top: 10px;
-  padding: 5px 10px;
-  background-color: #007bff;
-  color: #fff;
+.formquotes-doctor-save-btn {
+  background-color: var(--color-primary);
   border: none;
-  border-radius: 3px;
-  cursor: pointer;
-  font-size: 0.9rem;
+  margin: 0 auto;
+  display: block;
 }
 
-.modal-content-form button:hover {
+.formquotes-save-btn:hover {
   background-color: #0056b3;
 }
+
+/* Aumenta el tamaño del icono y ajusta el margen izquierdo */
+.formquotes-icon-add {
+  font-size: 40px;
+  margin-left: 300px;
+}
+
+.formquotes-icon-pill {
+  font-size: 30px;
+  color: var(--color-primary);
+}
+
+.formquotes-icon-info {
+  font-size: 25px;
+  color: var(--color-primary);
+}
+
+.formquotes-close-icon {
+  color: var(--color-primary);
+  width: 50px;
+  height: auto;
+}
+
+/* Modal */
+.formquotes-modal {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.formquotes-selected-medico {
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Media Query para dispositivos móviles */
+@media (max-width: 767px) {
+  .formquotes-card {
+    width: 90%; /* Ancho del 90% del contenedor padre */
+    margin: 5px auto; /* Centra las tarjetas horizontalmente y agrega espacio vertical */
+  }
+
+  .formquotes-form-label {
+    font-size: 16px; /* Tamaño de fuente más grande para etiquetas en dispositivos móviles */
+  }
+
+  .formquotes-icon-add {
+    margin-left: 130px;
+  }
+
+  .formquotes-modal {
+    padding: 10px;
+  }
+}
+
+

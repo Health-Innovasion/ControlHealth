@@ -7,51 +7,56 @@ import {
   LOGIN_Failed,
   LOGOUT_Start,
   LOGOUT_Success,
-  LOGOUT_Failed
-} from "../const/const";
+  LOGOUT_Failed,
+} from '../const/const'
 import {
   createUserWithEmailAndPassword,
   updateProfile,
   signInWithEmailAndPassword,
-  signOut
+  signOut,
 } from 'firebase/auth'
-import { auth } from "../../firebase_config";
-import { doc, setDoc, addDoc,collection, query, where, onSnapshot  } from "firebase/firestore";
-import { db } from "../../firebase_config";
+import {
+  doc,
+  setDoc,
+  addDoc,
+  collection,
+  query,
+  where,
+  onSnapshot,
+} from 'firebase/firestore'
+import { db, auth, storage } from '../../firebase_config'
+
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 
 const registerUser = () => ({
   type: Register_User,
-
 })
 
 const registerSuccess = (user) => ({
   type: Register_Success,
-  payload: user
+  payload: user,
 })
 
 const registerFailed = (error) => ({
   type: Register_Failed,
-  payload: error
+  payload: error,
 })
-
 
 const loginStart = () => ({
   type: LOGIN_Start,
-
 })
 
 const loginSuccess = (user) => ({
   type: LOGIN_Success,
-  payload: user
+  payload: user,
 })
 
 const loginFailed = (error) => ({
   type: LOGIN_Failed,
-  payload: error
+  payload: error,
 })
 const logoutStart = () => ({
   type: LOGOUT_Start,
-
 })
 
 const logoutSuccess = () => ({
@@ -60,44 +65,98 @@ const logoutSuccess = () => ({
 
 const logoutFailed = (error) => ({
   type: LOGOUT_Failed,
-  payload: error
+  payload: error,
 })
 
-export const registerInitiate = (nombre, apellido, email, password) => {
+export const registerInitiate = (
+  nombre,
+  apellido,
+  email,
+  password,
+  isDoctor,
+  setModalOpen,
+  resetForm,
+  setSelectedFile,
+  setisLoadingRegister,
+) => {
   return async (dispatch) => {
-    dispatch(registerUser());
+    dispatch(registerUser())
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
-        password
-      );
+        password,
+      )
 
-      const user = userCredential.user;
+      const user = userCredential.user
 
       await updateProfile(auth.currentUser, {
-        displayName: `${nombre} ${apellido}`,
-      });
-
-      //TODO: cambiar el nombre de la coleccion user a users 
-
-
-      await setDoc(doc(db, 'user', user.uid), {
-        uid: user.uid,
-        displayName: `${nombre} ${apellido}`,
-        email,
-      })
-      await setDoc(doc(db, 'appointments', user.uid), {
-        appointments: []
+        userName: `${nombre} ${apellido}`,
       })
 
-      dispatch(registerSuccess(user));
+      //TODO: cambiar el nombre de la coleccion user a users
+
+      async function saveUser(fileUrl) {
+        try {
+          setDoc(doc(db, 'user', user.uid), {
+            uid: user.uid,
+            userName: `${nombre} ${apellido}`,
+            email,
+            ...(fileUrl && { fileUrl }),
+            ...(isDoctor ? { validated: 'In review' } : null),
+          })
+          if (!isDoctor) dispatch(registerSuccess(user))
+        } catch (error) {
+          console.error('Error al guardar el usuario:', error)
+          throw error 
+        }
+      }
+
+      if (isDoctor) {
+        const storageRef = ref(storage, `MINSA/${user.uid}`)
+
+        const file = isDoctor
+
+        const uploadTask = uploadBytes(storageRef, file)
+
+        uploadTask
+          .then((snapshot) => {
+            getDownloadURL(snapshot.ref)
+              .then((fileUrl) => {
+                saveUser(fileUrl)
+                  .then(() => {
+                    setModalOpen(true)
+                    resetForm()
+                    setSelectedFile(null)
+                    setisLoadingRegister(false)
+                  })
+                  .catch((error) => {
+                    dispatch(registerFailed(error.message))
+                    console.error(
+                      'Error al actualizar datos de usuario en Firestore:',
+                      error,
+                    )
+                  })
+              })
+              .catch((error) => {
+                dispatch(registerFailed(error.message))
+                console.error('Error al obtener la URL del archivo:', error)
+              })
+          })
+          .catch((error) => {
+            console.error('Error al subir el archivo:', error)
+          })
+      } else {
+        try {
+          saveUser()
+        } catch (error) {}
+      }
     } catch (error) {
-      console.error("Error en el registro:", error.code, error.message);
-      dispatch(registerFailed(error.message));
+      console.error('Error en el registro:', error.code, error.message)
+      dispatch(registerFailed(error.message))
     }
-  };
-};
+  }
+}
 
 export const loginInitiate = (email, password) => {
   return async (dispatch) => {
@@ -106,21 +165,21 @@ export const loginInitiate = (email, password) => {
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
-        password
-      );
+        password,
+      )
 
-      const user = userCredential.user;
+      const user = userCredential.user
 
-      dispatch(loginSuccess(user));
+      dispatch(loginSuccess(user))
     } catch (error) {
-      console.error("Error:", error.code, error.message);
-      dispatch(loginFailed(error.message));
+      console.error('Error:', error.code, error.message)
+      dispatch(loginFailed(error.message))
     }
   }
 }
 
 export const logout = () => {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch(logoutStart())
     try {
       await signOut(auth)
@@ -134,41 +193,39 @@ export const logout = () => {
 
 export const createAppointment = async (data) => {
   try {
-  
-     await addDoc(collection(db, "citas"), {data})
-
+    await addDoc(collection(db, 'citas'), { data })
   } catch (error) {
-    console.error('Error al crear la cita en Firebase', error);
-    throw error;
+    console.error('Error al crear la cita en Firebase', error)
+    throw error
   }
-};
+}
 
 export const combineData = (medico, cita, uid) => {
   return {
     medico,
     cita,
     uid,
-  };
-};
+  }
+}
 
 export const getCitas = (id, callback) => {
   try {
-    const docRef = query(collection(db, "citas"), where("data.uid", "==", id));
+    const docRef = query(collection(db, 'citas'), where('data.uid', '==', id))
 
     return onSnapshot(docRef, (querySnapshot) => {
-      const citas = [];
+      const citas = []
 
       querySnapshot.forEach((doc) => {
         citas.push({
           id: doc.id,
           data: doc.data(),
-        });
-      });
+        })
+      })
 
-      callback(citas);
-    });
+      callback(citas)
+    })
   } catch (error) {
-    console.error('Error al obtener los documentos:', error);
-    throw error;
+    console.error('Error al obtener los documentos:', error)
+    throw error
   }
-};
+}
