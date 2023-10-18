@@ -1,95 +1,135 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { loginInitiate } from "../../redux/action/action";
-import { useHistory } from "react-router-dom";
-import './Login.css';
-import logo from '../../Assets/Images/logo.png';
-import Modal from 'react-modal';
-import { FaSpinner } from 'react-icons/fa'; // Icono de carga
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { loginInitiate } from '../../redux/action/action'
+import { useHistory } from 'react-router-dom'
+import './Login.css'
+import logo from '../../Assets/Images/logo.png'
+import Modal from 'react-modal'
+import { FaSpinner } from 'react-icons/fa' // Icono de carga
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
+import ModalAlert from '../../Components/ModalAlert/ModalAlert'
 
 // Configura react-modal
-Modal.setAppElement('#root');
+Modal.setAppElement('#root')
 
 const Login = () => {
-  const [state, setState] = useState({
-    email: "",
-    password: "",
-  });
+  const state = {
+    email: '',
+    password: '',
+  }
 
-  const { email, password } = state;
+  const dispatch = useDispatch()
 
-  const dispatch = useDispatch();
+  const { currentUser } = useSelector((state) => state.user)
 
-  const { currentUser} = useSelector((state) => state.user);
-  
-  const history = useHistory();
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const history = useHistory()
+  const [isLodingLogin, setIsLodingLogin] = useState(false)
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [isErrorMessage, setIsErrorMessage] = useState(null)
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const required = 'Campo requerido'
 
-    if (!email || !password) return;
+  const formik = useFormik({
+    initialValues: state,
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .required(required)
+        .email('Ingrese una dirección de correo electrónico válida')
+        .nullable(),
+      password: Yup.string().required(required).nullable(),
+    }),
 
-    dispatch(loginInitiate(email, password));
-    openModal(); // Abre el modal cuando el inicio de sesión es exitoso
-  };
+    validate: () => {
+      const errors = {}
 
-  const handleChange = (e) => {
-    let { name, value } = e.target;
-    setState({ ...state, [name]: value });
-  };
+      return errors
+    },
+    onSubmit: (values) => {
+      handleSubmit(values)
+    },
+  })
+
+  const handleSubmit = (values) => {
+    const { email, password } = values
+
+    setIsLodingLogin(true)
+    dispatch(
+      loginInitiate(
+        email,
+        password,
+        setIsLodingLogin,
+        setErrorMessage,
+        setIsErrorMessage,
+      ),
+    )
+  }
 
   useEffect(() => {
     if (currentUser) {
-      history.push("/");
+      history.push('/')
     }
-  }, [currentUser, history]);
-
-  const openModal = () => {
-    setModalIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalIsOpen(false);
-  };
+  }, [currentUser, history])
 
   return (
     <div className="login-container">
       <div className="box">
         <img src={logo} alt="Logo" className="login-logo" />
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={formik.handleSubmit}>
           <div className="login-form-group">
             <div className="input">
               <label htmlFor="email"></label>
               <input
                 type="email"
-                className="login-form-control"
+                className={`login-form-control ${
+                  formik.touched.email && formik.errors.email
+                    ? 'input-invalid'
+                    : ''
+                }`}
                 placeholder="Email"
-                onChange={handleChange}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 id="email"
-                value={email}
+                value={formik.values.email}
                 name="email"
-                required
               />
+              {formik.touched.email && formik.errors.email && (
+                <div className="text-invalid">
+                  <strong>{formik.errors.email}</strong>
+                </div>
+              )}
             </div>
             <div className="login-form-group">
               <label htmlFor="password"></label>
               <input
                 type="password"
-                className="login-form-control"
+                className={`login-form-control ${
+                  formik.touched.password && formik.errors.password
+                    ? 'input-invalid'
+                    : ''
+                }`}
                 placeholder="Password"
-                onChange={handleChange}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 id="password"
-                value={password}
+                value={formik.values.password}
                 name="password"
-                required
               />
+              {formik.touched.password && formik.errors.password && (
+                <div className="text-invalid">
+                  <strong>{formik.errors.password}</strong>
+                </div>
+              )}
             </div>
           </div>
-          
+
           <button type="submit" className="btn btn-primary">
-            Iniciar Sesión
+            {isLodingLogin ? (
+              <FaSpinner className="spinner" />
+            ) : (
+              'Iniciar sesión'
+            )}
           </button>
         </form>
         <p className="text">¿No estás registrado aún?</p>
@@ -98,22 +138,16 @@ const Login = () => {
         </Link>
       </div>
 
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="Inicio Exitoso"
-        className="custom-modal-login"
-        overlayClassName="custom-modal-overlay-login"
-      >
-        <div className="modal-content">
-              <div className="loading-icon">
-                <FaSpinner className="spinner" /> {/* Icono de carga */}
-              </div>
-              <p>Iniciando sesión...</p>
-        </div>
-      </Modal>
+      <ModalAlert
+        modalOpen={isErrorMessage}
+        setModalOpen={setIsErrorMessage}
+        title={'Alerta'}
+        message={errorMessage}
+        errorMessage={setIsErrorMessage}
+        value={formik.values.email}
+      />
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

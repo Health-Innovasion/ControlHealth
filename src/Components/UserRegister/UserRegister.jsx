@@ -74,8 +74,6 @@ const UserRegister = ({
     },
   ]
 
-  console.log('El formik', formik.error)
-
   return (
     <form className="form-user" onSubmit={formik.handleSubmit}>
       {formFields.map((field) => (

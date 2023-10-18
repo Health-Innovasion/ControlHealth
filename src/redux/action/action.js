@@ -11,13 +11,31 @@ import {
 } from '../const/const'
 import {
   createUserWithEmailAndPassword,
-  updateProfile,  
+  updateProfile,
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth'
-import { doc, setDoc, addDoc,collection, query, where, onSnapshot ,getDoc  } from "firebase/firestore";
-import { db,storage,auth } from "../../firebase_config";
-import { ref ,uploadBytes,getDownloadURL,deleteObject  } from "firebase/storage";
+import { auth, storage } from '../../firebase_config'
+import {
+  doc,
+  setDoc,
+  addDoc,
+  collection,
+  query,
+  where,
+  onSnapshot,
+  updateDoc,
+  getDoc,
+} from 'firebase/firestore'
+import { db } from '../../firebase_config'
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytes,
+  uploadBytesResumable,
+} from '@firebase/storage'
+import { statusApplication, typeUsers } from '../../Utils/constants'
 
 const registerUser = () => ({
   type: Register_User,
@@ -69,6 +87,8 @@ export const registerInitiate = (
   resetForm,
   setSelectedFile,
   setisLoadingRegister,
+  setErrorMessage,
+  setIsErrorMessage,
 ) => {
   return async (dispatch) => {
     dispatch(registerUser())
@@ -93,13 +113,14 @@ export const registerInitiate = (
             uid: user.uid,
             userName: `${nombre} ${apellido}`,
             email,
+            typeUser: isDoctor ? typeUsers.doctor : typeUsers.patient,
             ...(fileUrl && { fileUrl }),
-            ...(isDoctor ? { validated: 'In review' } : null),
+            ...(isDoctor ? { validated: statusApplication.inReview } : null),
           })
           if (!isDoctor) dispatch(registerSuccess(user))
         } catch (error) {
           console.error('Error al guardar el usuario:', error)
-          throw error 
+          throw error
         }
       }
 
@@ -144,13 +165,23 @@ export const registerInitiate = (
       }
     } catch (error) {
       console.error('Error en el registro:', error.code, error.message)
+      setErrorMessage(error.code)
+      setIsErrorMessage(true)
+      setisLoadingRegister(false)
       dispatch(registerFailed(error.message))
     }
   }
 }
 
-export const loginInitiate = (email, password) => {
+export const loginInitiate = (
+  email,
+  password,
+  setIsLodingLogin,
+  setErrorMessage,
+  setIsErrorMessage,
+) => {
   return async (dispatch) => {
+    setErrorMessage('')
     dispatch(loginStart())
     try {
       const userCredential = await signInWithEmailAndPassword(
@@ -164,10 +195,14 @@ export const loginInitiate = (email, password) => {
       const userData = await obtenerUsuario(user.uid)
 
       dispatch(loginSuccess(userData))
+      setIsErrorMessage(false)
     } catch (error) {
       console.error('Error:', error.code, error.message)
+      setIsErrorMessage(true)
+      setErrorMessage(error.code)
       dispatch(loginFailed(error.message))
     }
+    setIsLodingLogin(false)
   }
 }
 
@@ -186,9 +221,7 @@ export const logout = () => {
 
 export const createAppointment = async (data) => {
   try {
-  
-     await addDoc(collection(db, "citas"), {data})
-
+    await addDoc(collection(db, 'citas'), { data })
   } catch (error) {
     console.error('Error al crear la cita en Firebase', error)
     throw error
@@ -225,55 +258,50 @@ export const getCitas = (id, callback) => {
   }
 }
 
-
 export const updateUserDataAndPhoto = async (currentUser, userData, file) => {
   try {
-    const storageRef = ref(storage, 'images/' + currentUser.uid);
+    const storageRef = ref(storage, 'images/' + currentUser.uid)
     const metadata = {
-      contentType: 'image/jpeg'
-    };
+      contentType: 'image/jpeg',
+    }
 
     // Verifica si el usuario ya tiene una foto almacenada
     if (currentUser.photoURL) {
       // Elimina la foto anterior del almacenamiento
-      await deleteObject(storageRef);
+      await deleteObject(storageRef)
     }
-    console.log(auth.currentUser)
     // Actualiza el perfil del usuario con los nuevos datos
-    await updateProfile(auth.currentUser, userData);
+    await updateProfile(auth.currentUser, userData)
 
     // Si se proporciona un archivo de imagen, cárgalo al almacenamiento
     if (file) {
-      const uploadTask = uploadBytesResumable(storageRef, file.name, metadata);
-      await uploadTask;
-      userData.photoURL = await getDownloadURL(storageRef);
+      const uploadTask = uploadBytesResumable(storageRef, file.name, metadata)
+      await uploadTask
+      userData.photoURL = await getDownloadURL(storageRef)
     }
 
     // Actualiza el documento del usuario en tu base de datos (por ejemplo, Firestore)
     // con los nuevos datos, incluida la URL de la imagen actualizada
     // (deberás adaptar esto a tu base de datos específica)
-    const userDocRef = doc(db, 'users', currentUser.uid);
-    await updateDoc(userDocRef, userData);
-
-    console.log('Usuario actualizado correctamente.');
+    const userDocRef = doc(db, 'users', currentUser.uid)
+    await updateDoc(userDocRef, userData)
   } catch (error) {
-    console.error('Error al actualizar el usuario:', error);
+    console.error('Error al actualizar el usuario:', error)
   }
-};
-
+}
 
 export const obtenerUsuario = async (id) => {
   try {
-    const docRef = doc(db, "user", id);
-    const docSnap = await getDoc(docRef);
+    const docRef = doc(db, 'user', id)
+    const docSnap = await getDoc(docRef)
 
     if (docSnap.exists()) {
-      return docSnap.data();
+      return docSnap.data()
     } else {
       // docSnap.data() will be undefined in this case
-      console.log("No such document!");
-}
+      console.log('No such document!')
+    }
   } catch (error) {
-    console.log("error al obtener la data", error)
+    console.log('error al obtener la data', error)
   }
 }
