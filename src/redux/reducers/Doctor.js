@@ -13,14 +13,14 @@ const initialState = {
 const DoctorsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_DOCTORS:
-      console.log('obtiendo datos ')
+
       return {
         ...state,
         loading: true,
       };
 
   case COMPLETED_GET_DOCTORS:
-    console.log('Datos obtenidos ')
+
     return{
       ...state,
         loading: true,
@@ -28,7 +28,6 @@ const DoctorsReducer = (state = initialState, action) => {
     }
     case FAILED_COMPLETED_GET_DOCTORS:
 
-    console.log("error")
       return {
         ...state,
         loading: false,

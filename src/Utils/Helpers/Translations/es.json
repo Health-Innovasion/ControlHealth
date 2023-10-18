@@ -1,0 +1,5 @@
+{
+    "auth/email-already-in-use": "El correo {{value}} ya está registrado. ¡Intenta con otro correo nuevamente!",
+    "auth/invalid-email": "Este correo {{value}} no está registrado. ¡Regístrate!",
+    "auth/invalid-login-credentials": "Tus credenciales son incorrectas, verifica nuevamente."
+}

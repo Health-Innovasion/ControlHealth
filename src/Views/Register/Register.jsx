@@ -34,6 +34,8 @@ const Register = () => {
   const [isLoadingRegister, setisLoadingRegister] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
   const [tabs, setTabs] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [isErrorMessage, setIsErrorMessage] = useState(null)
 
   const required = 'Campo requerido'
   const passInvalid = 'La contraseña debe tener al menos 6 caracteres'
@@ -43,11 +45,11 @@ const Register = () => {
     validationSchema: Yup.object({
       name: Yup.string()
         .required(required)
-        .matches(/^[a-zA-Z]+$/, 'El nombre solo debe contener letras')
+        .matches(/^[a-zA-Z\s]+$/, 'El nombre solo debe contener letras')
         .nullable(),
       lastName: Yup.string()
         .required(required)
-        .matches(/^[a-zA-Z]+$/, 'El apellido solo debe contener letras')
+        .matches(/^[a-zA-Z\s]+$/, 'El apellido solo debe contener letras')
         .nullable(),
       email: Yup.string()
         .required(required)
@@ -89,7 +91,9 @@ const Register = () => {
         setModalOpen,
         formik.resetForm,
         setSelectedFile,
-        setisLoadingRegister
+        setisLoadingRegister,
+        setErrorMessage,
+        setIsErrorMessage,
       ),
     )
     openModal()
@@ -117,7 +121,6 @@ const Register = () => {
 
   return (
     <div className="register-container ">
-
       <div className="box">
         <img src={logo} alt="Logo" className="register-logo" />
         <Tabs
@@ -151,10 +154,16 @@ const Register = () => {
         </Link>
       </div>
       <ModalAlert
-        modalOpen={modalOpen}
-        setModalOpen={setModalOpen}
+        modalOpen={modalOpen || isErrorMessage}
+        setModalOpen={modalOpen ? setModalOpen : setIsErrorMessage}
         title={'Alerta'}
-        message={'Se envió la solicitud y se realizará validación del código'}
+        message={
+          modalOpen
+            ? 'Se envió la solicitud y se realizará validación del código'
+            : errorMessage
+        }
+        errorMessage={setIsErrorMessage}
+        value={!modalOpen ? formik.values.email : ''}
       />
     </div>
   )

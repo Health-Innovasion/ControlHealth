@@ -1,3 +1,4 @@
+import { t } from 'i18next'
 import React from 'react'
 import { Button, Modal } from 'react-bootstrap'
 
@@ -9,13 +10,15 @@ const ModalAlert = ({
   isButton,
   handleButton,
   textButton,
+  value,
+  errorMessage,
 }) => {
   return (
     <Modal show={modalOpen} onHide={() => setModalOpen(false)} animation={true}>
-      <Modal.Header closeButton>
+      <Modal.Header>
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>{message}</Modal.Body>
+      <Modal.Body>{t(message, { value })}</Modal.Body>
       <Modal.Footer>
         {isButton && (
           <Button variant="primary" onClick={handleButton}>

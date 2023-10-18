@@ -46,4 +46,16 @@ export const Menu = [
     path: '/settings',
     cName: 'nav-text',
   },
-];
+]
+
+export const statusApplication = {
+  inReview: 'En revisión',
+  approved: 'Aprobada',
+  denied: 'Denegada',
+  done: 'Ninguna',
+}
+
+export const typeUsers = {
+  patient: 'patient',
+  doctor: 'doctor'
+}
