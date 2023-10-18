@@ -5,7 +5,6 @@ import { Menu } from '../../Utils/constants';
 import { Link } from 'react-router-dom'; // Importa Link desde react-router-dom
 import { logout } from '../../redux/action/action';
 import { useDispatch, useSelector } from 'react-redux';
-import useAuth from '../../custom-Hooks/useAuth';
 
 const Dropdown = () => {
   const [open, setOpen] = useState(false);
@@ -13,8 +12,7 @@ const Dropdown = () => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
 
-  const user = useAuth();
-  console.log(user);
+
   const handleAuth = () => {
     if (currentUser) {
       dispatch(logout());
@@ -23,10 +21,10 @@ const Dropdown = () => {
 
   return (
     <>
-      {user && (
+      {currentUser && (
         <div className='dropdown-container'>
           <FaUser onClick={() => setOpen(!open)} className='user-icon' />
-          {user.displayName}
+          {currentUser.userName}
         
           {open && (
             <div className={`menu ${open ? 'visible' : ''}`}>

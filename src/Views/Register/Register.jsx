@@ -116,7 +116,8 @@ const Register = () => {
   }, [tabs])
 
   return (
-    <div className="register-container">
+    <div className="register-container ">
+
       <div className="box">
         <img src={logo} alt="Logo" className="register-logo" />
         <Tabs

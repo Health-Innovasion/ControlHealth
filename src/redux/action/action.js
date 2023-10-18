@@ -11,22 +11,13 @@ import {
 } from '../const/const'
 import {
   createUserWithEmailAndPassword,
-  updateProfile,
+  updateProfile,  
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth'
-import {
-  doc,
-  setDoc,
-  addDoc,
-  collection,
-  query,
-  where,
-  onSnapshot,
-} from 'firebase/firestore'
-import { db, auth, storage } from '../../firebase_config'
-
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+import { doc, setDoc, addDoc,collection, query, where, onSnapshot ,getDoc  } from "firebase/firestore";
+import { db,storage,auth } from "../../firebase_config";
+import { ref ,uploadBytes,getDownloadURL,deleteObject  } from "firebase/storage";
 
 const registerUser = () => ({
   type: Register_User,
@@ -170,7 +161,9 @@ export const loginInitiate = (email, password) => {
 
       const user = userCredential.user
 
-      dispatch(loginSuccess(user))
+      const userData = await obtenerUsuario(user.uid)
+
+      dispatch(loginSuccess(userData))
     } catch (error) {
       console.error('Error:', error.code, error.message)
       dispatch(loginFailed(error.message))
@@ -193,7 +186,9 @@ export const logout = () => {
 
 export const createAppointment = async (data) => {
   try {
-    await addDoc(collection(db, 'citas'), { data })
+  
+     await addDoc(collection(db, "citas"), {data})
+
   } catch (error) {
     console.error('Error al crear la cita en Firebase', error)
     throw error
@@ -227,5 +222,58 @@ export const getCitas = (id, callback) => {
   } catch (error) {
     console.error('Error al obtener los documentos:', error)
     throw error
+  }
+}
+
+
+export const updateUserDataAndPhoto = async (currentUser, userData, file) => {
+  try {
+    const storageRef = ref(storage, 'images/' + currentUser.uid);
+    const metadata = {
+      contentType: 'image/jpeg'
+    };
+
+    // Verifica si el usuario ya tiene una foto almacenada
+    if (currentUser.photoURL) {
+      // Elimina la foto anterior del almacenamiento
+      await deleteObject(storageRef);
+    }
+    console.log(auth.currentUser)
+    // Actualiza el perfil del usuario con los nuevos datos
+    await updateProfile(auth.currentUser, userData);
+
+    // Si se proporciona un archivo de imagen, cárgalo al almacenamiento
+    if (file) {
+      const uploadTask = uploadBytesResumable(storageRef, file.name, metadata);
+      await uploadTask;
+      userData.photoURL = await getDownloadURL(storageRef);
+    }
+
+    // Actualiza el documento del usuario en tu base de datos (por ejemplo, Firestore)
+    // con los nuevos datos, incluida la URL de la imagen actualizada
+    // (deberás adaptar esto a tu base de datos específica)
+    const userDocRef = doc(db, 'users', currentUser.uid);
+    await updateDoc(userDocRef, userData);
+
+    console.log('Usuario actualizado correctamente.');
+  } catch (error) {
+    console.error('Error al actualizar el usuario:', error);
+  }
+};
+
+
+export const obtenerUsuario = async (id) => {
+  try {
+    const docRef = doc(db, "user", id);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      // docSnap.data() will be undefined in this case
+      console.log("No such document!");
+}
+  } catch (error) {
+    console.log("error al obtener la data", error)
   }
 }
