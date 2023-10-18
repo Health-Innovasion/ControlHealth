@@ -12,32 +12,36 @@ import Profile from './Views/Profile/Profile';
 import Navbar from './Components/NavBar/Navbar'; // Importa tu barra de navegación aquí
 import ProtectedRoute from './Utils/ProtectedRoute';
 import Admin from './Views/Admin/Admin';
+import { useSelector } from "react-redux"
 
 function App() {
+
+  const { currentUser } = useSelector(state => state.user);
   return (
     <Router>
       <Switch>
         {/* Las rutas Login y Register no tendrán la barra de navegación */}
         <Route path="/login" exact component={Login} />
         <Route path="/register" component={Register} />
-        <Route path="/homedr" component={HomeDr} />
         <Route path="/admin" component={Admin} />
 
-        {/* Todas las demás rutas tendrán la barra de navegación */}
-        <Route>
-          <Navbar />
-          <Switch>
-            {/* Las rutas protegidas envuelven las rutas que requieren autenticación */}
-            <ProtectedRoute path="/citas" component={Quotes} />
-            <ProtectedRoute path="/medication" component={Medication} />
-            <ProtectedRoute path="/diet" component={Diet} />
-            <ProtectedRoute path="/routines" component={Routines} />
-            <ProtectedRoute path="/profile" component={Profile} />
-
-            {/* La ruta raíz también está protegida */}
-            <ProtectedRoute path="/" component={Home} />
-          </Switch>
-        </Route>
+        {currentUser?.tipo === 'medico' ? (
+          // Si es un médico, muestra las rutas específicas para médicos
+          <Route path="/" component={HomeDr} />
+        ) : (
+          // Si no es un médico (es un paciente), muestra las rutas específicas para pacientes
+          <Route>
+            <Navbar />
+            <Switch>
+              <ProtectedRoute path="/citas" component={Quotes} />
+              <ProtectedRoute path="/medication" component={Medication} />
+              <ProtectedRoute path="/diet" component={Diet} />
+              <ProtectedRoute path="/routines" component={Routines} />
+              <ProtectedRoute path="/profile" component={Profile} />
+              <ProtectedRoute path="/" component={Home} />
+            </Switch>
+          </Route>
+        )}
       </Switch>
     </Router>
   );

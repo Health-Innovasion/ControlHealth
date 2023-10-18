@@ -11,13 +11,13 @@ import {
 } from '../const/const'
 import {
   createUserWithEmailAndPassword,
-  updateProfile,
+  updateProfile,  
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth'
-import { auth } from "../../firebase_config";
-import { doc, setDoc, addDoc,collection, query, where, onSnapshot  } from "firebase/firestore";
-import { db } from "../../firebase_config";
+import { doc, setDoc, addDoc,collection, query, where, onSnapshot ,getDoc  } from "firebase/firestore";
+import { db,storage,auth } from "../../firebase_config";
+import { ref ,uploadBytes,getDownloadURL,deleteObject  } from "firebase/storage";
 
 const registerUser = () => ({
   type: Register_User,
@@ -161,7 +161,9 @@ export const loginInitiate = (email, password) => {
 
       const user = userCredential.user
 
-      dispatch(loginSuccess(user))
+      const userData = await obtenerUsuario(user.uid)
+
+      dispatch(loginSuccess(userData))
     } catch (error) {
       console.error('Error:', error.code, error.message)
       dispatch(loginFailed(error.message))
@@ -258,3 +260,20 @@ export const updateUserDataAndPhoto = async (currentUser, userData, file) => {
     console.error('Error al actualizar el usuario:', error);
   }
 };
+
+
+export const obtenerUsuario = async (id) => {
+  try {
+    const docRef = doc(db, "user", id);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      // docSnap.data() will be undefined in this case
+      console.log("No such document!");
+}
+  } catch (error) {
+    console.log("error al obtener la data", error)
+  }
+}

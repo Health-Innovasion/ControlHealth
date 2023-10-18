@@ -5,7 +5,7 @@ import { Route, Redirect } from 'react-router-dom'
 const ProtectedRoute = ({ ...rest }) => {
   const { currentUser } = useSelector(state => state.user);
 
-  return currentUser ? <Route {...rest} /> : <Redirect to="/login" />;
+  return currentUser?.tipo === 'paciente' ? <Route {...rest} /> : <Redirect to="/login" />;
 }
 
 export default ProtectedRoute
