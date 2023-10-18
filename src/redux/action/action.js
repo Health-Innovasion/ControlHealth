@@ -109,7 +109,7 @@ export const registerInitiate = (
 
       async function saveUser(fileUrl) {
         try {
-          setDoc(doc(db, 'user', user.uid), {
+          setDoc(doc(db, 'users', user.uid), {
             uid: user.uid,
             userName: `${nombre} ${apellido}`,
             email,
@@ -292,7 +292,7 @@ export const updateUserDataAndPhoto = async (currentUser, userData, file) => {
 
 export const obtenerUsuario = async (id) => {
   try {
-    const docRef = doc(db, 'user', id)
+    const docRef = doc(db, 'users', id)
     const docSnap = await getDoc(docRef)
 
     if (docSnap.exists()) {
