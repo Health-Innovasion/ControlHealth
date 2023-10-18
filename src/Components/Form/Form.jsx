@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import './Form.css'; // Asegúrate de que este archivo contenga tus estilos CSS
-import { useDispatch, useSelector } from 'react-redux';
-import { Container, Form, Row, Col, Button, Modal } from 'react-bootstrap';
-import { IoIosAddCircle, IoIosCloseCircle } from 'react-icons/io'; // Importa el ícono IoIosCloseCircle
-import { GetDoctors } from '../../redux/action/DoctorAction';
-import { combineData, createAppointment } from '../../redux/action/action';
+import React, { useState, useEffect } from 'react'
+import './Form.css' // Asegúrate de que este archivo contenga tus estilos CSS
+import { useDispatch, useSelector } from 'react-redux'
+import { Container, Form, Row, Col, Button, Modal } from 'react-bootstrap'
+import { IoIosAddCircle, IoIosCloseCircle } from 'react-icons/io' // Importa el ícono IoIosCloseCircle
+import { GetDoctors } from '../../redux/action/DoctorAction'
+import { combineData, createAppointment } from '../../redux/action/action'
 
 const FormQuotes = () => {
-  const dispatch = useDispatch();
-  const { doctors } = useSelector((state) => state.doctors);
-  const { currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch()
+  const { doctors } = useSelector((state) => state.doctors)
+  const { currentUser } = useSelector((state) => state.user)
 
-  const [isFormModalOpen, setIsFormModalOpen] = useState(false);
-  const [isMedicoSelectModalOpen, setIsMedicoSelectModalOpen] = useState(false);
-  const [selectedMedico, setSelectedMedico] = useState(null);
+  const [isFormModalOpen, setIsFormModalOpen] = useState(false)
+  const [isMedicoSelectModalOpen, setIsMedicoSelectModalOpen] = useState(false)
+  const [selectedMedico, setSelectedMedico] = useState(null)
   const [infoForm, setInfoForm] = useState({
     name: '',
     date: '',
@@ -21,47 +21,50 @@ const FormQuotes = () => {
     numTelef: '',
     Tip_Diabe: '',
     description: '',
-  });
+  })
 
   useEffect(() => {
-    dispatch(GetDoctors());
-  }, [dispatch]);
+    dispatch(GetDoctors())
+  }, [dispatch])
 
   const openFormModal = () => {
-    setIsFormModalOpen(true);
-  };
+    setIsFormModalOpen(true)
+  }
 
   const closeFormModal = () => {
-    setIsFormModalOpen(false);
-  };
+    setIsFormModalOpen(false)
+  }
 
   const openMedicoSelectModal = () => {
-    setIsMedicoSelectModalOpen(true);
-  };
+    setIsMedicoSelectModalOpen(true)
+  }
 
   const closeMedicoSelectModal = () => {
-    setIsMedicoSelectModalOpen(false);
-  };
+    setIsMedicoSelectModalOpen(false)
+  }
 
   const handleMedicoSelect = (doctor) => {
-    const selectedDoctor = doctors.find((m) => m.displayName === doctor);
-    setSelectedMedico(selectedDoctor);
-    closeMedicoSelectModal();
-  };
+    setSelectedMedico(doctor)
+    closeMedicoSelectModal()
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const areAllFieldsFilled = Object.values(infoForm).every((value) => value.trim() !== '');
+    const areAllFieldsFilled = Object.values(infoForm).every(
+      (value) => value.trim() !== '',
+    )
 
     if (!areAllFieldsFilled) {
-      alert('Por favor, complete todos los campos antes de enviar el formulario.');
-      return;
+      alert(
+        'Por favor, complete todos los campos antes de enviar el formulario.',
+      )
+      return
     }
 
-    const data = combineData(selectedMedico, infoForm, currentUser.uid);
+    const data = combineData(selectedMedico, infoForm, currentUser.uid)
 
-    await createAppointment(data);
+    await createAppointment(data)
 
     setInfoForm({
       name: '',
@@ -70,30 +73,41 @@ const FormQuotes = () => {
       numTelef: '',
       Tip_Diabe: '',
       description: '',
-    });
+    })
 
-    setSelectedMedico(null);
-  };
+    setSelectedMedico(null)
+  }
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setInfoForm({ ...infoForm, [name]: value });
-  };
+    const { name, value } = e.target
+    setInfoForm({ ...infoForm, [name]: value })
+  }
 
   return (
     <Container className="formquotes-container">
       <h1 className="formquotes-title">Citas</h1>
       <IoIosAddCircle className="formquotes-icon-add" onClick={openFormModal} />
-      <Modal className='formquotes-modal-container' show={isFormModalOpen} onHide={closeFormModal}>
+      <Modal
+        className="formquotes-modal-container"
+        show={isFormModalOpen}
+        onHide={closeFormModal}
+      >
         <Modal.Header className="formquotes-modal-header">
-          <Modal.Title className="formquotes-modal-title">Agendar cita</Modal.Title>
-          <IoIosCloseCircle className="formquotes-close-icon" onClick={closeFormModal} />
+          <Modal.Title className="formquotes-modal-title">
+            Agendar cita
+          </Modal.Title>
+          <IoIosCloseCircle
+            className="formquotes-close-icon"
+            onClick={closeFormModal}
+          />
         </Modal.Header>
         <Form onSubmit={handleSubmit} className="formquotes-modal-body">
           <Row>
             <Col>
               <Form.Group controlId="name">
-                <Form.Label className="formquotes-form-label">Nombre</Form.Label>
+                <Form.Label className="formquotes-form-label">
+                  Nombre
+                </Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Nombre"
@@ -104,7 +118,9 @@ const FormQuotes = () => {
                 />
               </Form.Group>
               <Form.Group controlId="date">
-                <Form.Label className="formquotes-form-label">Fecha de Nacimiento</Form.Label>
+                <Form.Label className="formquotes-form-label">
+                  Fecha de Nacimiento
+                </Form.Label>
                 <Form.Control
                   type="date"
                   name="date"
@@ -114,7 +130,9 @@ const FormQuotes = () => {
                 />
               </Form.Group>
               <Form.Group controlId="cedula">
-                <Form.Label className="formquotes-form-label">Cédula</Form.Label>
+                <Form.Label className="formquotes-form-label">
+                  Cédula
+                </Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Cédula"
@@ -127,7 +145,9 @@ const FormQuotes = () => {
             </Col>
             <Col>
               <Form.Group controlId="numTelef">
-                <Form.Label className="formquotes-form-label">Número de Teléfono</Form.Label>
+                <Form.Label className="formquotes-form-label">
+                  Número de Teléfono
+                </Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Número de Teléfono"
@@ -138,7 +158,9 @@ const FormQuotes = () => {
                 />
               </Form.Group>
               <Form.Group controlId="Tip_Diabe">
-                <Form.Label className="formquotes-form-label">Tipo de Diabetes</Form.Label>
+                <Form.Label className="formquotes-form-label">
+                  Tipo de Diabetes
+                </Form.Label>
                 <Form.Select
                   name="Tip_Diabe"
                   value={infoForm.Tip_Diabe}
@@ -152,7 +174,9 @@ const FormQuotes = () => {
                 </Form.Select>
               </Form.Group>
               <Form.Group controlId="description">
-                <Form.Label className="formquotes-form-label col-mb3">Motivo de la Cita</Form.Label>
+                <Form.Label className="formquotes-form-label col-mb3">
+                  Motivo de la Cita
+                </Form.Label>
                 <Form.Control
                   as="textarea"
                   rows={4}
@@ -163,13 +187,17 @@ const FormQuotes = () => {
                 />
               </Form.Group>
               <div>
-                <Button className="formquotes-doctor-save-btn" variant="primary" onClick={openMedicoSelectModal}>
+                <Button
+                  className="formquotes-doctor-save-btn"
+                  variant="primary"
+                  onClick={openMedicoSelectModal}
+                >
                   Seleccionar médico
                 </Button>
                 {selectedMedico && (
                   <div className="formquotes-selected-medico">
                     <h4>Médico seleccionado:</h4>
-                    <p>{selectedMedico.displayName}</p>
+                    <p>{selectedMedico.userName}</p>
                   </div>
                 )}
               </div>
@@ -187,14 +215,21 @@ const FormQuotes = () => {
       <Modal show={isMedicoSelectModalOpen} onHide={closeMedicoSelectModal}>
         <Modal.Header className="formquotes-modal-header">
           <Modal.Title>Selecciona un médico</Modal.Title>
-          <IoIosCloseCircle className="formquotes-close-icon" onClick={closeMedicoSelectModal} />
+          <IoIosCloseCircle
+            className="formquotes-close-icon"
+            onClick={closeMedicoSelectModal}
+          />
         </Modal.Header>
-        <Modal.Body className='fomquotes-card-body'>
+        <Modal.Body className="fomquotes-card-body">
           {doctors?.map((doctor, index) => (
             <div className="formquotes-card" key={index}>
-              <h3>{doctor.displayName}</h3>
+              <h3>{doctor.userName}</h3>
               <p>{doctor.location}</p>
-              <Button className="formquotes-save-btn" variant="primary" onClick={() => handleMedicoSelect(doctor.displayName)}>
+              <Button
+                className="formquotes-save-btn"
+                variant="primary"
+                onClick={() => handleMedicoSelect(doctor)}
+              >
                 Seleccionar
               </Button>
             </div>
@@ -202,7 +237,7 @@ const FormQuotes = () => {
         </Modal.Body>
       </Modal>
     </Container>
-  );
-};
+  )
+}
 
-export default FormQuotes;
+export default FormQuotes
