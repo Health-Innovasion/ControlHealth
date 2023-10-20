@@ -1,64 +1,99 @@
+.full-screen-container{
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .centered-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    text-align: center;
-  }
-  
-  .button-container {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap; 
-  }
-  
-  .option-button svg {
-    width: 70px;
-    height: 70px;
-    margin-bottom: 10px;
-    color: var(--color-primary);
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  margin-top: -60px;
+}
+.titulo{
+  text-align: center;
+}
+
+.button-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap; 
+}
+
+.option-button svg {
+  width: 70px;
+  height: 70px;
+  margin-bottom: 10px;
+  color: var(--color-primary);
+}
+
+.option-button {
+  background-color: var(--color-secundary);
+  border: 2px solid var(--color-primary);
+  box-shadow: 0px 0px 5px rgba(22, 22, 22, 0.3);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  align-items: center;
+  width: 150px;
+  height: 170px;
+  margin-bottom: 10px;
+  font-size: 15px;
+  font-weight: bold;
+  color: black;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.option-button:hover {
+  transform: scale(1.05);
+  border: transparent;
+  color: var(--color-primary);
+}
+
+.option-button:hover svg {
+  color: var(--color-secundary); ;
+  transform: scale(1.05);
+  border: transparent;
+}
+
+
+.logo-doctor {
+  max-width: 80px;
+  height: auto;
+  position: absolute; /* Cambia a absolute */
+  top: 50%; /* Coloca el logo en el centro verticalmente */
+  transform: translateY(-50%); /* Centra verticalmente */
+  left: 30px; /* Ajusta la posición izquierda */
+  color: #000; /* Cambiamos el color del icono a negro */
+}
+
+.icon-doctor{
+  max-width: 100%;
+  align-items: center;
+}
+
+
+
+/* Media Query para pantallas más pequeñas */
+@media (max-width: 768px) {
   .option-button {
-    background-color: var(--color-secundary);
-    border: 2px solid var(--color-primary);
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    padding: 20px;
-    text-align: center;
+    width: 90%; /* Los botones ocuparán todo el ancho en pantallas pequeñas */
+    margin: 0 0 15px; /* Margen inferior para separar los botones */
+    padding: 5px;
+  }
+  
+  .icon-doctor{
+    max-width: 50%;
     align-items: center;
-    width: 150px;
-    height: 170px;
-    margin-bottom: 10px;
-    font-size: 15px;
-    font-weight: bold;
-    color: black;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
   }
-  
-  .option-button:hover {
-    background-color: transparent;
-    transform: scale(1.05);
-    border: transparent;
-    color: black;
-  }
-  
-  .logo {
-    max-width: 100px;
-    height: auto;
-    position: absolute;
-    top: 20px;
-    left: 20px;
-  }
-  
-  /* Media Query para pantallas más pequeñas */
-  @media (max-width: 768px) {
-    .option-button {
-      width: 100%; /* Los botones ocuparán todo el ancho en pantallas pequeñas */
-      margin: 0 0 10px; /* Margen inferior para separar los botones */
-    }
-  }
-  
+}
+
+:root {
+  --color-primary: #008DD8;
+  --color-secundary: #ffff;
+ }

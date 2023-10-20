@@ -41,11 +41,6 @@ export const Menu = [
     path: '/profile',
     cName: 'nav-text',
   },
-  {
-    title: 'Settings',
-    path: '/settings',
-    cName: 'nav-text',
-  },
 ]
 
 export const statusApplication = {
