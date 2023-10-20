@@ -9,7 +9,7 @@ import Modal from 'react-modal'
 import { FaSpinner } from 'react-icons/fa' // Icono de carga
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import ModalAlert from '../../Components/ModalAlert/ModalAlert'
+import SweetAlertComponent from '../../Components/Alerts/alerts'
 
 // Configura react-modal
 Modal.setAppElement('#root')
@@ -26,8 +26,6 @@ const Login = () => {
 
   const history = useHistory()
   const [isLodingLogin, setIsLodingLogin] = useState(false)
-  const [errorMessage, setErrorMessage] = useState(null)
-  const [isErrorMessage, setIsErrorMessage] = useState(null)
 
   const required = 'Campo requerido'
 
@@ -60,8 +58,7 @@ const Login = () => {
         email,
         password,
         setIsLodingLogin,
-        setErrorMessage,
-        setIsErrorMessage,
+        SweetAlertComponent.showSuccessAlert,
       ),
     )
   }
@@ -137,15 +134,6 @@ const Login = () => {
           Regístrate
         </Link>
       </div>
-
-      <ModalAlert
-        modalOpen={isErrorMessage}
-        setModalOpen={setIsErrorMessage}
-        title={'Alerta'}
-        message={errorMessage}
-        errorMessage={setIsErrorMessage}
-        value={formik.values.email}
-      />
     </div>
   )
 }

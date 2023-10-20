@@ -83,12 +83,10 @@ export const registerInitiate = (
   email,
   password,
   isDoctor,
-  setModalOpen,
   resetForm,
   setSelectedFile,
   setisLoadingRegister,
-  setErrorMessage,
-  setIsErrorMessage,
+  SweetAlertComponent,
 ) => {
   return async (dispatch) => {
     dispatch(registerUser())
@@ -117,7 +115,7 @@ export const registerInitiate = (
             ...(fileUrl && { fileUrl }),
             ...(isDoctor ? { validated: statusApplication.inReview } : null),
           })
-            const dataUser = await obtenerUsuario(user.uid)
+          const dataUser = await obtenerUsuario(user.uid)
           if (!isDoctor) dispatch(registerSuccess(dataUser))
         } catch (error) {
           console.error('Error al guardar el usuario:', error)
@@ -138,7 +136,10 @@ export const registerInitiate = (
               .then((fileUrl) => {
                 saveUser(fileUrl)
                   .then(() => {
-                    setModalOpen(true)
+                    SweetAlertComponent({
+                      icon: 'warning',
+                      text: 'waitValidateDoctorMessage',
+                    })
                     resetForm()
                     setSelectedFile(null)
                     setisLoadingRegister(false)
@@ -166,8 +167,7 @@ export const registerInitiate = (
       }
     } catch (error) {
       console.error('Error en el registro:', error.code, error.message)
-      setErrorMessage(error.code)
-      setIsErrorMessage(true)
+      SweetAlertComponent({ icon: 'error', text: error.code })
       setisLoadingRegister(false)
       dispatch(registerFailed(error.message))
     }
@@ -178,11 +178,9 @@ export const loginInitiate = (
   email,
   password,
   setIsLodingLogin,
-  setErrorMessage,
-  setIsErrorMessage,
+  SweetAlertComponent,
 ) => {
   return async (dispatch) => {
-    setErrorMessage('')
     dispatch(loginStart())
     try {
       const userCredential = await signInWithEmailAndPassword(
@@ -196,11 +194,8 @@ export const loginInitiate = (
       const userData = await obtenerUsuario(user.uid)
 
       dispatch(loginSuccess(userData))
-      setIsErrorMessage(false)
     } catch (error) {
-      console.error('Error:', error.code, error.message)
-      setIsErrorMessage(true)
-      setErrorMessage(error.code)
+      SweetAlertComponent({ text: error.code, icon: 'error' })
       dispatch(loginFailed(error.message))
     }
     setIsLodingLogin(false)
