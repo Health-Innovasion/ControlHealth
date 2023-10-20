@@ -3,8 +3,8 @@
   background-color: var(--color-secundary); /* Cambia el color de fondo a blanco */
   min-height: 60px;
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  justify-content: flex-end;
+  align-items: normal;
   padding: 0 1rem;
   border-bottom: 1px solid #807676; /* Agrega un borde inferior negro */
   box-shadow: 0 3px 4px rgba(32, 32, 32, 0.1); /* Agrega una sombra ligera */

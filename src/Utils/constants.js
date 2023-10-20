@@ -38,13 +38,7 @@ export const SidebarData = [
     path: '/medication',
     icon: <img src={medication} alt="Logo" className='icon-homeview'/>,
     cName: 'nav-text',
-  },
-  {
-    title: 'chats',
-    path: '/chat',
-    icon: <MdMedication />,
-    cName: 'nav-text',
-  },
+  }
 ]
 
 export const Menu = [
