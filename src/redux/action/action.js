@@ -117,7 +117,8 @@ export const registerInitiate = (
             ...(fileUrl && { fileUrl }),
             ...(isDoctor ? { validated: statusApplication.inReview } : null),
           })
-          if (!isDoctor) dispatch(registerSuccess(user))
+            const dataUser = await obtenerUsuario(user.uid)
+          if (!isDoctor) dispatch(registerSuccess(dataUser))
         } catch (error) {
           console.error('Error al guardar el usuario:', error)
           throw error
