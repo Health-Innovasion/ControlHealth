@@ -14,7 +14,7 @@
     flex-direction: row;
 }
 
-.card {
+.card-admin {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -23,21 +23,21 @@
     min-height: 200px; 
     max-height: 300px; 
 }
-.card:first-child{
+.card-admin:first-child{
     background-color: rgb(138, 123, 123);
 }
-.card:nth-child(2){
+.card-admin:nth-child(2){
     background-color: rgb(138, 123, 123);
 }
-.card:nth-child(3){
+.card-admin:nth-child(3){
     background-color: rgb(138, 123, 123);
 }
-.card-inner{
+.card-admin-inner{
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-.card-inner > .card-icon{
+.card-admin-inner > .card-icon{
 font-size: 20px;
 }
 .charts{

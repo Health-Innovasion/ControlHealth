@@ -99,6 +99,7 @@
     
     /* Reducción del tamaño de los elementos de entrada (input) */
     .login-form-control {
+        width: 300%;
         padding: 8px; /* Ajusta el espaciado interno */
         font-size: 14px; /* Ajusta el tamaño de la fuente */
         max-width: 100%; /* Evita que los input se salgan del box */
