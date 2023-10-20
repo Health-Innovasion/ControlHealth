@@ -100,6 +100,11 @@
   transition: opacity 0.5s ease, visibility 0s ease 0.5s;
 }
 
+.icon-homeview{
+  width: 30px;
+  height: 30px;
+}
+
 span {
   margin-left: 16px;
 }

@@ -1,36 +1,42 @@
 import React from 'react'
-import { FaCalendarAlt, FaDumbbell, FaHome, FaUtensils } from 'react-icons/fa'
-import { MdMedication } from 'react-icons/md'
+import '../Components/NavBar/navbar.css'
+import home from '../Assets/Images/Iconly-Curved-Home.svg'
+import quotes from '../Assets/Images/citas-iconly.svg'
+import diet from '../Assets/Images/Dietas.iconly.svg'
+import routines from '../Assets/Images/routines.iconly.svg'
+import medication from '../Assets/Images/medication.iconly.svg'
+
+
 
 export const SidebarData = [
   {
     title: 'Home',
     path: '/home',
-    icon: <FaHome />,
+    icon: <img src={home} alt="Logo" className='icon-homeview'/>,
     cName: 'nav-text',
   },
   {
     title: 'Citas',
     path: '/citas',
-    icon: <FaCalendarAlt />,
+    icon: <img src={quotes} alt="Logo" className='icon-homeview'/>,
     cName: 'nav-text',
   },
   {
     title: 'Dietas',
     path: '/diet',
-    icon: <FaUtensils />,
+    icon: <img src={diet} alt="Logo" className='icon-homeview'/>,
     cName: 'nav-text',
   },
   {
     title: 'Rutinas',
     path: '/routines',
-    icon: <FaDumbbell />,
+    icon: <img src={routines} alt="Logo" className='icon-homeview'/>,
     cName: 'nav-text',
   },
   {
     title: 'Medicación',
     path: '/medication',
-    icon: <MdMedication />,
+    icon: <img src={medication} alt="Logo" className='icon-homeview'/>,
     cName: 'nav-text',
   },
   {
@@ -45,11 +51,6 @@ export const Menu = [
   {
     title: 'Profile',
     path: '/profile',
-    cName: 'nav-text',
-  },
-  {
-    title: 'Settings',
-    path: '/settings',
     cName: 'nav-text',
   },
 ]

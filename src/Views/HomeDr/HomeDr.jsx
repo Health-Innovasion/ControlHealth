@@ -1,41 +1,50 @@
 import React from 'react';
-import { Button, Container, Row, Col } from 'react-bootstrap';
-import { BsCalendar, BsBell, BsFileText, BsPerson } from 'react-icons/bs'; // Importa los iconos de Bootstrap
+import { Container, Row, Col} from 'react-bootstrap';
 import './HomeDr.css';
 import logo from '../../Assets/Images/logo.png'
+import doctor from '../../Assets/Images/doctor.png'
+import notify from '../../Assets/Images/Notify.png'
+import expedient from '../../Assets/Images/expedient.png'
+import user from '../../Assets/Images/user.png'
+import Dropdown from '../../Components/Dropdown/Dropdown'
+
 
 function HomeDr() {
   return (
+  <div className="full-screen-container">
+      <div className="navbar">
+        <Dropdown />
+        <img src={logo} alt="Logo" className="logo-doctor" />
+      </div>
     <Container className="centered-container">
-       <img src={logo} alt="Logo" className="logo" />
       <Row className="button-container">
-        <Col xs={3}>
-          <Button className="option-button">
-            <BsCalendar size={30} />
+        <Col xs={6} md={3}>
+          <button className="option-button">
+            <img src={doctor} alt="Ícono de Doctor" className='icon-doctor'/>
             <br />
             Citas
-          </Button>
+          </button>
         </Col>
-        <Col xs={3}>
-          <Button className="option-button">
-            <BsBell size={30} />
+        <Col xs={6} md={3}>
+          <button className="option-button">
+          <img src={notify} alt="Ícono de Notificaciones" className='icon-doctor'/>
             <br />
             Notificaciones
-          </Button>
+          </button>
         </Col>
-        <Col xs={3}>
-          <Button className="option-button">
-            <BsFileText size={30} />
+        <Col xs={6} md={3}>
+          <button className="option-button">
+          <img src={expedient} alt="Ícono de Expedientes" className='icon-doctor'/>
             <br />
             Expedientes
-          </Button>
+          </button>
         </Col>
-        <Col xs={3}>
-          <Button className="option-button">
-            <BsPerson size={30} />
+        <Col xs={6} md={3}>
+          <button className="option-button">
+          <img src={user} alt="Ícono de Cuenta" className='icon-doctor'/>
             <br />
             Cuenta
-          </Button>
+          </button>
         </Col>
         <Col xs={3}>
           <Button className="option-button">
@@ -46,6 +55,7 @@ function HomeDr() {
         </Col>
       </Row>
     </Container>
+  </div>
   );
 }
 

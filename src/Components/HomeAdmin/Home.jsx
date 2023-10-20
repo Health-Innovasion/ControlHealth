@@ -59,24 +59,24 @@ const Home = () => {
             </div>
 
             <div className='main-cards'>
-                <div className='card'>
+                <div className='card-admin'>
                     <div className='car-inner'>
                         <h3>users</h3>
-                        <FaUser className='card-icon' />
+                        <FaUser className='card-admin-icon' />
                     </div>
                     <h1>50</h1>
                 </div>
-                <div className='card'>
+                <div className='card-admin'>
                     <div className='car-inner'>
                         <h3>doctors</h3>
-                        <FaUserDoctor className='card-icon' />
+                        <FaUserDoctor className='card-admin-icon' />
                     </div>
                     <h1>25</h1>
                 </div>
-                <div className='card'>
+                <div className='card-admin'>
                     <div className='car-inner'>
                         <h3>Quotes</h3>
-                        <BiAccessibility className='card-icon' />
+                        <BiAccessibility className='card-admin-icon' />
                     </div>
                     <h1>100</h1>
                 </div>

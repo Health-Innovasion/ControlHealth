@@ -26,8 +26,9 @@ function App() {
         <Route path="/register" component={Register} />
         <Route path="/admin" component={Admin} />
 
-        {currentUser && currentUser.typeUser === typeUsers.doctor ? (
+        {currentUser && currentUser?.typeUser === typeUsers.doctor ? (
           <Route path="/" component={HomeDr} />
+          
         ) : (
           <React.Fragment>
             <Navbar />
