@@ -14,6 +14,7 @@ import ProtectedRoute from './Utils/ProtectedRoute'
 import Admin from './Views/Admin/Admin'
 import { useSelector } from 'react-redux'
 import { typeUsers } from './Utils/constants'
+import ProtectedRouteMedico from './Utils/ProtectedRouteMedico'
 
 function App() {
   const { currentUser } = useSelector((state) => state.user)
@@ -26,7 +27,7 @@ function App() {
         <Route path="/admin" component={Admin} />
 
         {currentUser && currentUser?.typeUser === typeUsers.doctor ? (
-          <Route path="/" component={HomeDr} />
+          <ProtectedRouteMedico path="/" component={HomeDr} />
           
         ) : (
           <React.Fragment>
