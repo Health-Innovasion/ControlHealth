@@ -14,6 +14,7 @@ import ProtectedRoute from './Utils/ProtectedRoute'
 import Admin from './Views/Admin/Admin'
 import { useSelector } from 'react-redux'
 import { typeUsers } from './Utils/constants'
+import ScreenChat from './Views/ScreenChat/ScreenChat'
 
 function App() {
   const { currentUser } = useSelector((state) => state.user)
@@ -36,6 +37,7 @@ function App() {
               <ProtectedRoute path="/diet" component={Diet} />
               <ProtectedRoute path="/routines" component={Routines} />
               <ProtectedRoute path="/profile" component={Profile} />
+              <ProtectedRoute path="/chat" component={ScreenChat} />
               <ProtectedRoute path="/" component={Home} />
             </Switch>
           </React.Fragment>

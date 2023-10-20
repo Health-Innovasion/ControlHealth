@@ -33,6 +33,12 @@ export const SidebarData = [
     icon: <MdMedication />,
     cName: 'nav-text',
   },
+  {
+    title: 'chats',
+    path: '/chat',
+    icon: <MdMedication />,
+    cName: 'nav-text',
+  },
 ]
 
 export const Menu = [

@@ -15,6 +15,7 @@
   background: none;
   margin-left: 5px;
   color: var(--color-primary); /* Cambiamos el color del icono a negro */
+  display: flex;
 }
 
 .menu-x {
@@ -43,6 +44,12 @@
   opacity: 1;
   visibility: visible;
   transition: left 0.5s ease, opacity 0.5s ease, visibility 0s ease 0s;
+  width: 13%;
+}
+@media (max-width: 700px) {
+  .nav-menu.active {
+    width: 45%;
+  }
 }
 
 .nav-text {
@@ -62,7 +69,7 @@
   height: 100%;
   display: flex;
   align-items: center;
-  padding: -10px;
+  padding: 10px;
   border-radius: 4px;
   transition: background-color 0.3s ease, transform 0.1s ease;
 }
@@ -74,6 +81,7 @@
 
 .nav-menu-items {
   width: 100%;
+  padding: 10px;
 }
 
 .navbar-toggle {

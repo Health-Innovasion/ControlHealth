@@ -2,17 +2,26 @@
 
 .dropdown-container {
     position: relative;
-    display: inline-block;
+    display: flex;
     margin-left: auto; /* Cambia margin-right a margin-left */
+    gap: 5px;
   }
   
-  .user-icon {
+  .user-icon img {
     cursor: pointer;
     color: var(--color-primary);
     width: 35px;
     height: 35px;
+    border-radius: 50%;
+    gap: 10px;
+
   }
-  
+  @media (max-width: 700px) {
+    .dropdown-container p{
+      display: none;
+    }
+  }
+
   .menu {
     display: block;
     position: absolute;

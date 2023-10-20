@@ -37,6 +37,13 @@ function HomeDr() {
             Cuenta
           </Button>
         </Col>
+        <Col xs={3}>
+          <Button className="option-button">
+            <BsPerson size={30} />
+            <br />
+            Chat
+          </Button>
+        </Col>
       </Row>
     </Container>
   );
