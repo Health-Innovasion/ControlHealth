@@ -38,7 +38,7 @@
   .text-invalid {
     margin-top: 5px;
     color: red;
-    text-align: center;
+    text-align: justify;
     font-weight: 300;
     font-size: 12px;
   }
