@@ -4,7 +4,7 @@ import { Menu } from '../../Utils/constants';
 import { Link } from 'react-router-dom'; // Importa Link desde react-router-dom
 import { logout } from '../../redux/action/action';
 import { useDispatch, useSelector } from 'react-redux';
-import icono from '../../Assets/Images/icono.png'
+import icono from '../../Assets/Images/icono-user.png'
 
 const Dropdown = () => {
   const [open, setOpen] = useState(false);
@@ -24,12 +24,12 @@ const Dropdown = () => {
     <>
       {currentUser && (
         <div className='dropdown-container'>
-          <div className="user-icon">
-            <img src={icono} alt="" onClick={() => setOpen(!open)}/>
+       <div className="user-icon">
+            <img src={icono} alt="" onClick={() => setOpen(!open)} />
           </div>
-          
-          <p>{currentUser.userName}</p>
 
+          <p>{currentUser.userName}</p>
+        
           {open && (
             <div className={`menu ${open ? 'visible' : ''}`}>
               <div className='user-info'>

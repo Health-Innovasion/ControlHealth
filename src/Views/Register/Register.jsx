@@ -9,9 +9,9 @@ import logo from '../../Assets/Images/logo.png'
 import Modal from 'react-modal'
 import { Tab, Tabs } from 'react-bootstrap'
 import FormUser from '../../Components/UserRegister/UserRegister'
-import ModalAlert from '../../Components/ModalAlert/ModalAlert'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import SweetAlertComponent from '../../Components/Alerts/alerts'
 
 // Configura react-modal
 Modal.setAppElement('#root')
@@ -32,10 +32,7 @@ const Register = () => {
   const { currentUser } = useSelector((state) => state.user)
   const history = useHistory()
   const [isLoadingRegister, setisLoadingRegister] = useState(false)
-  const [modalOpen, setModalOpen] = useState(false)
   const [tabs, setTabs] = useState(null)
-  const [errorMessage, setErrorMessage] = useState(null)
-  const [isErrorMessage, setIsErrorMessage] = useState(null)
 
   const required = 'Campo requerido'
   const passInvalid = 'La contraseña debe tener al menos 6 caracteres'
@@ -88,12 +85,10 @@ const Register = () => {
         email,
         password,
         selectedFile,
-        setModalOpen,
         formik.resetForm,
         setSelectedFile,
         setisLoadingRegister,
-        setErrorMessage,
-        setIsErrorMessage,
+        SweetAlertComponent.showSuccessAlert,
       ),
     )
     openModal()
@@ -153,18 +148,6 @@ const Register = () => {
           Login
         </Link>
       </div>
-      <ModalAlert
-        modalOpen={modalOpen || isErrorMessage}
-        setModalOpen={modalOpen ? setModalOpen : setIsErrorMessage}
-        title={'Alerta'}
-        message={
-          modalOpen
-            ? 'Se envió la solicitud y se realizará validación del código'
-            : errorMessage
-        }
-        errorMessage={setIsErrorMessage}
-        value={!modalOpen ? formik.values.email : ''}
-      />
     </div>
   )
 }
