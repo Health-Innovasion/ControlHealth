@@ -88,6 +88,7 @@ const UserRegister = ({
           handleBlur={formik.handleBlur}
           touched={formik.touched[field.name]}
           error={formik.errors[field.name]}
+          autocomplete="current-password"
         />
       ))}
 

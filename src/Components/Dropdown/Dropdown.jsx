@@ -19,6 +19,7 @@ const Dropdown = () => {
     }
   };
 
+  console.log(currentUser)
   return (
     <>
       {currentUser && (

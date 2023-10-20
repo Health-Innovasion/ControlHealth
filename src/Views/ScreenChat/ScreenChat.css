@@ -1,0 +1,48 @@
+.home{
+
+height: 100vh;
+display: flex;
+align-items: center;
+}
+.container{
+    border: 1px solid rgb(18, 15, 15);
+    border-radius: 10px;
+    width: 90%;
+    height: 80%;
+    display: flex;
+    overflow: hidden;
+}
+.sidebar{
+flex: 1;
+border-right: 1px solid rgb(47, 46, 46);
+}
+.chat{
+flex: 2;
+}
+
+.navbar{
+    display: flex;
+    align-items: center;
+    height: 50px;
+    padding: 10px;
+    justify-content: flex-end;
+    color: rgb(16, 14, 14);
+}
+.logo{
+    font-weight: bold;
+}
+.user{
+    display: flex;
+    gap: 10px;
+}
+.user img {
+    background-color: black;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.user span{
+    display: flex;
+    align-items: center;
+}
