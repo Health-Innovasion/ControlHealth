@@ -3,7 +3,9 @@ import './Quote.css'
 import { getCitas } from '../../redux/action/action'
 import { useSelector } from 'react-redux'
 import img from '../../Assets/Images/icono-user.png'
-import { Col, Row } from 'react-bootstrap'
+// import { Col, Row } from 'react-bootstrap'
+// import IconoBorrar from '../../Assets/Images/IconoBorrar.svg'
+
 
 const Quote = () => {
   const { currentUser } = useSelector((state) => state.user)
@@ -63,6 +65,10 @@ const Quote = () => {
 
                 <span>{citaData.date}</span>
               </div>
+
+              {/* <div className="botones">
+              <img src={IconoBorrar} alt="" />
+              </div> */}
             </div>
           )
         })}
