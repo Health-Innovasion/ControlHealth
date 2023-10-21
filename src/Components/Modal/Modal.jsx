@@ -8,8 +8,8 @@ function formatDate(date) {
 
 const Modal = ({ event, onClose }) => {
   return (
-    <div className="modal">
-      <div className="modal-content">
+    <div className="modal-component">
+      <div className="modal-content-component">
         <h2>Detalles de la cita</h2>
         <p>Título: {event.title}</p>
         <p>Tipo de diabetes: {event.Tip_Diabe}</p>

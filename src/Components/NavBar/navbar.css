@@ -71,7 +71,7 @@
   align-items: center;
   padding: 10px;
   border-radius: 4px;
-  transition: background-color 0.3s ease, transform 0.1s ease;
+  transition: background-color  0.3s ease, transform 0.1s ease;
 }
 
 .nav-text a:hover {

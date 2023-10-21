@@ -48,7 +48,7 @@ const Dropdown = () => {
                 ))}
                 <div className='drop'>
                   <img src={exit} alt="exit icon" className='imagen-drop'/>
-                  <li onClick={handleAuth}>Logout</li>
+                  <li onClick={handleAuth}>Cerrar Sesión</li>
                 </div>
               </ul>
             </div>

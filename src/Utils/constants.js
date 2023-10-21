@@ -10,7 +10,7 @@ import medication from '../Assets/Images/medication.iconly.svg'
 
 export const SidebarData = [
   {
-    title: 'Home',
+    title: 'Inicio',
     path: '/home',
     icon: <img src={home} alt="Logo" className='icon-homeview'/>,
     cName: 'nav-text',
@@ -43,7 +43,7 @@ export const SidebarData = [
 
 export const Menu = [
   {
-    title: 'Profile',
+    title: 'Perfil',
     path: '/profile',
     cName: 'nav-text',
   },
