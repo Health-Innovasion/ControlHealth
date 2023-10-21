@@ -44,11 +44,11 @@
   opacity: 1;
   visibility: visible;
   transition: left 0.5s ease, opacity 0.5s ease, visibility 0s ease 0s;
-  width: 13%;
+  width: 200px;
 }
 @media (max-width: 700px) {
   .nav-menu.active {
-    width: 45%;
+    width: 200px;
   }
 }
 
