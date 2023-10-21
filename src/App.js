@@ -16,9 +16,10 @@ import { useSelector } from 'react-redux'
 import { typeUsers } from './Utils/constants'
 import ScreenChat from './Views/ScreenChat/ScreenChat'
 import ProtectedRouteMedico from './Utils/ProtectedRouteMedico'
+import CitasDr from './Views/CitasDr/CitasDr'
 
 function App() {
-  const { currentUser } = useSelector((state) => state.user)
+  const { currentUser } = useSelector((state) => state.user);
 
   return (
     <Router>
@@ -28,8 +29,12 @@ function App() {
         <Route path="/admin" component={Admin} />
 
         {currentUser && currentUser?.typeUser === typeUsers.doctor ? (
-          <ProtectedRouteMedico path="/" component={HomeDr} />
-          
+          <React.Fragment>
+            <Switch>
+              <ProtectedRouteMedico path="/citasdr" component={CitasDr} />
+              <ProtectedRouteMedico path="/" component={HomeDr} />
+            </Switch>
+          </React.Fragment>
         ) : (
           <React.Fragment>
             <Navbar />
@@ -46,7 +51,7 @@ function App() {
         )}
       </Switch>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;

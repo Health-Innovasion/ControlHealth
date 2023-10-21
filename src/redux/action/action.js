@@ -234,8 +234,9 @@ export const combineData = (cita, uid) => {
 
 export const getCitas = (id, callback) => {
   try {
-    const docRef = query(collection(db, 'quotes'), where('data.uid', '==', id))
 
+    const docRef = query(collection(db, 'quotes'), where('data.uid', '==', id))
+    
     return onSnapshot(docRef, (querySnapshot) => {
       const citas = []
 
@@ -253,6 +254,28 @@ export const getCitas = (id, callback) => {
     throw error
   }
 }
+export const getCitasdr = (doctorId, callback) => {
+  try {
+    const docRef = query(collection(db, 'quotes'),where('data.cita.doctor.id', '==', doctorId));
+
+    return onSnapshot(docRef, (querySnapshot) => {
+      const citas = [];
+
+      querySnapshot.forEach((doc) => {
+        citas.push({
+          id: doc.id,
+          data: doc.data(),
+        });
+      });
+
+      console.log(citas)
+      callback(citas);
+    });
+  } catch (error) {
+    console.error('Error al obtener los documentos:', error);
+    throw error;
+  }
+};
 
 export const updateUserDataAndPhoto = async (currentUser, userData, file) => {
   try {
