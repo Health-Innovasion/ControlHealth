@@ -32,7 +32,7 @@ const Quote = () => {
   if (citas.length === 0) {
     return <div className="sidebar">No hay citas disponibles.</div>
   }
-
+console.log(citas)
   return (
     <div className="sidebar">
       {citas?.length &&
