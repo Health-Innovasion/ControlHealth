@@ -5,8 +5,6 @@ import 'slick-carousel/slick/slick-theme.css';
 import CardDieta from '../../Components/Card/CardDieta';
 import { DietData } from '../../Utils/DietData';
 import { ExerciseData } from '../../Utils/routines';
-import Card from '../../Components/Card/Card';
-import backgroud from '../../Assets/Images/background.png'
 
 function Home() {
 
