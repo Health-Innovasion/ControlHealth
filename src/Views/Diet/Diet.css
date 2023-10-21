@@ -118,6 +118,7 @@ h2 {
   .item-card {
     max-width: 300%; /* Hacer que las tarjetas ocupen todo el ancho de la pantalla */
   }
+  
   .item-card img {
     width: auto; /* Hacer que la imagen ocupe todo el ancho de la tarjeta */
     height: auto;
