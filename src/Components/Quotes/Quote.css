@@ -58,8 +58,40 @@
   color: red;
 }
 
+#chatbot{
+  position: fixed;
+  bottom: 10%;
+  transition: all 300ms ease 0ms;
+  z-index: 999;
+}
+
+.btn-flotante {
+  width: 60px;
+  height: 60px;
+  font-size: 16px; 
+  text-transform: uppercase; 
+  letter-spacing: 2px; 
+  background-color: "#fff"; 
+  position: fixed;
+  bottom: 40px;
+  right: 10px;
+  transition: all 300ms ease 0ms;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  z-index: 99;
+}
+.btn-flotante:hover {
+
+  box-shadow: 0px 0px 0px 5px rgba(0, 0, 0, 0.3);
+  transform: translateY(-7px);
+}
+.fa-robot{
+  color:var(--color-primary);
+  font-size: 35px;
+  margin: 0;
+}
+
 /* Estilos para dispositivos móviles (Media Query) */
-@media (max-width: 768px) {
   .quote-card {
     display: flex;
     flex-wrap: wrap; /* Cambiar a disposición de fila en dispositivos móviles */
@@ -87,4 +119,54 @@
     flex-direction: row; /* Mantener la disposición de fila en dispositivos móviles */
     margin-top: 10px;
   }
-}
+
+
+  @media only screen and (min-width: 300px) {
+
+    .btn-flotante {
+      /* font-size: 14px;
+      padding: 12px 20px; */
+      bottom: 10%;
+      right: 3%;
+    }
+  }
+  @media only screen and (max-width: 460px) {
+
+    #chatbot{
+      right: 70px;
+    }
+  
+    .btn-flotante{
+      height: 40px;
+      width: 40px;
+    }
+    .fa-robot{
+      font-size: 20px;
+    }
+  }  
+
+  @media (max-width: 1080px) {
+
+    .btn-flotante{
+      height: 50px;
+      width: 50px;
+    }
+  
+    #chatbot{
+      right: 80px;
+    }
+    .fa-robot{
+      font-size: 25px;
+    }
+
+  }
+
+  @media only screen and (min-width:1080px) {
+
+    #chatbot{
+      right: 10%;
+    }
+    .fa-robot{
+      font-size: 30px;
+    }
+  }
