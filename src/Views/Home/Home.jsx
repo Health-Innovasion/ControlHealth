@@ -5,6 +5,9 @@ import 'slick-carousel/slick/slick-theme.css';
 import CardDieta from '../../Components/Card/CardDieta';
 import { DietData } from '../../Utils/DietData';
 import { ExerciseData } from '../../Utils/routines';
+import '.././Home/Home.css'
+// import { Card } from 'react-bootstrap';
+// import background from '../../Assets/Images/background.png'
 
 function Home() {
 
@@ -48,7 +51,7 @@ function Home() {
 
 
   return (
-    <div >
+    <div className='home'>
       <h1>Alimentos recomendados hoy</h1>
       <Slider {...settings}>
         {dietItems.map((item, index) => (
@@ -56,14 +59,14 @@ function Home() {
         ))}
       </Slider>
 
-        <h1>Ejercicios recomendados hoy</h1>
+      <h1>Ejercicios recomendados hoy</h1>
 
-        <Slider {...settings}>
-          {exerciseItems.map((item, index) => (
-            <CardDieta key={index} item={item} />
-          ))}
-        </Slider>
-      
+      <Slider {...settings}>
+        {exerciseItems.map((item, index) => (
+          <CardDieta key={index} item={item} />
+        ))}
+      </Slider>
+
 
       {/* <div className="informacion-diabetes">
           <h3>Todo lo que debes saber de la diabetes</h3>
@@ -72,7 +75,7 @@ function Home() {
               className="card-home"
               title="¿Qué es la Diabetes?"
               content="La diabetes es una enfermedad crónica que afecta la forma en que el cuerpo utiliza la glucosa en sangre. Puede ser causada por una falta de insulina (diabetes tipo 1) o por una resistencia a la insulina (diabetes tipo 2)."
-              image={backgroud}
+              image={background}
             />
              <Card
             className="card-home"
