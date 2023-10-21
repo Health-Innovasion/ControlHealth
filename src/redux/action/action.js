@@ -217,24 +217,24 @@ export const logout = () => {
 
 export const createAppointment = async (data) => {
   try {
-    await addDoc(collection(db, 'citas'), { data })
+    await addDoc(collection(db, 'quotes'), { data })
   } catch (error) {
     console.error('Error al crear la cita en Firebase', error)
     throw error
   }
 }
 
-export const combineData = (medico, cita, uid) => {
+export const combineData = (cita, uid) => {
   return {
-    medico,
     cita,
     uid,
+    status: 'En revisión'
   }
 }
 
 export const getCitas = (id, callback) => {
   try {
-    const docRef = query(collection(db, 'citas'), where('data.uid', '==', id))
+    const docRef = query(collection(db, 'quotes'), where('data.uid', '==', id))
 
     return onSnapshot(docRef, (querySnapshot) => {
       const citas = []

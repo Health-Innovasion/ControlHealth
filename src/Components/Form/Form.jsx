@@ -12,7 +12,6 @@ const FormQuotes = () => {
   const { currentUser } = useSelector((state) => state.user)
 
   const [isFormModalOpen, setIsFormModalOpen] = useState(false)
-  const [isMedicoSelectModalOpen, setIsMedicoSelectModalOpen] = useState(false)
   const [selectedMedico, setSelectedMedico] = useState(null)
   const [infoForm, setInfoForm] = useState({
     name: '',
@@ -21,6 +20,7 @@ const FormQuotes = () => {
     numTelef: '',
     Tip_Diabe: '',
     description: '',
+    doctor: '',
   })
 
   useEffect(() => {
@@ -35,34 +35,10 @@ const FormQuotes = () => {
     setIsFormModalOpen(false)
   }
 
-  const openMedicoSelectModal = () => {
-    setIsMedicoSelectModalOpen(true)
-  }
-
-  const closeMedicoSelectModal = () => {
-    setIsMedicoSelectModalOpen(false)
-  }
-
-  const handleMedicoSelect = (doctor) => {
-    setSelectedMedico(doctor)
-    closeMedicoSelectModal()
-  }
-
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const areAllFieldsFilled = Object.values(infoForm).every(
-      (value) => value.trim() !== '',
-    )
-
-    if (!areAllFieldsFilled) {
-      alert(
-        'Por favor, complete todos los campos antes de enviar el formulario.',
-      )
-      return
-    }
-
-    const data = combineData(selectedMedico, infoForm, currentUser.uid)
+    const data = combineData(infoForm, currentUser.uid)
 
     await createAppointment(data)
 
@@ -73,14 +49,17 @@ const FormQuotes = () => {
       numTelef: '',
       Tip_Diabe: '',
       description: '',
+      doctor: ''
     })
 
-    setSelectedMedico(null)
   }
 
   const handleChange = (e) => {
     const { name, value } = e.target
-    setInfoForm({ ...infoForm, [name]: value })
+    setInfoForm({
+      ...infoForm,
+      [name]: name === 'doctor' ? JSON.parse(value) : value,
+    })
   }
 
   return (
@@ -173,6 +152,26 @@ const FormQuotes = () => {
                   <option value="Otro">Otro</option>
                 </Form.Select>
               </Form.Group>
+              <Form.Group controlId="Tip_Diabe">
+                <Form.Label className="formquotes-form-label">
+                  Seleccione medico
+                </Form.Label>
+                <Form.Select
+                  name="doctor"
+                  value={infoForm.doctor}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="--selelect">--Seleccionar--</option>
+                  {doctors.map((doctor) => {
+                    return (
+                      <option value={JSON.stringify(doctor)}>
+                        {doctor.userName}
+                      </option>
+                    )
+                  })}
+                </Form.Select>
+              </Form.Group>
               <Form.Group controlId="description">
                 <Form.Label className="formquotes-form-label col-mb3">
                   Motivo de la Cita
@@ -186,21 +185,6 @@ const FormQuotes = () => {
                   placeholder="Ingrese el motivo aquí..."
                 />
               </Form.Group>
-              <div>
-                <Button
-                  className="formquotes-doctor-save-btn"
-                  variant="primary"
-                  onClick={openMedicoSelectModal}
-                >
-                  Seleccionar médico
-                </Button>
-                {selectedMedico && (
-                  <div className="formquotes-selected-medico">
-                    <h4>Médico seleccionado:</h4>
-                    <p>{selectedMedico.userName}</p>
-                  </div>
-                )}
-              </div>
             </Col>
           </Row>
           <Modal.Footer className="formquotes-modal-footer">
@@ -209,32 +193,6 @@ const FormQuotes = () => {
             </Button>
           </Modal.Footer>
         </Form>
-      </Modal>
-
-      {/* Primer modal para seleccionar médico */}
-      <Modal show={isMedicoSelectModalOpen} onHide={closeMedicoSelectModal}>
-        <Modal.Header className="formquotes-modal-header">
-          <Modal.Title>Selecciona un médico</Modal.Title>
-          <IoIosCloseCircle
-            className="formquotes-close-icon"
-            onClick={closeMedicoSelectModal}
-          />
-        </Modal.Header>
-        <Modal.Body className="fomquotes-card-body">
-          {doctors?.map((doctor, index) => (
-            <div className="formquotes-card" key={index}>
-              <h3>{doctor.userName}</h3>
-              <p>{doctor.location}</p>
-              <Button
-                className="formquotes-save-btn"
-                variant="primary"
-                onClick={() => handleMedicoSelect(doctor)}
-              >
-                Seleccionar
-              </Button>
-            </div>
-          ))}
-        </Modal.Body>
       </Modal>
     </Container>
   )
