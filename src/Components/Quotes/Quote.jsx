@@ -3,9 +3,8 @@ import './Quote.css'
 import { getCitas } from '../../redux/action/action'
 import { useSelector } from 'react-redux'
 import img from '../../Assets/Images/icono-user.png'
-// import { Col, Row } from 'react-bootstrap'
-// import IconoBorrar from '../../Assets/Images/IconoBorrar.svg'
-
+import editar from '../../Assets/Images/editar.svg'
+import borrar from '../../Assets/Images/borrar.svg'
 
 const Quote = () => {
   const { currentUser } = useSelector((state) => state.user)
@@ -17,19 +16,18 @@ const Quote = () => {
     })
 
     return () => {
-      // Limpia la suscripción cuando el componente se desmonta
       unsubscribe()
     }
   }, [currentUser.uid])
+
   function getStatusClass(status) {
     const statusClasses = {
       'En revisión': 'warning',
       'success': 'success',
     };
-  
+
     return statusClasses[status] || 'error';
   }
-  
 
   if (citas.length === 0) {
     return <div className="sidebar">No hay citas disponibles.</div>
@@ -57,18 +55,17 @@ const Quote = () => {
               </div>
               <div className="col-quote">
                 <span className="title-quote">Fecha:</span>
-
                 <span className="title-quote">Hora:</span>
               </div>
               <div className="col-quote">
                 <span>{citaData.date}</span>
-
                 <span>{citaData.date}</span>
               </div>
 
-              {/* <div className="botones">
-              <img src={IconoBorrar} alt="" />
-              </div> */}
+              <div className="botones">
+                <img src={editar} alt="" />
+                <img src={borrar} alt="" />
+              </div>
             </div>
           )
         })}
