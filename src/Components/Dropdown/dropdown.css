@@ -7,7 +7,11 @@
   margin-right: 13px;
   align-items: baseline;
 }
-
+@media (max-width: 700px) {
+  .dropdown-container p{
+    display: none;
+  }
+}
 .user-icon img {
   cursor: pointer;
   color: var(--color-primary);
@@ -53,8 +57,20 @@
     border-bottom: 1px solid;
     transform: scale(1.03);
   }
+.imagen-drop{
+  width: 34px;
+  height: 34px;
+}
 
-
+.drop{
+  display: flex;
+  margin-right: 20px;
+  align-items: center;
+}
+.drop li a{
+  text-decoration: none;
+  color: #000000;
+}
 
   
   :root {

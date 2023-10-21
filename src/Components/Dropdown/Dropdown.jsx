@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom'; // Importa Link desde react-router-dom
 import { logout } from '../../redux/action/action';
 import { useDispatch, useSelector } from 'react-redux';
 import icono from '../../Assets/Images/icono-user.png'
+import exit from '../../Assets/Images/exit.png'
+import user from '../../Assets/Images/user.png'
 
 const Dropdown = () => {
   const [open, setOpen] = useState(false);
@@ -24,23 +26,30 @@ const Dropdown = () => {
     <>
       {currentUser && (
         <div className='dropdown-container'>
-       <div className="user-icon">
+          <div className="user-icon">
             <img src={icono} alt="" onClick={() => setOpen(!open)} />
           </div>
 
           <p>{currentUser.userName}</p>
-        
+
           {open && (
             <div className={`menu ${open ? 'visible' : ''}`}>
               <div className='user-info'>
               </div>
               <ul onClick={() => setOpen(false)}>
                 {Menu.map((item, index) => (
-                  <li key={index}>
-                    <Link to={item.path}>{item.title}</Link>
-                  </li>
+                  <div className='drop'>
+                    <img src={user} alt="user icon" className='imagen-drop' />
+                    <li key={index} >
+                      <Link to={item.path}>{item.title}</Link>
+
+                    </li>
+                  </div>
                 ))}
-                <li onClick={handleAuth}>logout</li>
+                <div className='drop'>
+                  <img src={exit} alt="exit icon" className='imagen-drop'/>
+                  <li onClick={handleAuth}>Logout</li>
+                </div>
               </ul>
             </div>
           )}
