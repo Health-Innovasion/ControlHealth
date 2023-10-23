@@ -205,3 +205,72 @@ export const steps = (Review) => {
     },
   ]
 }
+
+export const InputField = ({
+  id,
+  type,
+  placeholder,
+  value,
+  name,
+  handleChange,
+  handleBlur,
+  touched,
+  error,
+  options,
+}) => (
+  <div className="register-form-group">
+    <label htmlFor={id}></label>
+    {type === 'select' ? ( 
+      <select
+        className={`register-form-control ${
+          touched && error ? 'input-invalid' : ''
+        }`}
+        id={id}
+        name={name}
+        value={value}
+        onChange={handleChange}
+        onBlur={handleBlur}
+      >
+        <option key={id} disabled hidden value="">
+          {placeholder}
+        </option>{' '}
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    ) : type === 'textarea' ? (
+      <textarea
+        type={type}
+        className={`register-form-control ${
+          touched && error ? 'input-invalid' : ''
+        }`}
+        placeholder={placeholder}
+        id={id}
+        value={value}
+        name={name}
+        onChange={handleChange}
+        onBlur={handleBlur}
+      />
+    ) : (
+      <input
+        type={type}
+        className={`register-form-control ${
+          touched && error ? 'input-invalid' : ''
+        }`}
+        placeholder={placeholder}
+        id={id}
+        value={value}
+        name={name}
+        onChange={handleChange}
+        onBlur={handleBlur}
+      />
+    )}
+    {touched && error && (
+      <div className="text-invalid">
+        <strong>{error}</strong>
+      </div>
+    )}
+  </div>
+)

@@ -46,16 +46,19 @@
   font-weight: bold;
 }
 
-.status-color.warning {
+.status-color.in-review {
   color: orange;
 }
 
-.status-color.success {
+.status-color.approved {
   color: green;
 }
 
 .status-color.error {
   color: red;
+}
+.status-color.postponed {
+  color: aqua;
 }
 
 #chatbot{

@@ -60,3 +60,15 @@ export const typeUsers = {
   patient: 'patient',
   doctor: 'doctor'
 }
+
+export const statusQuotes = {
+  inReview: 'En revisión',
+  approved: 'Aprobada',
+  denied: 'Denegada',
+  postponed: 'Pospuesta'
+}
+
+export const required = 'Campo requerido'
+export const onlyLetters = 'No dede de contener caracteres especiales o números'
+
+export const regexOnlyLetters = /^[a-zA-Z\s]+$/

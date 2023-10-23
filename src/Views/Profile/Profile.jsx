@@ -26,9 +26,7 @@ function Profile() {
     setState({ ...state, [name]: value });
   };
   const handleImageChange = (e) => {
-    console.log('handleImageChange called');
     const file = e.target.files[0];
-    console.log('Selected file:', file);
     if (file) {
       setState({ ...state, photoURL: file });
     }
@@ -46,7 +44,7 @@ function Profile() {
     e.preventDefault();
 
     updateUserDataAndPhoto(currentUser,state,photoURL)
-    console.log(state)
+
   }
 
   // https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp

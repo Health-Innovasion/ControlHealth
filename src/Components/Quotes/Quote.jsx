@@ -7,11 +7,14 @@ import editar from '../../Assets/Images/editar.svg'
 import borrar from '../../Assets/Images/borrar.svg'
 import { ThemeProvider } from 'styled-components'
 import SimpleForm from '../ChatBot/ChatBot'
+import { FaSpinner } from 'react-icons/fa'
+import { statusQuotes } from '../../Utils/constants'
 
 const Quote = () => {
   const { currentUser } = useSelector((state) => state.user)
   const [citas, setCitas] = useState([])
   const [chatbot, setChatBot] = useState(false)
+  const [isLoadingQuotes, setIsLoadingQuotes] = useState(false)
 
   const theme = {
     background: '#f5f8fb',
@@ -25,9 +28,13 @@ const Quote = () => {
   }
 
   useEffect(() => {
-    const unsubscribe = getCitas(currentUser.uid, (citasData) => {
-      setCitas(citasData)
-    })
+    const unsubscribe = getCitas(
+      currentUser.uid,
+      setIsLoadingQuotes,
+      (citasData) => {
+        setCitas(citasData)
+      },
+    )
 
     return () => {
       unsubscribe()
@@ -36,21 +43,26 @@ const Quote = () => {
 
   function getStatusClass(status) {
     const statusClasses = {
-      'En revisión': 'warning',
-      success: 'success',
+      [statusQuotes.inReview]: 'in-review',
+      [statusQuotes.approved]: 'approved',
+      [statusQuotes.postponed]: 'postponed',
     }
 
     return statusClasses[status] || 'error'
   }
 
-  if (citas.length === 0) {
-    return <div className="sidebar">No hay citas disponibles.</div>
-  }
-console.log(citas)
   return (
     <>
       <div className="sidebar">
-        {citas?.length &&
+        {isLoadingQuotes ? (
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <FaSpinner
+              size={80}
+              className="spinner quotes"
+              color="#008DD8"
+            ></FaSpinner>
+          </div>
+        ) : citas?.length ? (
           citas.map((cita, index) => {
             const citaData = cita.data.data.cita
             const status = cita.data.data.status
@@ -74,7 +86,7 @@ console.log(citas)
                 </div>
                 <div className="col-quote">
                   <span>{citaData.date}</span>
-                  <span>{citaData.date}</span>
+                  <span>{citaData.time}</span>
                 </div>
 
                 <div className="botones">
@@ -83,7 +95,10 @@ console.log(citas)
                 </div>
               </div>
             )
-          })}
+          })
+        ) : (
+          <div className="sidebar">No hay citas disponibles.</div>
+        )}
       </div>
       <button
         href="#"
