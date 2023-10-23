@@ -350,3 +350,41 @@ export const deleteDocument = async (collectionName, id) => {
   }
 };
 
+export const createMedication = async (data) => {
+  try {
+    const infomedicamento = await addDoc(collection(db, 'medications'), { data });
+    console.log(infomedicamento)
+  } catch (error) {
+    console.error('Error al crear la medicación en Firebase', error);
+    throw error;
+  }
+}
+
+export const combineMedicationData = (medication, uid) => {
+  return {
+    medication,
+    uid,
+  };
+}
+
+export const getMedications = (id, callback) => {
+  try {
+    const docRef = query(collection(db, 'medications'), where('data.uid', '==', id));
+
+    return onSnapshot(docRef, (querySnapshot) => {
+      const medications = [];
+
+      querySnapshot.forEach((doc) => {
+        medications.push({
+          id: doc.id,
+          data: doc.data(),
+        });
+      });
+
+      callback(medications);
+    });
+  } catch (error) {
+    console.error('Error al obtener los documentos de medicación:', error);
+    throw error;
+  }
+}
