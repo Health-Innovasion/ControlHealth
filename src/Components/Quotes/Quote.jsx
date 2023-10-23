@@ -9,6 +9,8 @@ import { ThemeProvider } from 'styled-components'
 import SimpleForm from '../ChatBot/ChatBot'
 import { FaSpinner } from 'react-icons/fa'
 import { statusQuotes } from '../../Utils/constants'
+import { deleteDocument } from '../../redux/action/action'
+
 
 const Quote = () => {
   const { currentUser } = useSelector((state) => state.user)
@@ -51,6 +53,10 @@ const Quote = () => {
     return statusClasses[status] || 'error'
   }
 
+  const handledelete = async (id) => {
+   await deleteDocument('quotes',id)
+  }
+
   return (
     <>
       <div className="sidebar">
@@ -91,7 +97,7 @@ const Quote = () => {
 
                 <div className="botones">
                   <img src={editar} alt="" />
-                  <img src={borrar} alt="" />
+                  <img src={borrar} alt="icon-borrar" onClick={() => handledelete(cita.id)}/>
                 </div>
               </div>
             )
@@ -102,7 +108,7 @@ const Quote = () => {
       </div>
       <button
         href="#"
-        class="btn-flotante"
+        className="btn-flotante"
         onClick={() => setChatBot(!chatbot)}
       >
         <span className="fas fa-robot" src={img}></span>

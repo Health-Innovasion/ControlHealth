@@ -26,6 +26,7 @@ import {
   onSnapshot,
   updateDoc,
   getDoc,
+  deleteDoc 
 } from 'firebase/firestore'
 import { db } from '../../firebase_config'
 import {
@@ -337,3 +338,15 @@ export const obtenerUsuario = async (id) => {
     console.log('error al obtener la data', error)
   }
 }
+
+export const deleteDocument = async (collectionName, id) => {
+  try {
+    const documentRef = doc(db, collectionName, id);
+    await deleteDoc(documentRef);
+    console.log(`Documento eliminado con éxito en la colección "${collectionName}" con ID "${id}"`);
+  } catch (error) {
+    console.error('Error al eliminar el documento en Firebase:', error);
+    throw error;
+  }
+};
+

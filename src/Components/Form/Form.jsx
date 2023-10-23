@@ -40,7 +40,7 @@ const FormQuotes = () => {
       time: Yup.string().required(required).nullable(),
       dni: Yup.string()
         .required(required)
-        .matches(/^\d{3}-\d{6}-\d{5}[A-Za-z]$/, 'Cédula inválida')
+        .matches(/^\d{3}-\d{6}-\d{4}[A-Za-z]$/, 'Cédula inválida')
         .nullable(),
       numberPhone: Yup.string()
         .required(required)
@@ -188,12 +188,12 @@ const FormQuotes = () => {
             <Row>
               <Col>
                 {formFields.map((field) => (
-                  <>
+                  <div key={field.id}> 
                     {field.type === 'time' || field.type === 'date' ? (
                       <div style={{ textAlign: 'justify' }}>
                         <label>{field.placeholder}:</label>
                         <InputField
-                          key={field.id}
+                          key={field.id} 
                           id={field.id}
                           type={field.type}
                           placeholder={field.placeholder}
@@ -204,12 +204,12 @@ const FormQuotes = () => {
                           touched={formik.touched[field.name]}
                           error={formik.errors[field.name]}
                           options={field.options}
-                          autocomplete="current-password"
+                          autoComplete="current-password" 
                         />
                       </div>
                     ) : (
                       <InputField
-                        key={field.id}
+                        key={field.id} 
                         id={field.id}
                         type={field.type}
                         placeholder={field.placeholder}
@@ -224,12 +224,13 @@ const FormQuotes = () => {
                         touched={formik.touched[field.name]}
                         error={formik.errors[field.name]}
                         options={field.options}
-                        autocomplete="current-password"
+                        autoComplete="current-password" 
                       />
                     )}
-                  </>
+                  </div>
                 ))}
               </Col>
+
             </Row>
             <Button type="submit" className="formquotes-save-btn">
               {isLoadingCreate ? (
