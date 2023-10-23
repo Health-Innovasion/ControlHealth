@@ -8,22 +8,17 @@ export const DietData = [
           name: 'Tortilla de vegetales',
           preparation:
             'Ingredientes:\n- 2 huevos\n- 1/4 de pimiento rojo, cortado en cubos\n- 1/4 de pimiento verde, cortado en cubos\n- 1/4 de cebolla roja, cortada en cubos\n- Espinacas frescas\n- Aceite de oliva virgen extra\n- Sal y pimienta al gusto',
-          image: 'https://i.imgur.com/PVai24j.jpg',
-        },
-        {
-          name: 'Yogur con frutas',
-          preparation: 'Preparación detallada del Yogur con frutas.',
-          image: 'https://i.imgur.com/JSh4nPF.png',
+          image: 'https://i.imgur.com/ltYo9Ar.png',
         },
         {
           name: 'Batido de proteínas',
           preparation: 'Preparación detallada del Batido de proteínas.',
-          image: 'https://i.imgur.com/JSh4nPF.png',
+          image: 'https://i.imgur.com/NsP8yUx.png',
         },
         {
           name: 'Omelette de espinacas',
           preparation: 'Preparación detallada del Omelette de espinacas.',
-          image: 'https://i.imgur.com/JSh4nPF.png',
+          image: 'https://i.imgur.com/TtoYUFC.png',
         },
       ],
     },
