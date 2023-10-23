@@ -5,6 +5,11 @@ import { Container, Form, Row, Col, Button, Modal } from 'react-bootstrap'
 import { IoIosAddCircle, IoIosCloseCircle } from 'react-icons/io' // Importa el ícono IoIosCloseCircle
 import { GetDoctors } from '../../redux/action/DoctorAction'
 import { combineData, createAppointment } from '../../redux/action/action'
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
+import { onlyLetters, regexOnlyLetters, required } from '../../Utils/constants'
+import { InputField } from '../../Utils/functions'
+import { FaSpinner } from 'react-icons/fa'
 
 const FormQuotes = () => {
   const dispatch = useDispatch()
@@ -12,15 +17,49 @@ const FormQuotes = () => {
   const { currentUser } = useSelector((state) => state.user)
 
   const [isFormModalOpen, setIsFormModalOpen] = useState(false)
-  const [selectedMedico, setSelectedMedico] = useState(null)
-  const [infoForm, setInfoForm] = useState({
+  const [isLoadingCreate, setIsLoadingCreate] = useState(false)
+  const infoForm = {
     name: '',
     date: '',
-    cedula: '',
-    numTelef: '',
-    Tip_Diabe: '',
+    time: '',
+    dni: '',
+    numberPhone: '',
+    typeDiabetes: '',
     description: '',
     doctor: '',
+  }
+
+  const formik = useFormik({
+    initialValues: infoForm,
+    validationSchema: Yup.object({
+      name: Yup.string()
+        .required(required)
+        .matches(regexOnlyLetters, onlyLetters)
+        .nullable(),
+      date: Yup.string().required(required).nullable(),
+      time: Yup.string().required(required).nullable(),
+      dni: Yup.string()
+        .required(required)
+        .matches(/^\d{3}-\d{6}-\d{5}[A-Za-z]$/, 'Cédula inválida')
+        .nullable(),
+      numberPhone: Yup.string()
+        .required(required)
+        .matches(/^[2578]\d{7}$/, 'Número inválido')
+        .nullable(),
+      typeDiabetes: Yup.string().required(required).nullable(),
+      description: Yup.string().required(required).nullable(),
+      doctor: Yup.string().required(required).nullable(),
+    }),
+
+    validate: () => {
+      const errors = {}
+
+      return errors
+    },
+    onSubmit: (values) => {
+      values.doctor = JSON.parse(formik.values.doctor)
+      handleSubmit(values)
+    },
   })
 
   useEffect(() => {
@@ -35,32 +74,92 @@ const FormQuotes = () => {
     setIsFormModalOpen(false)
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  const handleSubmit = async (values) => {
+    setIsLoadingCreate(true)
+    const data = combineData(values, currentUser.uid)
 
-    const data = combineData(infoForm, currentUser.uid)
-
-    await createAppointment(data)
-
-    setInfoForm({
-      name: '',
-      date: '',
-      cedula: '',
-      numTelef: '',
-      Tip_Diabe: '',
-      description: '',
-      doctor: ''
-    })
-
+    await createAppointment(
+      data,
+      setIsLoadingCreate,
+      setIsFormModalOpen,
+      formik.resetForm,
+    )
   }
 
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setInfoForm({
-      ...infoForm,
-      [name]: name === 'doctor' ? JSON.parse(value) : value,
-    })
+  const handleDNICheck = (event) => {
+    const value = event.target.value
+    let formattedValue = value.replace(/[^0-9A-Za-z]/g, '')
+    let formattedDNI = ''
+
+    for (let i = 0; i < formattedValue.length; i++) {
+      if (i === 3 || i === 9) {
+        formattedDNI += '-'
+      }
+      formattedDNI += formattedValue[i]
+    }
+
+    formik.setFieldValue('dni', formattedDNI)
   }
+
+  const formFields = [
+    {
+      id: 'nombre',
+      type: 'text',
+      placeholder: 'Nombre',
+      name: 'name',
+    },
+    {
+      id: 'cédula',
+      type: 'text',
+      placeholder: 'Cédula',
+      name: 'dni',
+    },
+    {
+      id: 'fecha',
+      type: 'date',
+      placeholder: 'Fecha',
+      name: 'date',
+    },
+    {
+      id: 'hora',
+      type: 'time',
+      placeholder: 'Hora',
+      name: 'time',
+    },
+    {
+      id: 'teléfono',
+      type: 'number',
+      placeholder: 'Teléfono',
+      name: 'numberPhone',
+    },
+    {
+      id: 'tipo',
+      type: 'select',
+      placeholder: 'Seleccione tipo de diabetes',
+      name: 'typeDiabetes',
+      options: [
+        { value: 'Tipo 1', label: 'Tipo 1' },
+        { value: 'Tipo 2', label: 'Tipo 2' },
+        { value: 'Otro', label: 'Otro' },
+      ],
+    },
+    {
+      id: 'doctor',
+      type: 'select',
+      placeholder: 'Seleccione médico',
+      name: 'doctor',
+      options: doctors?.map((doc) => ({
+        value: JSON.stringify(doc),
+        label: doc.userName,
+      })),
+    },
+    {
+      id: 'descripción',
+      type: 'textarea',
+      placeholder: 'Descripción',
+      name: 'description',
+    },
+  ]
 
   return (
     <Container className="formquotes-container">
@@ -70,6 +169,7 @@ const FormQuotes = () => {
         className="formquotes-modal-container"
         show={isFormModalOpen}
         onHide={closeFormModal}
+        scrollable
       >
         <Modal.Header className="formquotes-modal-header">
           <Modal.Title className="formquotes-modal-title">
@@ -80,119 +180,66 @@ const FormQuotes = () => {
             onClick={closeFormModal}
           />
         </Modal.Header>
-        <Form onSubmit={handleSubmit} className="formquotes-modal-body">
-          <Row>
-            <Col>
-              <Form.Group controlId="name">
-                <Form.Label className="formquotes-form-label">
-                  Nombre
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Nombre"
-                  name="name"
-                  value={infoForm.name}
-                  onChange={handleChange}
-                  required
-                />
-              </Form.Group>
-              <Form.Group controlId="date">
-                <Form.Label className="formquotes-form-label">
-                  Fecha de Nacimiento
-                </Form.Label>
-                <Form.Control
-                  type="date"
-                  name="date"
-                  value={infoForm.date}
-                  onChange={handleChange}
-                  required
-                />
-              </Form.Group>
-              <Form.Group controlId="cedula">
-                <Form.Label className="formquotes-form-label">
-                  Cédula
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Cédula"
-                  name="cedula"
-                  value={infoForm.cedula}
-                  onChange={handleChange}
-                  required
-                />
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group controlId="numTelef">
-                <Form.Label className="formquotes-form-label">
-                  Número de Teléfono
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Número de Teléfono"
-                  name="numTelef"
-                  value={infoForm.numTelef}
-                  onChange={handleChange}
-                  required
-                />
-              </Form.Group>
-              <Form.Group controlId="Tip_Diabe">
-                <Form.Label className="formquotes-form-label">
-                  Tipo de Diabetes
-                </Form.Label>
-                <Form.Select
-                  name="Tip_Diabe"
-                  value={infoForm.Tip_Diabe}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="--selelect">--Seleccionar--</option>
-                  <option value="Tipo 1">Tipo 1</option>
-                  <option value="Tipo 2">Tipo 2</option>
-                  <option value="Otro">Otro</option>
-                </Form.Select>
-              </Form.Group>
-              <Form.Group controlId="Tip_Diabe">
-                <Form.Label className="formquotes-form-label">
-                  Seleccione medico
-                </Form.Label>
-                <Form.Select
-                  name="doctor"
-                  value={infoForm.doctor}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="--selelect">--Seleccionar--</option>
-                  {doctors.map((doctor) => {
-                    return (
-                      <option value={JSON.stringify(doctor)}>
-                        {doctor.userName}
-                      </option>
-                    )
-                  })}
-                </Form.Select>
-              </Form.Group>
-              <Form.Group controlId="description">
-                <Form.Label className="formquotes-form-label col-mb3">
-                  Motivo de la Cita
-                </Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={4}
-                  name="description"
-                  value={infoForm.description}
-                  onChange={handleChange}
-                  placeholder="Ingrese el motivo aquí..."
-                />
-              </Form.Group>
-            </Col>
-          </Row>
-          <Modal.Footer className="formquotes-modal-footer">
+        <Modal.Body>
+          <form
+            onSubmit={formik.handleSubmit}
+            className="formquotes-modal-body"
+          >
+            <Row>
+              <Col>
+                {formFields.map((field) => (
+                  <>
+                    {field.type === 'time' || field.type === 'date' ? (
+                      <div style={{ textAlign: 'justify' }}>
+                        <label>{field.placeholder}:</label>
+                        <InputField
+                          key={field.id}
+                          id={field.id}
+                          type={field.type}
+                          placeholder={field.placeholder}
+                          value={formik.values[field.name]}
+                          name={field.name}
+                          handleChange={formik.handleChange}
+                          handleBlur={formik.handleBlur}
+                          touched={formik.touched[field.name]}
+                          error={formik.errors[field.name]}
+                          options={field.options}
+                          autocomplete="current-password"
+                        />
+                      </div>
+                    ) : (
+                      <InputField
+                        key={field.id}
+                        id={field.id}
+                        type={field.type}
+                        placeholder={field.placeholder}
+                        value={formik.values[field.name]}
+                        name={field.name}
+                        handleChange={
+                          field.name === 'dni'
+                            ? handleDNICheck
+                            : formik.handleChange
+                        }
+                        handleBlur={formik.handleBlur}
+                        touched={formik.touched[field.name]}
+                        error={formik.errors[field.name]}
+                        options={field.options}
+                        autocomplete="current-password"
+                      />
+                    )}
+                  </>
+                ))}
+              </Col>
+            </Row>
             <Button type="submit" className="formquotes-save-btn">
-              Crear Cita
+              {isLoadingCreate ? (
+                <FaSpinner className="spinner"></FaSpinner>
+              ) : (
+                'Crear cita'
+              )}
             </Button>
-          </Modal.Footer>
-        </Form>
+          </form>
+        </Modal.Body>
       </Modal>
     </Container>
   )

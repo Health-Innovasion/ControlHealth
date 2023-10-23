@@ -215,10 +215,20 @@ export const logout = () => {
   }
 }
 
-export const createAppointment = async (data) => {
+export const createAppointment = async (
+  data,
+  setIsLoadingCreate,
+  setIsFormModalOpen,
+  resetForm,
+) => {
+  setIsLoadingCreate(true)
   try {
     await addDoc(collection(db, 'quotes'), { data })
+    resetForm()
+    setIsFormModalOpen(false)
+    setIsLoadingCreate(false)
   } catch (error) {
+    setIsLoadingCreate(false)
     console.error('Error al crear la cita en Firebase', error)
     throw error
   }
@@ -228,15 +238,15 @@ export const combineData = (cita, uid) => {
   return {
     cita,
     uid,
-    status: 'En revisión'
+    status: 'En revisión',
   }
 }
 
-export const getCitas = (id, callback) => {
+export const getCitas = (id, setIsLoadingQuotes, callback) => {
+  setIsLoadingQuotes(true)
   try {
-
     const docRef = query(collection(db, 'quotes'), where('data.uid', '==', id))
-    
+
     return onSnapshot(docRef, (querySnapshot) => {
       const citas = []
 
@@ -248,34 +258,37 @@ export const getCitas = (id, callback) => {
       })
 
       callback(citas)
+      setIsLoadingQuotes(false)
     })
   } catch (error) {
+    setIsLoadingQuotes(false)
     console.error('Error al obtener los documentos:', error)
     throw error
   }
 }
 export const getCitasdr = (doctorId, callback) => {
   try {
-    const docRef = query(collection(db, 'quotes'),where('data.cita.doctor.id', '==', doctorId));
+    const docRef = query(
+      collection(db, 'quotes'),
+      where('data.cita.doctor.id', '==', doctorId),
+    )
 
     return onSnapshot(docRef, (querySnapshot) => {
-      const citas = [];
+      const citas = []
 
       querySnapshot.forEach((doc) => {
         citas.push({
           id: doc.id,
           data: doc.data(),
-        });
-      });
-
-      console.log(citas)
-      callback(citas);
-    });
+        })
+      })
+      callback(citas)
+    })
   } catch (error) {
-    console.error('Error al obtener los documentos:', error);
-    throw error;
+    console.error('Error al obtener los documentos:', error)
+    throw error
   }
-};
+}
 
 export const updateUserDataAndPhoto = async (currentUser, userData, file) => {
   try {

@@ -1,38 +1,8 @@
 import { FaSpinner } from 'react-icons/fa'
 import './UserRegister.css'
+import { InputField } from '../../Utils/functions'
 
-const InputField = ({
-  id,
-  type,
-  placeholder,
-  value,
-  name,
-  handleChange,
-  handleBlur,
-  touched,
-  error,
-}) => (
-  <div className="register-form-group">
-    <label htmlFor={id}></label>
-    <input
-      type={type}
-      className={`register-form-control ${
-        touched && error ? 'input-invalid' : ''
-      }`}
-      placeholder={placeholder}
-      id={id}
-      value={value}
-      name={name}
-      onChange={handleChange}
-      onBlur={handleBlur}
-    />
-    {touched && error && (
-      <div className="text-invalid">
-        <strong>{error}</strong>
-      </div>
-    )}
-  </div>
-)
+
 
 const UserRegister = ({
   isDoctor,
