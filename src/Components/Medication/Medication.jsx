@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { getMedications } from '../../redux/action/action'
+import { deleteDocument, getMedications } from '../../redux/action/action'
 import { useSelector } from 'react-redux'
 import pildora from '../../Assets/Images/Pildora.png'
 import editar from '../../Assets/Images/editar.svg'
@@ -20,6 +20,10 @@ const Medication = () => {
       unsubscribe()
     }
   }, [currentUser.uid])
+
+  const handledelete = async (id) => {
+    await deleteDocument('medications',id)
+   }
 
   return (
     <>
@@ -75,7 +79,7 @@ const Medication = () => {
 
                 <div className="botones">
                   <img src={editar} alt="" />
-                  <img src={borrar} alt="" />
+                  <img src={borrar} alt="icon-delete" onClick={()=> handledelete( medication.id)}/>
                 </div>
               </div>
             )
