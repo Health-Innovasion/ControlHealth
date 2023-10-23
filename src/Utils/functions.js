@@ -10,19 +10,14 @@ export const steps = (Review) => {
       id: '2',
       options: [
         {
-          value: 'Crear una cita con un especialista',
-          label: 'Crear una cita con un especialista',
-          trigger: '21',
+          value: 'Crear una cita con un diabetólogo',
+          label: 'Crear una cita con un diabetólogo',
+          trigger: '24',
         },
         {
           value: 'Realizar un pre diagnóstico',
           label: 'Realizar un pre diagnóstico',
           trigger: '3',
-        },
-        {
-          value: 'Crear una cita con un médico general',
-          label: 'Crear una cita con un médico general',
-          trigger: '6',
         },
       ],
     },
@@ -36,6 +31,15 @@ export const steps = (Review) => {
       id: 'name',
       user: true,
       trigger: '4',
+      validator: (value) => {
+        if (!value) {
+          return 'El nombre es obligatorio'
+        } else if (!isNaN(value)) {
+          return 'Nombre inválido'
+        }
+
+        return true
+      },
     },
 
     {
@@ -183,7 +187,13 @@ export const steps = (Review) => {
 
     {
       id: '23',
-      message: 'Bien, te presentamos tu expediente',
+      message:
+        'Ten en cuenta que esta evaluación se basa en mi algoritmo, y te recomiendo que solicites una consulta médica si deseas obtener una validación más precisa por parte de un profesional de la salud.',
+      trigger: '25',
+    },
+    {
+      id: '25',
+      message: 'Este es tu previo expediente y tu pre diagnóstico',
       trigger: 'review',
     },
     {
@@ -193,15 +203,8 @@ export const steps = (Review) => {
       trigger: '24',
     },
     {
-      id: '25',
-      component: <a href="/cita">Agenda tu cita aquí</a>,
-    },
-
-    {
       id: '24',
-      component: <a href="/cita">Pulsa aquí</a>,
-      trigger: 'review',
-      end: true,
+      component: <a href="/citas">Agenda tu cita aquí</a>,
     },
   ]
 }
@@ -220,7 +223,7 @@ export const InputField = ({
 }) => (
   <div className="register-form-group">
     <label htmlFor={id}></label>
-    {type === 'select' ? ( 
+    {type === 'select' ? (
       <select
         className={`register-form-control ${
           touched && error ? 'input-invalid' : ''

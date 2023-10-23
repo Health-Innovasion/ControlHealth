@@ -5,7 +5,6 @@ import { steps } from '../../Utils/functions'
 import './ChatBot.css'
 
 function Review(props) {
-
   const { steps } = props
 
   const {
@@ -22,30 +21,32 @@ function Review(props) {
   } = steps
 
   function calculatePercentage(state) {
-    // Valores de los parámetros (0 si no están definidos)
-    const {
-      diabetesPregnancy,
-      chronicDisease,
-      famililyMemberDiabetes,
-      anxietyWater,
-      frequentBathing,
-      loseWeight,
-    } = state
-
-    // Suma de puntos
-    const totalPoints =
-      (diabetesPregnancy ? 5 : 0) +
-      (chronicDisease ? 5 : 0) +
-      (famililyMemberDiabetes ? 5 : 0) +
-      (anxietyWater ? 5 : 0) +
-      (frequentBathing ? 5 : 0) +
-      (loseWeight ? 5 : 0)
-
-    // Porcentaje
-    const percentage = (totalPoints / 30) * 100 // 30 es la suma máxima posible (6 * 5)
-
-    return percentage.toFixed(2)
+  
+    // Definir un objeto con los puntos asociados a cada pregunta
+    const points = {
+      diabetesPregnancy: 5,
+      chronicDisease: 5,
+      famililyMemberDiabetes: 5,
+      anxietyWater: 5,
+      frequentBathing: 5,
+      loseWeight: 5,
+    };
+  
+    // Calcular el total de puntos sumando los puntos de las respuestas afirmativas
+    const totalPoints = Object.keys(points).reduce((sum, key) => {
+      if (state[key] && state[key].value === 'Sí') {
+        return sum + points[key];
+      }
+      return sum;
+    }, 0);
+  
+    // Calcular el porcentaje
+    const maximumPoints = Object.values(points).reduce((sum, value) => sum + value, 0);
+    const percentage = (totalPoints / maximumPoints) * 100;
+  
+    return percentage.toFixed(2);
   }
+  
 
   return (
     <div style={{ width: '100%' }}>
@@ -107,11 +108,10 @@ function Review(props) {
       </tr>
       <hr />
       <tr className="resultado">
-        <td>Resultado:</td>
         <td>
-          <p className='result-diagnostic'>
-            En base a tus síntomas, presentas el {calculatePercentage(steps)}%
-            de padecer de diabetes
+          <p className="result-diagnostic">
+          Resultado: En base a tus respuestas, presentas el {calculatePercentage(steps)}%
+            de padecer diabetes.
           </p>
         </td>
       </tr>
