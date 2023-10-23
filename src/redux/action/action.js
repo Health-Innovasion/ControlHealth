@@ -352,8 +352,7 @@ export const deleteDocument = async (collectionName, id) => {
 
 export const createMedication = async (data) => {
   try {
-    const infomedicamento = await addDoc(collection(db, 'medications'), { data });
-    console.log(infomedicamento)
+    await addDoc(collection(db, 'medications'), { data });
   } catch (error) {
     console.error('Error al crear la medicación en Firebase', error);
     throw error;

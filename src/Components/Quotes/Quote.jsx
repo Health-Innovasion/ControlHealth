@@ -97,7 +97,7 @@ const Quote = () => {
 
                 <div className="botones">
                   <img src={editar} alt="" />
-                  <img src={borrar} alt="icon-borrar" onClick={() => handledelete(cita.id)}/>
+                  <img src={borrar} alt="icon-borrar" onClick={() => handledelete(cita?.id)}/>
                 </div>
               </div>
             )
