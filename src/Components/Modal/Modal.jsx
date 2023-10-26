@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Modal.css';
-
-function formatDate(date) {
-  const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-  return new Date(date).toLocaleDateString('es-ES', options);
-}
+import { formatearFecha } from '../../Utils/FormatFecha';
+import { statusQuotes } from '../../Utils/constants';
+import { actualizarCita } from '../../redux/action/DoctorAction';
 
 const Modal = ({ event, onClose }) => {
+  const [valueSelected, setValueSelected] = useState('');
+
+  const handleUpdateQuotes = (param) => {
+    actualizarCita(event.uid, param, true)
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((error) => {
+        console.error("Error al actualizar la cita:", error);
+      });
+  };
+
   return (
     <div className="modal-component">
       <div className="modal-content-component">
@@ -14,8 +24,25 @@ const Modal = ({ event, onClose }) => {
         <p>Título: {event.title}</p>
         <p>Tipo de diabetes: {event.Tip_Diabe}</p>
         <p>Descripcion: {event.description}</p>
-        <p>Fecha de inicio: {formatDate(event.start)}</p>
-        <p>Fecha de finalización: {formatDate(event.end)}</p>
+        <p>Fecha de inicio: {formatearFecha(event.start)}</p>
+        <div>
+          <label htmlFor="statusSelect">Selecciona un estado:</label>
+          <select
+            id="statusSelect"
+            onChange={(e) => {
+              const selectedValue = e.target.value;
+              setValueSelected(selectedValue);
+              handleUpdateQuotes(selectedValue);
+            }}
+            value={valueSelected}
+          >
+            {Object.values(statusQuotes).map((value, index) => (
+              <option key={index} value={value}>
+                {value}
+              </option>
+            ))}
+          </select>
+        </div>
         <button onClick={onClose}>Cerrar</button>
       </div>
     </div>

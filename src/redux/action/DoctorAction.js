@@ -3,7 +3,15 @@ import {
   COMPLETED_GET_DOCTORS,
   FAILED_COMPLETED_GET_DOCTORS,
 } from '../const/const'
-import { getDocs, collection, query, where } from 'firebase/firestore'
+import {
+  doc,
+  collection,
+  query,
+  where,
+  updateDoc,
+  getDocs,
+  getDoc
+} from 'firebase/firestore'
 import { db } from '../../firebase_config'
 import { statusApplication, typeUsers } from '../../Utils/constants'
 
@@ -50,3 +58,30 @@ export const GetDoctors = () => {
     }
   }
 }
+
+export const actualizarCita = async (citaId, nuevaFecha, cambiarEstado=false) => {
+  try {
+    const citaRef = doc(db, 'quotes', citaId);
+    const citaSnapshot = await getDoc(citaRef);
+
+    if (citaSnapshot.exists()) {
+      const actualizaciones = {};
+
+      if (cambiarEstado) {
+        actualizaciones['data.status'] = nuevaFecha;
+      } else {
+        actualizaciones['data.cita.date'] = nuevaFecha.toISOString();
+      }
+
+      await updateDoc(citaRef, actualizaciones);
+
+      return 'Cita actualizada exitosamente';
+    } else {
+      console.error('El documento de la cita no existe.');
+      return 'La cita no existe';
+    }
+  } catch (error) {
+    console.error('Error al actualizar la cita:', error);
+    throw error;
+  }
+};
