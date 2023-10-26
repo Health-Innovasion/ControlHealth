@@ -387,3 +387,4 @@ export const getMedications = (id, callback) => {
     throw error;
   }
 }
+
