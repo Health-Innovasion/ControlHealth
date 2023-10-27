@@ -28,19 +28,19 @@ export const DietData = [
       description: 'Platillos saludables para el almuerzo.',
       items: [
         {
-          name: 'Platillo 1 del almuerzo',
+          name: 'Salmón con espinaca',
           preparation: 'Preparación detallada del Platillo 1 del almuerzo.',
-          image: 'https://i.imgur.com/JSh4nPF.png',
+          image: 'https://i.imgur.com/elriYQ2.png',
         },
         {
-          name: 'Platillo 2 del almuerzo',
+          name: 'Pescado Empanizado con Almendras',
           preparation: 'Preparación detallada del Platillo 2 del almuerzo.',
-          image: 'https://i.imgur.com/JSh4nPF.png',
+          image: 'https://i.imgur.com/MImVTXO.png',
         },
         {
-          name: 'Platillo 3 del almuerzo',
+          name: 'Tacos de Lechuga con Pollo',
           preparation: 'Preparación detallada del Platillo 3 del almuerzo.',
-          image: 'https://i.imgur.com/JSh4nPF.png',
+          image: 'https://i.imgur.com/LzdTJ5m.png',
         },
       ],
     },
@@ -50,9 +50,9 @@ export const DietData = [
       description: 'Platillos saludables para la cena.',
       items: [
         {
-          name: 'Platillo 1 de la cena',
+          name: 'Baba Ganoush',
           preparation: 'Preparación detallada del Platillo 1 de la cena.',
-          image: 'https://i.imgur.com/JSh4nPF.png',
+          image: 'https://i.imgur.com/0Nl2NzS.png',
         },
         {
           name: 'Platillo 2 de la cena',

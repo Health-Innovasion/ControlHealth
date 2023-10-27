@@ -79,23 +79,14 @@ const logoutFailed = (error) => ({
 })
 
 export const registerInitiate = (
-  nombre,
-  apellido,
-  email,
-  password,
-  isDoctor,
-  resetForm,
-  setSelectedFile,
-  setisLoadingRegister,
-  SweetAlertComponent,
+  nombre,apellido,email,password,isDoctor,resetForm,
+  setSelectedFile,setisLoadingRegister,SweetAlertComponent,
 ) => {
   return async (dispatch) => {
     dispatch(registerUser())
     try {
       const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password,
+        auth,email,password,
       )
 
       const user = userCredential.user
