@@ -9,47 +9,35 @@ const Home = () => {
 
     const data = [
         {
-            name: 'Page A',
-            uv: 4000,
-            pv: 2400,
-            amt: 2400,
+            Departamento: 'Chontales',
+            tipo_1: 40,
+            tipo_2: 25,
+        },{
+            Departamento: 'Managua',
+            tipo_1: 40,
+            tipo_2: 25,
+        },{
+            Departamento: 'Leon',
+            tipo_1: 25,
+            tipo_2: 30,
+        },{
+            Departamento: 'Granada',
+            tipo_1: 25,
+            tipo_2: 50,
+        },{
+            Departamento: 'Masaya',
+            tipo_1: 85,
+            tipo_2: 25,
+        },{
+            Departamento: 'Esteli',
+            tipo_1: 25,
+            tipo_2: 25,
+        },{
+            Departamento: 'Matagalpa',
+            tipo_1: 60,
+            tipo_2: 100,
         },
-        {
-            name: 'Page B',
-            uv: 3000,
-            pv: 1398,
-            amt: 2210,
-        },
-        {
-            name: 'Page C',
-            uv: 2000,
-            pv: 9800,
-            amt: 2290,
-        },
-        {
-            name: 'Page D',
-            uv: 2780,
-            pv: 3908,
-            amt: 2000,
-        },
-        {
-            name: 'Page E',
-            uv: 1890,
-            pv: 4800,
-            amt: 2181,
-        },
-        {
-            name: 'Page F',
-            uv: 2390,
-            pv: 3800,
-            amt: 2500,
-        },
-        {
-            name: 'Page G',
-            uv: 3490,
-            pv: 4300,
-            amt: 2100,
-        },
+       
     ];
 
     return (
@@ -96,12 +84,12 @@ const Home = () => {
                         }}
                     >
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
+                        <XAxis dataKey="Departamento" />
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
-                        <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+                        <Line type="monotone" dataKey="tipo_1" stroke="#8884d8" activeDot={{ r: 8 }} />
+                        <Line type="monotone" dataKey="tipo_2" stroke="#82ca9d" />
                     </LineChart>
                 </ResponsiveContainer>
 
@@ -118,12 +106,12 @@ const Home = () => {
                         }}
                     >
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
+                        <XAxis dataKey="Departamento" />
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Bar dataKey="pv" fill="#8884d8" />
-                        <Bar dataKey="uv" fill="#82ca9d" />
+                        <Bar dataKey="tipo_1" fill="#8884d8" />
+                        <Bar dataKey="tipo_2" fill="#474a48" />
                     </BarChart>
                 </ResponsiveContainer>
             </div>

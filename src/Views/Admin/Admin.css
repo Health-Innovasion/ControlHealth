@@ -11,7 +11,8 @@
 }
 .main-cards {
     display: flex;
-    flex-direction: row;
+    justify-content: space-between;
+    gap: 15px;
 }
 
 .card-admin {
@@ -22,6 +23,7 @@
     border-radius: 5px;
     min-height: 200px; 
     max-height: 300px; 
+    width: 100%;
 }
 .card-admin:first-child{
     background-color: rgb(138, 123, 123);
