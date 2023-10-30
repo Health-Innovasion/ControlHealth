@@ -5,11 +5,11 @@ export const ExerciseData = [
     description: 'Rutinas de ejercicio para fortalecer tus piernas.',
     items: [
       {
-        name: 'Sentadillas',
+        name: 'Full Body Prinicpiantes',
         description:
           'Las sentadillas son un excelente ejercicio para fortalecer tus piernas y glúteos. Asegúrate de mantener una buena forma.',
-        image: 'https://i.imgur.com/0ZNovUx.png',
-        videoUrl: 'https://www.youtube.com/watch?v=lKc39ogHlDc',
+        image: 'https://i.imgur.com/9Pi1z35.png',
+        videoUrl: 'hhttps://www.youtube.com/watch?v=q9b9afJ-GnA',
       },
     ],
   },
@@ -22,7 +22,7 @@ export const ExerciseData = [
         name: 'Flexiones de brazos',
         description:
           'Las flexiones de brazos son ideales para fortalecer los músculos del pecho y los tríceps.',
-        image: 'https://i.imgur.com/0ZNovUx.png',
+        image: 'https://i.imgur.com/oLpKpHm.png',
         videoUrl: 'https://www.youtube.com/watch?v=lKc39ogHlDc',
       },
     ],
@@ -33,11 +33,11 @@ export const ExerciseData = [
     description: 'Rutinas de ejercicio para fortalecer la espalda y mejorar la postura.',
     items: [
       {
-        name: 'Pull-ups',
+        name: 'Full Body Avanzado',
         description:
           'Las pull-ups son ideales para trabajar los músculos de la espalda y los brazos.',
-        image: 'https://i.imgur.com/0ZNovUx.png',
-        videoUrl: 'https://www.youtube.com/watch?v=lKc39ogHlDc',
+        image: 'https://i.imgur.com/oLpKpHm.png',
+        videoUrl: 'https://www.youtube.com/watch?v=BsXYSlOBMZg',
       },
     ],
   },
