@@ -1,45 +1,29 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaUser } from 'react-icons/fa';
 import { FaUserDoctor } from 'react-icons/fa6';
 import { BiAccessibility } from "react-icons/bi";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,BarChart, Bar } from 'recharts';
+import { dataUser } from '../../redux/action/DoctorAction';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, Cell, LabelList } from 'recharts';
+
 
 
 const Home = () => {
 
-    const data = [
-        {
-            Departamento: 'Chontales',
-            tipo_1: 40,
-            tipo_2: 25,
-        },{
-            Departamento: 'Managua',
-            tipo_1: 40,
-            tipo_2: 25,
-        },{
-            Departamento: 'Leon',
-            tipo_1: 25,
-            tipo_2: 30,
-        },{
-            Departamento: 'Granada',
-            tipo_1: 25,
-            tipo_2: 50,
-        },{
-            Departamento: 'Masaya',
-            tipo_1: 85,
-            tipo_2: 25,
-        },{
-            Departamento: 'Esteli',
-            tipo_1: 25,
-            tipo_2: 25,
-        },{
-            Departamento: 'Matagalpa',
-            tipo_1: 60,
-            tipo_2: 100,
-        },
-       
-    ];
+    const [data, setData] = useState([])
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const dataArray = await dataUser();
+                setData(dataArray)
+            } catch (error) {
+                console.error('Error al obtener los datos:', error);
+            }
+        }
+        fetchData();
+    }, []);
+
+    console.log(data)
     return (
         <main className='main-container'>
             <div className='main-title'>
@@ -84,13 +68,19 @@ const Home = () => {
                         }}
                     >
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="Departamento" />
+                        <XAxis dataKey="departamento" />
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Line type="monotone" dataKey="tipo_1" stroke="#8884d8" activeDot={{ r: 8 }} />
-                        <Line type="monotone" dataKey="tipo_2" stroke="#82ca9d" />
+                        <Line type="monotone" dataKey="tipo_1" stroke="#8884d8" activeDot={{ r: 8 }}>
+                            <LabelList dataKey="tipo_1" position="top" />
+                        </Line>
+                        <Line type="monotone" dataKey="tipo_2" stroke="#82ca9d">
+                            <LabelList dataKey="tipo_2" position="top" />
+                        </Line>
                     </LineChart>
+
+
                 </ResponsiveContainer>
 
                 <ResponsiveContainer width="100%" height="100%">
@@ -106,13 +96,26 @@ const Home = () => {
                         }}
                     >
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="Departamento" />
+                        <XAxis dataKey="departamento" />
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Bar dataKey="tipo_1" fill="#8884d8" />
-                        <Bar dataKey="tipo_2" fill="#474a48" />
+                        <Bar dataKey="tipo_1" fill="#4843b0">
+                            {
+                                data.map((entry, index) => (
+                                    <Cell key={`cell-${index}`} position="top" value={entry.tipo_1} />
+                                ))
+                            }
+                        </Bar>
+                        <Bar dataKey="tipo_2" fill="#474a48">
+                            {
+                                data.map((entry, index) => (
+                                    <Cell key={`cell-${index}`} position="top" value={entry.tipo_2} />
+                                ))
+                            }
+                        </Bar>
                     </BarChart>
+
                 </ResponsiveContainer>
             </div>
 
