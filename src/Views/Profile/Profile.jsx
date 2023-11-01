@@ -3,7 +3,7 @@ import './Profile.css'
 import { FaEdit,FaSave } from 'react-icons/fa';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
 import { updateUserDataAndPhoto } from '../../redux/action/action';
-
+import { Bot } from '../../Components/ChatBot/Bot'
 
 function Profile() {
 
@@ -166,6 +166,7 @@ function Profile() {
           </div>
         </div>
       </div>
+      <Bot />
     </div>
   );
 }

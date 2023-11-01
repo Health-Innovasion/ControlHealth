@@ -6,6 +6,7 @@ import CardDieta from '../../Components/Card/CardDieta';
 import { DietData } from '../../Utils/DietData';
 import { ExerciseData } from '../../Utils/routines';
 import '.././Home/Home.css'
+import { Bot } from '../../Components/ChatBot/Bot'
 // import { Card } from 'react-bootstrap';
 // import background from '../../Assets/Images/background.png'
 
@@ -97,6 +98,7 @@ function Home() {
             /> 
           </div>
         </div> */}
+        <Bot />
     </div>
   );
 }
