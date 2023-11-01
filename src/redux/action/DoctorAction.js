@@ -59,7 +59,7 @@ export const GetDoctors = () => {
   }
 }
 
-export const actualizarCita = async (citaId, nuevaFecha, cambiarEstado=false) => {
+export const actualizarCita = async (citaId, nuevaFecha, cambiarEstado = false) => {
   try {
     const citaRef = doc(db, 'quotes', citaId);
     const citaSnapshot = await getDoc(citaRef);
@@ -85,3 +85,44 @@ export const actualizarCita = async (citaId, nuevaFecha, cambiarEstado=false) =>
     throw error;
   }
 };
+
+
+export const dataUser = async () => {
+  const usuariosCollection = collection(db, 'users');
+
+  // Crea un objeto para almacenar la estructura de datos
+  const data = {};
+
+  try {
+    const querySnapshot = await getDocs(usuariosCollection);
+
+    querySnapshot.forEach((doc) => {
+      const usuarioData = doc.data();
+      const departamento = usuarioData.departamento;
+      //TODO: HACER QUE EN LAS CONFIGURACIONDE DEL PERFIL APARESCAN LOS NOMBRES DE LOS DEPARTAMENTO EN MINUSCULAS Y CON LA PROPIEDAD departamento
+      // Verifica si el campo "departamento" es válido antes de continuar
+      if (departamento !== undefined) {
+        const tipo_1 = usuarioData.diabetes === 'tipo_1' ? 1 : 0;
+        const tipo_2 = usuarioData.diabetes === 'tipo_2' ? 1 : 0;
+
+        if (!data[departamento]) {
+          data[departamento] = {
+            departamento,
+            tipo_1: 0,
+            tipo_2: 0,
+          };
+        }
+
+        data[departamento].tipo_1 += tipo_1;
+        data[departamento].tipo_2 += tipo_2;
+      }
+    });
+
+    const dataArray = Object.values(data);
+    return dataArray; // Devuelve el array de objetos
+  } catch (error) {
+    console.error('Error al obtener los datos de usuarios:', error);
+    throw error; // Lanza el error si ocurre uno
+  }
+}
+
