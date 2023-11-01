@@ -4,11 +4,12 @@ import { FaUserDoctor } from 'react-icons/fa6';
 import { BiAccessibility } from "react-icons/bi";
 import { dataUser } from '../../redux/action/DoctorAction';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, Cell, LabelList } from 'recharts';
-
+import {  useSelector } from 'react-redux/es/hooks/useSelector';
 
 
 const Home = () => {
 
+    const {doctors} = useSelector((state) => state.doctors)
     const [data, setData] = useState([])
 
     useEffect(() => {
@@ -23,7 +24,7 @@ const Home = () => {
         fetchData();
     }, []);
 
-    console.log(data)
+    console.log(doctors)
     return (
         <main className='main-container'>
             <div className='main-title'>
