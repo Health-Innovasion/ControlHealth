@@ -1,58 +1,168 @@
-/* Home.css */
-.home-container {
-    font-family: Arial, sans-serif;
-    color: #333;
-    padding: 20px;
-  }
-  
-  .carousel-container {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  .carousel .slide img {
-    max-width: 100%;
-    height: auto;
-  }
-  
-  .diabetes-info {
-    background-color: #b7d2dd;
-    color: white;
-    border-radius: 5px;
-    padding: 20px;
-    margin: 20px 0;
-  }
-  
-  .features-section {
-    margin-top: 30px;
-  }
-  
-  .features-section h2 {
-    color: #3e98b9;
-  }
-  
-  .features-section ul {
-    list-style-type: disc;
-    padding-left: 20px;
+  /* Home.css */
+  .home-container {
+      font-family: Arial, sans-serif;
+      color: #333;
+      padding: 20px;
+      display: flex;
+      min-height: 100vh;
+    }
+    
+    .container-cardshome {
+      display: flex; /* Utiliza flexbox para alinear elementos */
+      flex-direction: column; /* Alinea los elementos verticalmente */
+      justify-content: center; /* Centra verticalmente los elementos */
+      align-items: center; /* Centra horizontalmente los elementos */
+      overflow: hidden; /* Cambia a overflow: auto */
+    }
+    
+    .diabetes-info {
+      background-color: #b7d2dd;
+      color: white;
+      border-radius: 5px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    
+    .features-section {
+      margin-top: 30px;
+    }
+    
+    .features-section h2 {
+      color: #3e98b9;
+    }
+    
+    .features-section ul {
+      list-style-type: disc;
+      padding-left: 20px;
+    }
+
+    .home{
+      padding-right: 15px;
+      margin: 11px;
+    }
+    /* Card Info */
+    .titulodiabetes{
+      text-align: center;
+    }
+    .diabetes-info {
+      background-color: #ffffff;
+      color: white;
+      border-radius: 5px;
+      padding: 20px;
+      margin: 20px 0;
+      display: flex;
+      flex-direction: column; /* Alinea los elementos verticalmente */
+      justify-content: center; /* Centra horizontalmente las tarjetas */
+      align-items: center; /* Centra verticalmente las tarjetas */
   }
 
-  .carousel-container {
-    max-width: 800px;
-    margin: 0 auto;
-    overflow: hidden; /* Oculta contenido que exceda el contenedor */
-  }
-  
-  .carousel .slide img {
-    max-width: 100%;
-    height: auto;
-    object-fit: cover; /* Ajusta la imagen para llenar el contenedor */
-    border-radius: 10px; /* Añade bordes redondeados a las imágenes */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Agrega una sombra suave */
+  .card-info {
+    max-width: 80%;
+    margin: 10px; /* Margen entre tarjetas */
+    border: 1px solid #ccc; /* Borde de las tarjetas */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra de las tarjetas */
+    background-color: none;
   }
 
-  .home{
-    padding-right: 15px;
-    margin: 11px;
+  .card-info .card-body {
+    padding: 1rem; /* Espaciado interno del cuerpo de la tarjeta */
   }
-  /* ...otros estilos... */
+
+  .card-info .card-title {
+    font-size: 1.25rem; /* Tamaño del título */
+    font-weight: bold; /* Peso de fuente en negrita */
+  }
+
+  .card-info .card-text {
+    font-size: 1rem; /* Tamaño del texto de la tarjeta */
+  }
+
+  .card-info .d-flex {
+    align-items: center; /* Alinea verticalmente la imagen y el contenido */
+  }
+
+  /* Agrega estos estilos al archivo CSS de tu proyecto */
+  .horizontal-scroll {
+    max-width: 80%;
+    overflow-x: auto;
+    white-space: nowrap;
+    text-align: center;
+    justify-content: center;
+    /* Agrega estas propiedades para ocultar el scroll vertical */
+    overflow-y: hidden;
+    height: auto; /* Esto permite que la altura se ajuste automáticamente */
+  }
+  
+  .horizontal-scroll .card {
+    display: inline-block; /* Hace que las tarjetas se muestren en línea horizontalmente */
+    margin-right: 10px; /* Espacio entre las tarjetas */
+    max-width: 500px;
+  }
+
+
+  @media (max-width: 767px) {
+    .diabetes-info {
+      background-color: #ffffff;
+    }
+  
+    .card-info .d-flex {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .card-info .card-body {
+      padding: 1rem;
+      text-align: center;
+    }
+  
+    .card-info .card-title {
+      font-size: 1rem; /* Ajusta el tamaño de fuente de los títulos a 1rem (puedes cambiar el valor según tus preferencias) */
+      font-weight: bold;
+    }
+  
+    .card-info .card-text {
+      font-size: 1rem;
+    }
+  
+    .card-info {
+      max-width: 100%;
+      margin: 10px; /* Margen entre tarjetas */
+      border: 1px solid #ccc; /* Borde de las tarjetas */
+      border-radius: 8px; /* Bordes redondeados */
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra de las tarjetas */
+      background-color: none;
+    }
+    /* Agrega margen entre las secciones de dietas y ejercicios */
+    .diet-section {
+      margin-bottom: 20px;
+    }
+  
+    .exercise-section {
+      margin-bottom: 20px;
+    }
+  
+    .container-cardshome {
+      display: block; /* Utiliza flexbox para alinear elementos */
+      flex-direction: column; /* Alinea los elementos verticalmente */
+      justify-content: center; /* Centra verticalmente los elementos */
+      align-items: center; /* Centra horizontalmente los elementos */
+    }
+    .horizontal-scroll {
+      max-width: 200%;
+      overflow-x: auto;
+      white-space: nowrap;
+      text-align: center;
+      justify-content: center;
+    }
+  
+    .horizontal-scroll .card {
+      display: inline-block;
+      margin-right: 10px;
+      max-width: 200px;
+      text-align: left;
+      align-items: center;
+      justify-content: center;
+    }
+  }
   
