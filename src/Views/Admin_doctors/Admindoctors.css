@@ -1,0 +1,27 @@
+/* Estilo para hacer la tabla centrada y responsive */
+.container{
+   margin-top: 20px;
+  }
+  
+  /* Establece el ancho al 90% de la pantalla */
+  .table-responsive {
+    width: 90%;
+    overflow-x: auto;
+  }
+  
+  /* Estilo para filas alternas resaltadas */
+  .table-striped tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
+  }
+  
+  /* Estilo para el encabezado de la tabla */
+  .table thead th {
+    background-color: #343a40;
+    color: white;
+  }
+  
+  /* Estilo para el texto en celdas */
+  .table tbody td {
+    text-align: left;
+  }
+  

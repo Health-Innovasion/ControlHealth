@@ -17,6 +17,7 @@ import { typeUsers } from './Utils/constants'
 import ScreenChat from './Views/ScreenChat/ScreenChat'
 import ProtectedRouteMedico from './Utils/ProtectedRouteMedico'
 import CitasDr from './Views/CitasDr/CitasDr'
+import Admindoctors from './Views/Admin_doctors/Admindoctors'
 
 function App() {
   const { currentUser } = useSelector((state) => state.user);
@@ -27,6 +28,7 @@ function App() {
         <Route path="/login" exact component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/admin" component={Admin} />
+        <Route path="/admindoctors" component={Admindoctors} />
 
         {currentUser && currentUser?.typeUser === typeUsers.doctor ? (
           <React.Fragment>
