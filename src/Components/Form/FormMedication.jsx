@@ -3,7 +3,9 @@ import { useSelector } from 'react-redux';
 import { Container, Form, Button, Modal } from 'react-bootstrap';
 import { IoIosAddCircle, IoIosCloseCircle } from 'react-icons/io';
 import { combineMedicationData, createMedication } from '../../redux/action/action';
-import './FormMedication.css'; // Asegúrate de que este archivo contenga tus estilos CSS
+import './FormMedication.css';
+import Swal from 'sweetalert';
+import tonoMensaje from '../../Assets/tono-mensaje-3-.mp3';
 
 const FormMedication = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -41,6 +43,23 @@ const FormMedication = () => {
       fechadeinicio: '',
       hora: '',
     });
+
+    // Cierra el modal después de agregar
+    closeFormModal();
+
+    // Muestra una notificación de éxito con SweetAlert
+    Swal({
+      title: 'Medicamento agregado',
+      text: 'La medicación ha sido agregada con éxito.',
+      customClass: {
+        title: 'small-title',
+        content: 'small-content',
+        confirmButton: 'small-button',
+      },
+    });
+
+    // Programa la notificación en la hora especificada
+    scheduleNotification(infoForm);
   };
 
   const handleChange = (e) => {
@@ -48,14 +67,48 @@ const FormMedication = () => {
     setInfoForm({ ...infoForm, [name]: value });
   };
 
+  const playNotificationSound = () => {
+    const audio = new Audio(tonoMensaje);
+    audio.play();
+  };
+
+  const scheduleNotification = (medicationData) => {
+    const { nombreMedicamento, hora } = medicationData;
+    const [hour, minute] = hora.split(':');
+    const now = new Date();
+    const notificationTime = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate(),
+      parseInt(hour),
+      parseInt(minute)
+    );
+
+    if (notificationTime > now) {
+      setTimeout(() => {
+        Swal({
+          title: 'Recordatorio',
+          text: `Es hora de tomar ${nombreMedicamento}`,
+          customClass: {
+            title: 'small-title',
+            content: 'small-content',
+            confirmButton: 'small-button',
+          },
+        });
+
+        // Reproduce el sonido de notificación
+        playNotificationSound();
+      }, notificationTime - now);
+    }
+  };
+
   return (
     <Container className="formedication-container">
       <div className="formmedication-title">
-      <h1 >Medicación</h1>
-      <IoIosAddCircle className="formmedication-icon-add" onClick={openFormModal} />
+        <h1>Medicación</h1>
+        <IoIosAddCircle className="formmedication-icon-add" onClick={openFormModal} />
       </div>
 
-      
       <Modal
         className="formedication-modal-container"
         show={isFormModalOpen}

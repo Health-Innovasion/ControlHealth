@@ -24,6 +24,12 @@ const Medication = () => {
     await deleteDocument('medications', id);
   };
 
+  // Función para formatear la hora en un formato más natural con AM/PM
+  const formatHour = (hour) => {
+    const options = { hour: 'numeric', minute: 'numeric', hour12: true };
+    return new Date(`2000-01-01T${hour}`).toLocaleTimeString([], options);
+  };
+
   return (
     <div className="medication-container">
       {medications.length > 0 ? (
@@ -60,7 +66,7 @@ const Medication = () => {
 
               <div className="col-quote">
                 <span className="title-quote">Hora:</span>
-                <span>{medicationData.hora}</span>
+                <span>{formatHour(medicationData.hora)}</span>
               </div>
 
               <div className="botones">

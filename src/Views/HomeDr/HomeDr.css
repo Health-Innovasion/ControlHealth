@@ -11,7 +11,7 @@
   justify-content: center;
   height: 100vh;
   text-align: center;
-  margin-top: -60px;
+  margin-top: -61px;
 }
 .titulo{
   text-align: center;
@@ -63,7 +63,7 @@
 
 
 .logo-doctor {
-  max-width: 80px;
+  max-width: 10%;
   height: auto;
   position: absolute; /* Cambia a absolute */
   top: 50%; /* Coloca el logo en el centro verticalmente */

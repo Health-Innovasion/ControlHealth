@@ -23,7 +23,7 @@ const Admindoctors = () => {
 
 
             <Navbar />
-            <div className="container">
+            <div className="container-admin">
                 <div className="row">
                     <div className="col">
                         <table className="table table-responsive-md table-striped">
