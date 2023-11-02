@@ -126,3 +126,31 @@ export const dataUser = async () => {
   }
 }
 
+export const GetDoctorsAdmin = async () => {
+
+  const doctorsCollectionRef = collection(db, 'users')
+  
+  const doctorsData = []
+    
+  try {
+    // Crear una consulta que filtra los usuarios
+    const querySnapshot = await getDocs(
+      query(
+        doctorsCollectionRef,
+        where('typeUser', '==', typeUsers.doctor)
+      ),
+    )
+
+    querySnapshot.docs.forEach((doc) => {
+      const doctorData = doc.data()
+      const doctorId = doc.id
+      doctorsData.push({ id: doctorId, ...doctorData })
+    })
+
+    return doctorsData
+  } catch (error) {
+    console.error('Error:', error.code, error.message)
+    
+  }
+
+}
