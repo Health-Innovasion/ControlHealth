@@ -1,5 +1,4 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React,{useEffect,useState} from 'react'
 import Navbar from '../../Components/NavBar/Navbar'
 import { statusQuotes } from '../../Utils/constants'
 import './Admindoctors.css'
