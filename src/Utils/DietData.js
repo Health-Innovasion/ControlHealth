@@ -55,14 +55,14 @@ export const DietData = [
           image: 'https://i.imgur.com/0Nl2NzS.png',
         },
         {
-          name: 'Platillo 2 de la cena',
+          name: 'Ensalada de Pollo',
           preparation: 'Preparación detallada del Platillo 2 de la cena.',
-          image: 'https://i.imgur.com/JSh4nPF.png',
+          image: 'https://i.imgur.com/6ikB37Q.png',
         },
         {
-          name: 'Platillo 3 de la cena',
+          name: 'Pollo con Vegetales',
           preparation: 'Preparación detallada del Platillo 3 de la cena.',
-          image: 'https://i.imgur.com/JSh4nPF.png',
+          image: 'https://i.imgur.com/AGASNWw.png',
         },
       ],
     },

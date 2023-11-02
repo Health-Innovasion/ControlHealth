@@ -110,12 +110,12 @@ span {
 }
 
 .navbar-logo {
-  max-width: 80px;
+  max-width: 120px;
   height: auto;
   position: absolute; /* Cambia a absolute */
   top: 50%; /* Coloca el logo en el centro verticalmente */
   transform: translateY(-50%); /* Centra verticalmente */
-  left: 85px; /* Ajusta la posición izquierda */
+  left: 60px; /* Ajusta la posición izquierda */
   color: #000; /* Cambiamos el color del icono a negro */
 }
 

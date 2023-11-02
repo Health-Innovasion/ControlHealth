@@ -1,14 +1,16 @@
-import React, { useState} from 'react'
-import { useSelector } from 'react-redux'
-import { Container, Form,Button, Modal } from 'react-bootstrap'
-import { IoIosAddCircle, IoIosCloseCircle } from 'react-icons/io'
-import {combineMedicationData, createMedication } from '../../redux/action/action'
-import './Form.css' // Asegúrate de que este archivo contenga tus estilos CSS
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Container, Form, Button, Modal } from 'react-bootstrap';
+import { IoIosAddCircle, IoIosCloseCircle } from 'react-icons/io';
+import { combineMedicationData, createMedication } from '../../redux/action/action';
+import './FormMedication.css';
+import Swal from 'sweetalert';
+import tonoMensaje from '../../Assets/tono-mensaje-3-.mp3';
 
 const FormMedication = () => {
-  const { currentUser } = useSelector((state) => state.user)
+  const { currentUser } = useSelector((state) => state.user);
 
-  const [isFormModalOpen, setIsFormModalOpen] = useState(false)
+  const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [infoForm, setInfoForm] = useState({
     nombreMedicamento: '',
     dosificacion: '',
@@ -16,55 +18,109 @@ const FormMedication = () => {
     tomasDelDia: '',
     fechadeinicio: '',
     hora: '',
-  })
+  });
 
   const openFormModal = () => {
-    setIsFormModalOpen(true)
-  }
+    setIsFormModalOpen(true);
+  };
 
   const closeFormModal = () => {
-    setIsFormModalOpen(false)
-  }
+    setIsFormModalOpen(false);
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const data = combineMedicationData(infoForm, currentUser.uid)
+    const data = combineMedicationData(infoForm, currentUser.uid);
 
-    await createMedication(data)
+    await createMedication(data);
 
     setInfoForm({
-        nombreMedicamento: '',
-        dosificacion: '',
-        unidades: '',
-        tomasDelDia: '',
-        fechadeinicio: '',
-        hora: '',
-    })
+      nombreMedicamento: '',
+      dosificacion: '',
+      unidades: '',
+      tomasDelDia: '',
+      fechadeinicio: '',
+      hora: '',
+    });
 
-  }
+    // Cierra el modal después de agregar
+    closeFormModal();
+
+    // Muestra una notificación de éxito con SweetAlert
+    Swal({
+      title: 'Medicamento agregado',
+      text: 'La medicación ha sido agregada con éxito.',
+      customClass: {
+        title: 'small-title',
+        content: 'small-content',
+        confirmButton: 'small-button',
+      },
+    });
+
+    // Programa la notificación en la hora especificada
+    scheduleNotification(infoForm);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInfoForm({ ...infoForm, [name]: value });
   };
 
+  const playNotificationSound = () => {
+    const audio = new Audio(tonoMensaje);
+    audio.play();
+  };
+
+  const scheduleNotification = (medicationData) => {
+    const { nombreMedicamento, hora } = medicationData;
+    const [hour, minute] = hora.split(':');
+    const now = new Date();
+    const notificationTime = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate(),
+      parseInt(hour),
+      parseInt(minute)
+    );
+
+    if (notificationTime > now) {
+      setTimeout(() => {
+        Swal({
+          title: 'Recordatorio',
+          text: `Es hora de tomar ${nombreMedicamento}`,
+          customClass: {
+            title: 'small-title',
+            content: 'small-content',
+            confirmButton: 'small-button',
+          },
+        });
+
+        // Reproduce el sonido de notificación
+        playNotificationSound();
+      }, notificationTime - now);
+    }
+  };
+
   return (
-    <Container className="formquotes-container">
-      <h1 className="formquotes-title">Medicación</h1>
-      <IoIosAddCircle className="formquotes-icon-add" onClick={openFormModal} />
+    <Container className="formedication-container">
+      <div className="formmedication-title">
+        <h1>Medicación</h1>
+        <IoIosAddCircle className="formmedication-icon-add" onClick={openFormModal} />
+      </div>
+
       <Modal
-        className="formquotes-modal-container"
+        className="formedication-modal-container"
         show={isFormModalOpen}
         onHide={closeFormModal}
       >
-        <Modal.Header className="formquotes-modal-header">
-          <Modal.Title className="formquotes-modal-title">Agregar Medicamento</Modal.Title>
-          <IoIosCloseCircle className="formquotes-close-icon" onClick={closeFormModal} />
+        <Modal.Header className="formmedication-modal-header">
+          <Modal.Title className="formmedication-modal-title">Agregar Medicamento</Modal.Title>
+          <IoIosCloseCircle className="formmedication-close-icon" onClick={closeFormModal} />
         </Modal.Header>
-        <Form onSubmit={handleSubmit} className="formquotes-modal-body">
+        <Form onSubmit={handleSubmit} className="formmedication-modal-body">
           <Form.Group controlId="nombreMedicamento">
-            <Form.Label className="formquotes-form-label">Nombre del Medicamento</Form.Label>
+            <Form.Label className="formmedication-form-label">Nombre del Medicamento</Form.Label>
             <Form.Control
               type="text"
               placeholder="Nombre del Medicamento"
@@ -75,7 +131,7 @@ const FormMedication = () => {
             />
           </Form.Group>
           <Form.Group controlId="dosificacion">
-            <Form.Label className="formquotes-form-label">Dosificación</Form.Label>
+            <Form.Label className="formmedication-form-label">Dosificación</Form.Label>
             <Form.Control
               type="text"
               placeholder="Dosificación"
@@ -86,7 +142,7 @@ const FormMedication = () => {
             />
           </Form.Group>
           <Form.Group controlId="unidades">
-            <Form.Label className="formquotes-form-label">Unidades</Form.Label>
+            <Form.Label className="formmedication-form-label">Unidades</Form.Label>
             <Form.Control
               type="text"
               placeholder="Unidades"
@@ -97,7 +153,7 @@ const FormMedication = () => {
             />
           </Form.Group>
           <Form.Group controlId="tomasDelDia">
-            <Form.Label className="formquotes-form-label">Tomas al Día</Form.Label>
+            <Form.Label className="formmedication-form-label">Tomas al Día</Form.Label>
             <Form.Control
               type="text"
               placeholder="Tomas al Día"
@@ -108,7 +164,7 @@ const FormMedication = () => {
             />
           </Form.Group>
           <Form.Group controlId="fechadeinicio">
-            <Form.Label className="formquotes-form-label">Fecha de Inicio</Form.Label>
+            <Form.Label className="formmedication-form-label">Fecha de Inicio</Form.Label>
             <Form.Control
               type="date"
               name="fechadeinicio"
@@ -118,7 +174,7 @@ const FormMedication = () => {
             />
           </Form.Group>
           <Form.Group controlId="hora">
-            <Form.Label className="formquotes-form-label">Hora</Form.Label>
+            <Form.Label className="formmedication-form-label">Hora</Form.Label>
             <Form.Control
               type="time"
               name="hora"
@@ -127,8 +183,8 @@ const FormMedication = () => {
               required
             />
           </Form.Group>
-          <Modal.Footer className="formquotes-modal-footer">
-            <Button type="submit" className="formquotes-save-btn">
+          <Modal.Footer className="formmedication-modal-footer">
+            <Button type="submit" className="formmedication-save-btn">
               Agregar
             </Button>
           </Modal.Footer>
@@ -138,4 +194,4 @@ const FormMedication = () => {
   );
 };
 
-export default FormMedication
+export default FormMedication;

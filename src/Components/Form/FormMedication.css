@@ -1,0 +1,156 @@
+/* FormQuotes.css */
+
+/* Contenedor principal */
+.formedication-container {
+  text-align: center;
+  justify-content: center;
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Título y Ícono en la misma línea */
+.formmedication-title {
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.formmedication-title h1 {
+  margin-right: 10px; /* Espacio entre el título y el ícono */
+}
+
+.formmedication-title .formmedication-icon-add {
+  font-size: 40px;
+  color: #007bff;
+  cursor: pointer;
+}
+  
+  .formmedication-modal-container{
+    width: 300%;
+    height: auto;
+  }
+  
+  /* Tarjeta de médico */
+  .formmedication-card {
+    width: 300px; /* Ancho deseado de las tarjetas */
+    height: 200px;
+    margin: 10px; /* Espacio entre las tarjetas */
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;  
+    background-color: #fff;
+  }
+  
+  /* Encabezado del Modal */
+  .formmedication-modal-header {
+    background-color: #ffffff;
+    color: #000000;
+    border: none;
+  }
+  
+  /* Título del Modal */
+  .formmedication-modal-title {
+    font-size: 24px;
+  }
+  
+  /* Cuerpo del Modal */
+  .formmedication-modal-body {
+    padding: 20px;
+  }
+  
+  /* Etiqueta del Formulario */
+  .formmedication-form-label {
+    font-weight: bold;
+  }
+  
+  /* Pie del Modal */
+  .formmedication-modal-footer {
+    border: none;
+  }
+  
+  /* Botón Guardar */
+  .formmedication-save-btn {
+    background-color: var(--color-primary);
+    width: 150px;
+    height: 50px;
+    font-size: 16px;
+    border: none;
+    margin: 0 auto;
+    display: block;
+  }
+  
+  .formmedication-doctor-save-btn {
+    background-color: var(--color-primary);
+    border: none;
+    margin: 0 auto;
+    display: block;
+  }
+  
+  .formmedication-save-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Aumenta el tamaño del icono y ajusta el margen izquierdo */
+  .formmedication-icon-add {
+    margin-left: 500px;
+    color: var(--color-primary)
+  }
+  
+  .formmedication-icon-pill {
+    font-size: 30px;
+    color: var(--color-primary);
+  }
+  
+  .formmedication-icon-info {
+    font-size: 25px;
+    color: var(--color-primary);
+  }
+  
+  .formmedication-close-icon {
+    color: var(--color-primary);
+    width: 50px;
+    height: auto;
+  }
+  
+  /* Modal */
+  .formmedication-modal {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  .formmedication-selected-medico {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  /* Media Query para dispositivos móviles */
+  @media (max-width: 767px) {
+    .formmedication-card {
+      width: 90%; /* Ancho del 90% del contenedor padre */
+      margin: 5px auto; /* Centra las tarjetas horizontalmente y agrega espacio vertical */
+    }
+  
+    .formmedication-form-label {
+      font-size: 16px; /* Tamaño de fuente más grande para etiquetas en dispositivos móviles */
+    }
+  
+    .formmedication-icon-add {
+      margin-left: 130px;
+    }
+  
+    .formmedication-modal {
+      padding: 10px;
+    }
+  }
+  
+  
+  

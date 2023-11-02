@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col';
 import ReactPlayer from 'react-player'; 
 import './Routines.css';
 import { ExerciseData } from '../../Utils/routines';
+import { Bot } from '../../Components/ChatBot/Bot'
 
 function Exercise() {
   const [selectedItem, setSelectedItem] = useState(null);
@@ -110,6 +111,7 @@ function Exercise() {
           </Modal.Footer>
         </Modal>
       )}
+      <Bot />
     </div>
   );
 }
