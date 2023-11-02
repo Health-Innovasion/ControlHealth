@@ -1,12 +1,25 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React,{ useEffect, useState } from 'react'
 import Navbar from '../../Components/NavBar/Navbar'
 import { statusQuotes } from '../../Utils/constants'
 import './Admindoctors.css'
+import { GetDoctorsAdmin } from '../../redux/action/DoctorAction'
+
 
 const Admindoctors = () => {
 
-    const { doctors } = useSelector((state) => state.doctors)
+const [doctors, setDoctors] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const dataArray = await GetDoctorsAdmin();
+                setDoctors(dataArray)
+            } catch (error) {
+                console.error('Error al obtener los datos:', error);
+            }
+        }
+        fetchData();
+    }, []);
 
     function getStatusClass(status) {
         const statusClasses = {
