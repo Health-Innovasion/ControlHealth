@@ -10,7 +10,8 @@ import {
   where,
   updateDoc,
   getDocs,
-  getDoc
+  getDoc,
+  onSnapshot
 } from 'firebase/firestore'
 import { db } from '../../firebase_config'
 import { statusApplication, typeUsers } from '../../Utils/constants'
@@ -126,31 +127,31 @@ export const dataUser = async () => {
   }
 }
 
-export const GetDoctorsAdmin = async () => {
+export const GetDoctorsAdmin = (callback) => {
+  const doctorsCollectionRef = collection(db, 'users');
 
-  const doctorsCollectionRef = collection(db, 'users')
-  
-  const doctorsData = []
-    
   try {
     // Crear una consulta que filtra los usuarios
-    const querySnapshot = await getDocs(
-      query(
-        doctorsCollectionRef,
-        where('typeUser', '==', typeUsers.doctor)
-      ),
-    )
+    const queryRef = query(
+      doctorsCollectionRef,
+      where('typeUser', '==', typeUsers.doctor)
+    );
 
-    querySnapshot.docs.forEach((doc) => {
-      const doctorData = doc.data()
-      const doctorId = doc.id
-      doctorsData.push({ id: doctorId, ...doctorData })
-    })
+    return onSnapshot(queryRef, (querySnapshot) => {
+      const doctorsData = [];
 
-    return doctorsData
+      querySnapshot.docs.forEach((doc) => {
+        const doctorData = doc.data();
+        const doctorId = doc.id;
+        doctorsData.push({ id: doctorId, ...doctorData });
+      });
+
+      callback(doctorsData);
+    });
   } catch (error) {
-    console.error('Error:', error.code, error.message)
-    
+    console.error('Error:', error.code, error.message);
+    throw error;
   }
-
 }
+
+
