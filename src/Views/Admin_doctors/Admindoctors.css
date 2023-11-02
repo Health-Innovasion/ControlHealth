@@ -1,27 +1,48 @@
-/* Estilo para hacer la tabla centrada y responsive */
-.container-admin{
-   margin-top: 20px;
-  }
-  
-  /* Establece el ancho al 90% de la pantalla */
-  .table-responsive {
-    width: 90%;
-    overflow-x: auto;
-  }
-  
-  /* Estilo para filas alternas resaltadas */
-  .table-striped tbody tr:nth-child(odd) {
-    background-color: #f2f2f2;
-  }
-  
-  /* Estilo para el encabezado de la tabla */
-  .table thead th {
-    background-color: #343a40;
-    color: white;
-  }
-  
-  /* Estilo para el texto en celdas */
-  .table tbody td {
-    text-align: left;
-  }
-  
+.container-oficial {
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-top: 60px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
+    align-items: center;
+    text-align: center; /* Centra horizontalmente el contenido del contenedor */
+}
+
+.logo-admin {
+    max-width: 200px;
+    margin: 0 auto; /* Centra el logo horizontalmente */
+    margin-bottom: 10px;
+}
+
+/* Estilos para la tabla de datos */
+.table {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+/* Estilos para los botones de acciones en la tabla */
+.table .btn {
+    padding: 4px 8px;
+    margin: 2px;
+    font-size: 1rem;
+}
+
+/* Estilos para la tabla de datos */
+.display-4 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.icon {
+    color: #ffff;
+}
+
+.busqueda {
+    margin-top: 10px;
+}
