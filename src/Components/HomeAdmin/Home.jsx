@@ -37,21 +37,21 @@ const Home = () => {
                         <h3>users</h3>
                         <FaUser className='card-admin-icon' />
                     </div>
-                    <h1>50</h1>
+                    <h1>3</h1>
                 </div>
                 <div className='card-admin'>
                     <div className='car-inner'>
                         <h3>doctors</h3>
                         <FaUserDoctor className='card-admin-icon' />
                     </div>
-                    <h1>25</h1>
+                    <h1>1</h1>
                 </div>
                 <div className='card-admin'>
                     <div className='car-inner'>
                         <h3>Quotes</h3>
                         <BiAccessibility className='card-admin-icon' />
                     </div>
-                    <h1>100</h1>
+                    <h1>3</h1>
                 </div>
             </div>
 
