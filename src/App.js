@@ -18,6 +18,8 @@ import ScreenChat from './Views/ScreenChat/ScreenChat'
 import ProtectedRouteMedico from './Utils/ProtectedRouteMedico'
 import CitasDr from './Views/CitasDr/CitasDr'
 import Admindoctors from './Views/Admin_doctors/Admindoctors'
+import HomeAdmin from './Views/HomeAdmin/HomeAdmin'
+
 
 function App() {
   const { currentUser } = useSelector((state) => state.user);
@@ -29,6 +31,7 @@ function App() {
         <Route path="/register" component={Register} />
         <Route path="/admin" component={Admin} />
         <Route path="/admindoctors" component={Admindoctors} />
+        <Route path="/homeadmin" component={HomeAdmin} />
 
         {currentUser && currentUser?.typeUser === typeUsers.doctor ? (
           <React.Fragment>
