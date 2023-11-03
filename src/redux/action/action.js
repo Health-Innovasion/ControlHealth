@@ -294,8 +294,9 @@ export const updateUserDataAndPhoto = async (currentUser, userData, file) => {
       // Elimina la foto anterior del almacenamiento
       await deleteObject(storageRef)
     }
+  
     // Actualiza el perfil del usuario con los nuevos datos
-    await updateProfile(auth.currentUser, userData)
+    await updateProfile(auth.currentUser, { userName: userData.userName});
 
     // Si se proporciona un archivo de imagen, cárgalo al almacenamiento
     if (file) {

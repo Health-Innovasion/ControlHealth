@@ -41,6 +41,11 @@ const userReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload,
       }
+    case 'RESET_CURRENT_USER':
+      return {
+        ...state,
+        currentUser: null,
+      };
     default:
       return state
   }
