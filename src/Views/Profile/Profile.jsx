@@ -9,8 +9,9 @@ function Profile() {
 
   const { currentUser } = useSelector((state) => state.user);
 
+  console.log(currentUser)
   const [state, setState] = useState({
-    nombre: currentUser.displayName || '',
+    userName: currentUser.userName || '',
     tel: currentUser.telefon || '',
     departamento: currentUser.departamento || '',
     edad: currentUser.edad || '',
@@ -18,7 +19,7 @@ function Profile() {
   });
   const [isEditing, setIsEditing] = useState(false);
 
-  const { nombre, tel, departamento, edad, photoURL } = state;
+  const { userName, tel, departamento, edad, photoURL } = state;
 
 
   const handleChange = (e) => {
@@ -44,6 +45,7 @@ function Profile() {
     e.preventDefault();
 
     updateUserDataAndPhoto(currentUser,state,photoURL)
+    
 
   }
 
@@ -72,7 +74,7 @@ function Profile() {
                   id="file-input"
                   disabled={!isEditing}
                 />
-                <h5>{currentUser.displayName}</h5>
+                <h5>{currentUser.userName}</h5>
                 {isEditing ? (
                   <button type="button" onClick={handleSaveChanges} className='edit-btn btn btn-success'>
                     <FaSave size={20} /> Guardar Cambios
@@ -94,9 +96,9 @@ function Profile() {
                         type="text"
                         className="text-muted"
                         placeholder="Nombre"
-                        id="nombre"
-                        value={nombre}
-                        name="nombre"
+                        id="userName"
+                        value={userName}
+                        name="userName"
                         onChange={handleChange}
                         required
                         disabled={!isEditing}

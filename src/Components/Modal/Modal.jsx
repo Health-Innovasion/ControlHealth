@@ -16,7 +16,7 @@ const Modal = ({ event, onClose }) => {
         console.error("Error al actualizar la cita:", error);
       });
   };
-
+console.log(event)
   return (
     <div className="modal-component">
       <div className="modal-content-component">
@@ -30,11 +30,12 @@ const Modal = ({ event, onClose }) => {
           <select
             id="statusSelect"
             onChange={(e) => {
+
               const selectedValue = e.target.value;
               setValueSelected(selectedValue);
               handleUpdateQuotes(selectedValue);
             }}
-            value={valueSelected}
+            value={event.importante}
           >
             {Object.values(statusQuotes).map((value, index) => (
               <option key={index} value={value}>
