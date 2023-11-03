@@ -1,0 +1,94 @@
+.fullAdmin-screen-container {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+  }
+  
+  .admin-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 2px; /* Ajusta el margen superior */
+  }
+  
+  .logo-admin {
+    max-width: 300px;
+    height: auto;
+    color: #000; /* Cambiamos el color del icono a negro */
+    margin-bottom: 20px; /* Añadido margen inferior para separar el logo de los botones */
+  }
+  
+  .button-admin-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .option-admin-button svg {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 10px;
+    color: var(--color-primary);
+  }
+  
+  .option-admin-button {
+    background-color: var(--color-secundary);
+    border: 2px solid var(--color-primary);
+    box-shadow: 0px 0px 5px rgba(22, 22, 22, 0.3);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    align-items: center;
+    width: 150px;
+    height: 170px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    color: black;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .option-admin-button:hover {
+    transform: scale(1.05);
+    border: transparent;
+    color: var(--color-primary);
+  }
+  
+  .option-admin-button:hover svg {
+    color: var(--color-secundary);
+    transform: scale(1.05);
+    border: transparent;
+  }
+  
+  .icon-Admin {
+    max-width: 100%;
+    align-items: center;
+  }
+  
+  /* Media Query para pantallas más pequeñas */
+  @media (max-width: 768px) {
+    .option-admin-button {
+      width: 90%;
+      margin: 0 0 15px;
+      padding: 5px;
+    }
+  
+    .icon-admin {
+      max-width: 50%;
+      align-items: center;
+    }
+  }
+  
+  :root {
+    --color-primary: #008DD8;
+    --color-secundary: #ffff;
+  }
+  
