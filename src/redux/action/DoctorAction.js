@@ -154,4 +154,28 @@ export const GetDoctorsAdmin = (callback) => {
   }
 }
 
+export const actualizarValidatedDoctor = async (doctorId, nuevoValidated) => {
+  try {
+    const doctorRef = doc(db, 'users', doctorId); // Reemplaza 'doctors' con la colección adecuada en tu base de datos
+    const doctorSnapshot = await getDoc(doctorRef);
+
+    if (doctorSnapshot.exists()) {
+      const actualizaciones = {
+        validated: nuevoValidated,
+      };
+
+      await updateDoc(doctorRef, actualizaciones);
+
+      return 'Doctor validado actualizado exitosamente';
+    } else {
+      console.error('El documento del doctor no existe.');
+      return 'El doctor no existe';
+    }
+  } catch (error) {
+    console.error('Error al actualizar el estado de validación del doctor:', error);
+    throw error;
+  }
+};
+
+
 
