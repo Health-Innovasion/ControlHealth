@@ -5,6 +5,7 @@ import logo from '../../Assets/Images/logo.png';
 import doctor from '../../Assets/Images/doctor.png';
 import expedient from '../../Assets/Images/expedient.png';
 import user from '../../Assets/Images/user.png';
+import cerrar from '../../Assets/Images/cerrar.png'
 import { OptionButton } from '../../Components/OptionButton/OptionButton';
 
 function HomeAdmin() {
@@ -19,7 +20,7 @@ function HomeAdmin() {
           <OptionButton image={expedient} text="Estadisticas" to="/citasdr" />
           <OptionButton image={doctor} text="Médicos" to="/notificaciones" />
           <OptionButton image={user} text="Usuarios" to="/expedientes" />
-          <OptionButton image={user} text="Cerrar Sesion " to="/expedientes" />
+          <OptionButton image={cerrar} text="Cerrar Sesion " to="/expedientes" />
         </Row>
       </Container>
     </div>
