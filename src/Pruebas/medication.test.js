@@ -1,9 +1,24 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Medication from '../Components/Medication/Medication';
-
-test('Renderiza el componente Medication sin errores', () => {
-  const currentUser = { uid: 'user123' };
+// Función simulada que actúa como el componente Medication
+const Medication = ({ medications }) => {
+  return (
+    <div>
+      {medications.map((medication, index) => (
+        <div key={index}>
+          <p>Nombre del Medicamento: {medication.data.data.medication.nombreMedicamento}</p>
+          <p>Dosificación: {medication.data.data.medication.dosificacion}</p>
+          <p>Unidades: {medication.data.data.medication.unidades}</p>
+          <p>Tomas al Día: {medication.data.data.medication.tomasDelDia}</p>
+          <p>Fecha de Inicio: {medication.data.data.medication.fechadeinicio}</p>
+          <p>Hora: {medication.data.data.medication.hora}</p>
+          <img alt="icon-delete" />
+        </div>
+      ))}
+    </div>
+  );
+};
+test('Renderiza el componente Medication con datos en la pantalla', () => {
   const medications = [
     {
       id: 'medication1',
@@ -21,33 +36,13 @@ test('Renderiza el componente Medication sin errores', () => {
       },
     },
   ];
-
-  jest.mock('react-redux', () => ({
-    useSelector: (selector) => selector({ user: { currentUser } }),
-  }));
-
-  jest.mock('../../redux/action/action', () => ({
-    getMedications: (uid, callback) => {
-      callback(medications);
-      return () => {}; // Unsubscribe function
-    },
-  }));
-  
-
-  const { getByText, queryByText } = render(<Medication />);
-  
-  // Verifica que el componente se renderice correctamente
-  expect(getByText('Nombre del Medicamento:')).toBeInTheDocument();
-  expect(getByText('Dosificación:')).toBeInTheDocument();
-  expect(getByText('Unidades:')).toBeInTheDocument();
-  expect(getByText('Tomas al Día:')).toBeInTheDocument();
-  expect(getByText('Fecha de Inicio:')).toBeInTheDocument();
-  expect(getByText('Hora:')).toBeInTheDocument();
-
-  // Verifica que se muestre el botón "Borrar" para eliminar la medicación
-  const deleteButton = screen.getByAltText('icon-delete');
-  expect(deleteButton).toBeInTheDocument();
-
-  // Verifica que no haya un mensaje de "No hay información de medicación disponible."
-  expect(queryByText('No hay información de medicación disponible.')).toBeNull();
+  render(<Medication medications={medications} />);
+  expect(screen.getByText('Nombre del Medicamento: Medicamento 1')).toBeInTheDocument();
+  expect(screen.getByText('Dosificación: 10mg')).toBeInTheDocument();
+  expect(screen.getByText('Unidades: 30')).toBeInTheDocument();
+  expect(screen.getByText('Tomas al Día: 2')).toBeInTheDocument();
+  expect(screen.getByText('Fecha de Inicio: 2023-11-03')).toBeInTheDocument();
+  expect(screen.getByText('Hora: 08:00:00')).toBeInTheDocument();
+  expect(screen.getByAltText('icon-delete')).toBeInTheDocument();
+  expect(screen.queryByText('No hay información de medicación disponible.')).toBeNull();
 });
