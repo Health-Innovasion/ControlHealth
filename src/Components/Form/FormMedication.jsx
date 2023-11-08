@@ -17,6 +17,7 @@ const FormMedication = () => {
     unidades: '',
     tomasDelDia: '',
     fechadeinicio: '',
+    fechafinal: '',
     hora: '',
   });
 
@@ -41,6 +42,7 @@ const FormMedication = () => {
       unidades: '',
       tomasDelDia: '',
       fechadeinicio: '',
+      fechafinal: '',
       hora: '',
     });
 
@@ -73,7 +75,7 @@ const FormMedication = () => {
   };
 
   const scheduleNotification = (medicationData) => {
-    const { nombreMedicamento, hora } = medicationData;
+    const { nombreMedicamento, hora, fechafinal } = medicationData;
     const [hour, minute] = hora.split(':');
     const now = new Date();
     const notificationTime = new Date(
@@ -83,6 +85,9 @@ const FormMedication = () => {
       parseInt(hour),
       parseInt(minute)
     );
+
+    // Parse fechafinal to a Date object
+    const finalDate = new Date(fechafinal);
 
     if (notificationTime > now) {
       setTimeout(() => {
@@ -99,6 +104,16 @@ const FormMedication = () => {
         // Reproduce el sonido de notificación
         playNotificationSound();
       }, notificationTime - now);
+    } else if (now <= finalDate) {
+      Swal({
+        title: 'Recordatorio',
+        text: `Ya ha culminado su medicamento: ${nombreMedicamento}`,
+        customClass: {
+          title: 'small-title',
+          content: 'small-content',
+          confirmButton: 'small-button',
+        },
+      });
     }
   };
 
@@ -134,7 +149,7 @@ const FormMedication = () => {
             <Form.Label className="formmedication-form-label">Dosificación</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Dosificación"
+              placeholder="mg"
               name="dosificacion"
               value={infoForm.dosificacion}
               onChange={handleChange}
@@ -169,6 +184,16 @@ const FormMedication = () => {
               type="date"
               name="fechadeinicio"
               value={infoForm.fechadeinicio}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
+          <Form.Group controlId="fechafinal">
+            <Form.Label className="formmedication-form-label">Fecha de finalización</Form.Label>
+            <Form.Control
+              type="date"
+              name="fechafinal"
+              value={infoForm.fechafinal}
               onChange={handleChange}
               required
             />
