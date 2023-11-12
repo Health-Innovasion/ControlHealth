@@ -58,7 +58,8 @@ export const statusApplication = {
 
 export const typeUsers = {
   patient: 'patient',
-  doctor: 'doctor'
+  doctor: 'doctor',
+  admin:  'admin'
 }
 
 export const statusQuotes = {
