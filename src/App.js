@@ -19,6 +19,7 @@ import ProtectedRouteMedico from './Utils/ProtectedRouteMedico';
 import CitasDr from './Views/CitasDr/CitasDr';
 import Admindoctors from './Views/Admin_doctors/Admindoctors';
 import HomeAdmin from './Views/HomeAdmin/HomeAdmin';
+import ProtectedRouteAdmin from './Utils/ProtectecRouteAdmin';
 
 function App() {
   const { currentUser } = useSelector((state) => state.user);
@@ -35,9 +36,9 @@ function App() {
         {/* Admin Routes */}
         {isAdmin && (
           <Switch>
-            <Route path="/" component={Admindoctors} />
-            <Route path="/admin" component={Admin} />
-            <Route path="/homeadmin" component={HomeAdmin} />
+            <ProtectedRouteAdmin path="/admin" component={Admin} />
+            <ProtectedRouteAdmin path="/adminDoctors" component={Admindoctors} />
+            <ProtectedRouteAdmin path="/" component={HomeAdmin} />
           </Switch>
         )}
 
@@ -66,7 +67,7 @@ function App() {
         )}
 
         {/* Redirect to Home for unknown routes */}
-        <Redirect to="/" />
+        <Redirect to="/login" />
       </Switch>
     </Router>
   );
