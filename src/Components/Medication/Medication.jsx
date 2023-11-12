@@ -60,15 +60,10 @@ const Medication = () => {
               </div>
 
               <div className="col-quote">
-                <span className="title-quote">Fecha de Inicio:</span>
+                <span className="title-quote">Fecha inicial/Final:</span>
                 <span>{medicationData.fechadeinicio}</span>
-              </div>
-
-              <div className="col-quote">
-                <span className="title-quote">Fecha final</span>
                 <span>{medicationData.fechafinal}</span>
               </div>
-
               <div className="col-quote">
                 <span className="title-quote">Hora:</span>
                 <span>{formatHour(medicationData.hora)}</span>
