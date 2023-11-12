@@ -182,9 +182,9 @@ export const loginInitiate = (
       )
 
       const user = userCredential.user
-
+      console.log(user)
       const userData = await obtenerUsuario(user.uid)
-
+        
       dispatch(loginSuccess(userData))
     } catch (error) {
       SweetAlertComponent({ text: error.code, icon: 'error' })
