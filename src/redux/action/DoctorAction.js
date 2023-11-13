@@ -88,44 +88,50 @@ export const actualizarCita = async (citaId, nuevaFecha, cambiarEstado = false) 
 };
 
 
-export const dataUser = async () => {
-  const usuariosCollection = collection(db, 'users');
+export const dataUser = () => {
+  const coleccionUsuarios = collection(db, 'users');
 
-  // Crea un objeto para almacenar la estructura de datos
-  const data = {};
+  return new Promise((resolve, reject) => {
+    // Crea un objeto para almacenar la estructura de datos
+    const datos = {};
 
-  try {
-    const querySnapshot = await getDocs(usuariosCollection);
+    try {
+      // Usa onSnapshot para escuchar actualizaciones en tiempo real
+      onSnapshot(coleccionUsuarios, (querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          const datosUsuario = doc.data();
+          const departamento = datosUsuario.departamento;
 
-    querySnapshot.forEach((doc) => {
-      const usuarioData = doc.data();
-      const departamento = usuarioData.departamento;
-      //TODO: HACER QUE EN LAS CONFIGURACIONDE DEL PERFIL APARESCAN LOS NOMBRES DE LOS DEPARTAMENTO EN MINUSCULAS Y CON LA PROPIEDAD departamento
-      // Verifica si el campo "departamento" es válido antes de continuar
-      if (departamento !== undefined) {
-        const tipo_1 = usuarioData.diabetes === 'tipo_1' ? 1 : 0;
-        const tipo_2 = usuarioData.diabetes === 'tipo_2' ? 1 : 0;
+          // Verifica si el campo "departamento" es válido antes de continuar
+          if (departamento !== undefined) {
+            const tipo1 = datosUsuario.diabetes === 'tipo_1' ? 1 : 0;
+            const tipo2 = datosUsuario.diabetes === 'tipo_2' ? 1 : 0;
 
-        if (!data[departamento]) {
-          data[departamento] = {
-            departamento,
-            tipo_1: 0,
-            tipo_2: 0,
-          };
-        }
+            if (!datos[departamento]) {
+              datos[departamento] = {
+                departamento,
+                tipo1: 0,
+                tipo2: 0,
+              };
+            }
 
-        data[departamento].tipo_1 += tipo_1;
-        data[departamento].tipo_2 += tipo_2;
-      }
-    });
+            datos[departamento].tipo1 += tipo1;
+            datos[departamento].tipo2 += tipo2;
+          }
+        });
 
-    const dataArray = Object.values(data);
-    return dataArray; // Devuelve el array de objetos
-  } catch (error) {
-    console.error('Error al obtener los datos de usuarios:', error);
-    throw error; // Lanza el error si ocurre uno
-  }
-}
+        // Puedes hacer algo con los datos actualizados aquí
+        const arrayDatos = Object.values(datos);
+        resolve(arrayDatos);
+      });
+    } catch (error) {
+      console.error('Error al obtener los datos de usuarios:', error);
+      reject(error);
+    }
+  });
+};
+
+
 
 export const GetDoctorsAdmin = (callback) => {
   const doctorsCollectionRef = collection(db, 'users');
