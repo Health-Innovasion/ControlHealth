@@ -62,11 +62,21 @@ export const typeUsers = {
   admin:  'admin'
 }
 
+export const typeUser = {
+  patient: 'patient',
+  admin:  'admin'
+}
+
 export const statusQuotes = {
   inReview: 'En revisión',
   approved: 'Aprobada',
   denied: 'Denegada',
   postponed: 'Pospuesta'
+}
+export const statusDoctor = {
+  inReview: 'En revisión',
+  approved: 'Aprobada',
+  denied: 'Denegada',
 }
 
 export const required = 'Campo requerido'

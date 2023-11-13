@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from '../../Components/NavBar/Navbar';
-import { statusQuotes } from '../../Utils/constants';
+import { statusQuotes,statusDoctor } from '../../Utils/constants';
 import './Admindoctors.css';
 import { GetDoctorsAdmin, actualizarValidatedDoctor } from '../../redux/action/DoctorAction';
 import logo from '../../Assets/Images/logo.png';
 import Modal from 'react-modal';
+import Dropdown from '../../Components/Dropdown/Dropdown';
 import { IoIosCloseCircle } from 'react-icons/io';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { Button } from 'react-bootstrap';
+import { AiOutlineArrowLeft } from 'react-icons/ai';
 
 const Admindoctors = () => {
     const [doctors, setDoctors] = useState([]);
@@ -48,15 +51,26 @@ const Admindoctors = () => {
     };
 
     const handleStatusChange = (event, doctorId) => {
-        actualizarValidatedDoctor(doctorId, event.target.value) .then((res) => {
+        actualizarValidatedDoctor(doctorId, event.target.value).then((res) => {
             console.log(res); 
         })
     };
 
     return (
         <>
-            <Navbar />
+        <div className=' container-doctor'>
+        <div className="navbar">
+            <Link to="/homeAdmin">
+                <Button variant="primary" style={{ marginTop: '5px', marginLeft:'5px' }}>
+                     <AiOutlineArrowLeft />
+                </Button>
+
+            </Link> 
+                    <Dropdown />
+                </div>
+        </div>
             <div className="container-oficial">
+            
                 <img src={logo} alt="Logo" className="logo-admin" />
                 <h2 className="display-4">Bienvenido a tu vista administrativa</h2>
                 <div className="mb-3">
@@ -88,7 +102,7 @@ const Admindoctors = () => {
                                             value={doctor.validated}
                                             onChange={(e) => handleStatusChange(e, doctor.id)}
                                         >
-                                            {Object.values(statusQuotes).map((value, index) => (
+                                            {Object.values(statusDoctor).map((value, index) => (
                                                 <option key={index} value={value}>
                                                     {value}
                                                 </option>

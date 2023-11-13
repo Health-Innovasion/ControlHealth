@@ -2,12 +2,6 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    text-align: center;
   }
   
   .admin-container {
@@ -15,7 +9,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    margin-top: 2px; /* Ajusta el margen superior */
+    margin-top: 100px; /* Ajusta el margen superior */
   }
   
   .logo-admin {

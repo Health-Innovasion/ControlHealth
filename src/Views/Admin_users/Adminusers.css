@@ -1,0 +1,9 @@
+.status-patient {
+    background-color: green;
+    color: white; /* Color del texto */
+}
+
+.status-admin {
+    background-color: blue;
+    color: white; /* Color del texto */
+}

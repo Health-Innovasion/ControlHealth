@@ -19,6 +19,7 @@ import ProtectedRouteMedico from './Utils/ProtectedRouteMedico';
 import CitasDr from './Views/CitasDr/CitasDr';
 import Admindoctors from './Views/Admin_doctors/Admindoctors';
 import HomeAdmin from './Views/HomeAdmin/HomeAdmin';
+import AdminUsers from './Views/Admin_users/Adminusers';
 import ProtectedRouteAdmin from './Utils/ProtectecRouteAdmin';
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
         {isAdmin && (
           <Switch>
             <ProtectedRouteAdmin path="/admin" component={Admin} />
+            <ProtectedRouteAdmin path="/adminUsers" component={AdminUsers} />
             <ProtectedRouteAdmin path="/adminDoctors" component={Admindoctors} />
             <ProtectedRouteAdmin path="/" component={HomeAdmin} />
           </Switch>

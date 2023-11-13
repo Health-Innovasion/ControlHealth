@@ -2,12 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import moment from 'moment';
+import 'moment/locale/es';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import './CitasDr.css';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Importa el CSS de Bootstrap
 import { useSelector } from 'react-redux/es/hooks/useSelector';
 import { getCitasdr } from '../../redux/action/action';
 import Modal from '../../Components/Modal/Modal';
 import { actualizarCita } from '../../redux/action/DoctorAction';
+import Dropdown from '../../Components/Dropdown/Dropdown';
+import { AiOutlineArrowLeft } from 'react-icons/ai';
+import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 
 const localizer = momentLocalizer(moment);
 
@@ -27,7 +32,7 @@ const CitasDr = () => {
             unsubscribe();
         };
     }, [currentUser.uid]);
-    
+
     function extractParamsFromCitas(citasArray) {
         return citasArray.map((cita) => ({
             uid: cita.id,
@@ -41,20 +46,17 @@ const CitasDr = () => {
     }
 
     const myEventsList = extractParamsFromCitas(citas);
-  
-    //prueba
+
     const myEventsListEditable = myEventsList.map((cita) => ({
         ...cita,
-        editable: true, // Hacer que la cita sea editable
+        editable: true,
     }));
-      
 
     const eventStyleGetter = (event) => {
         const eventStyle = {
-            color: 'white', // Color de texto
+            color: 'white',
         };
 
-        //color de las card dependiendo del estado
         if (event.importante === 'Aprobada') {
             eventStyle.backgroundColor = 'green';
         } else if (event.importante === 'En revisión') {
@@ -82,22 +84,39 @@ const CitasDr = () => {
     const handleEventDrop = (event) => {
         actualizarCita(event.event.uid, event.start)
             .then((res) => {
-                console.log(res); //mostrando respuesta de la consulta 
+                console.log(res);
             })
             .catch((error) => {
                 console.error("Error al reagendar la cita:", error);
             });
     };
 
+    const handleGoBack = () => {
+        // Implementa la lógica para regresar a la vista anterior
+        // Puedes usar react-router-dom o cualquier otra solución según tu configuración de navegación
+    };
 
     return (
         <div style={calendarStyle}>
+        <div>
+        <div className="navbar">
+        <Link to="/homedr">
+        <Button variant="primary" style={{ marginTop: '5px' }}>
+                     <AiOutlineArrowLeft /> Volver
+                </Button>
+
+            </Link> 
+        <Dropdown />
+        </div>
+        </div>
+
+            <br />
             <DraggableCalendar
                 localizer={localizer}
                 events={myEventsListEditable}
                 startAccessor="start"
                 endAccessor="end"
-                onEventDrop={handleEventDrop} 
+                onEventDrop={handleEventDrop}
                 eventPropGetter={eventStyleGetter}
                 onSelectEvent={handleSelectEvent}
                 editable

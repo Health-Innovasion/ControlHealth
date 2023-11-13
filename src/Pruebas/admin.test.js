@@ -25,7 +25,6 @@ test('Renderiza y visualiza estadísticas correctamente', () => {
           <h1>{Data.quotesCount}</h1>
         </div>
       </div>
-
       <div data-testid="line-chart"></div>
       <div data-testid="bar-chart"></div>
     </main>
