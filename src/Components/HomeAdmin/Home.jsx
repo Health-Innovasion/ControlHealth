@@ -4,15 +4,17 @@ import { FaUserDoctor } from 'react-icons/fa6';
 import { BiAccessibility } from "react-icons/bi";
 import { dataUser } from '../../redux/action/DoctorAction';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, Cell, LabelList } from 'recharts';
-import { useSelector, useDispatch } from 'react-redux';
+import { dataAdminCard, dataAdminCard2, dataAdminCard3 } from '../../redux/action/UserAction';
 
 
 const Home = () => {
 
-    const { doctors } = useSelector((state) => state.doctors);
     const [data, setData] = useState([]);
-
-
+    const [numUser, setNumUser] = useState([]);
+    const [numDoc, setNumDoc] = useState([]);
+    const [citasE, setCitasE] = useState([]);
+    const [citasA, setCitasA] = useState([]);
+    const [citasT, setCitasT] = useState([]);
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -26,6 +28,74 @@ const Home = () => {
         fetchData(); // Llama a la función fetchData para obtener los datos y actualizar el estado
     }, [data]);
 
+    useEffect(() => {
+        const fetchDataNumUser = async () => {
+            try {
+                const unsubscribe = dataAdminCard('users',(dataArray) => {
+                    setNumUser(dataArray);
+                });
+
+                return () => {
+                    // Detener la escucha de cambios cuando el componente se desmonta
+                    unsubscribe();
+                };
+            } catch (error) {
+                console.error('Error al obtener los datos:', error);
+            }
+        };
+        fetchDataNumUser();
+    }, [numUser]);
+
+    useEffect(() => {
+        const fetchDataNumUser = async () => {
+            try {
+                const unsubscribe = dataAdminCard2((dataArray) => {
+                    setNumDoc(dataArray);
+                });
+
+                return () => {
+                    // Detener la escucha de cambios cuando el componente se desmonta
+                    unsubscribe();
+                };
+            } catch (error) {
+                console.error('Error al obtener los datos:', error);
+            }
+        };
+        fetchDataNumUser();
+    }, [numDoc]);
+    
+    useEffect(() => {
+        const fetchDataNumUser3 = async () => {
+            try {
+                const unsubscribe = dataAdminCard3((dataArray) => {
+
+                    const citasFiltradas = dataArray.filter(cita => {
+                         return cita.data.data.status === 'En revisión'
+                        
+                    });
+                    setCitasE(citasFiltradas)
+                    const citasFiltradasAprovadas = dataArray.filter(cita => {
+                        return cita.data.data.status === 'Aprobada'
+                       
+                   });
+                   setCitasA(citasFiltradasAprovadas)
+
+                   setCitasT(dataArray);
+                });
+                
+                
+                return () => {
+                    // Detener la escucha de cambios cuando el componente se desmonta
+                    unsubscribe();
+                };
+            } catch (error) {
+                console.error('Error al obtener los datos:', error);
+            }
+        };
+        fetchDataNumUser3();
+    }, []);
+
+    
     return (
         <main className='main-container'>
             <div className='main-title'>
@@ -38,22 +108,37 @@ const Home = () => {
                         <h3>users</h3>
                         <FaUser className='card-admin-icon' />
                     </div>
-                    <h1>3</h1>
+                    <h1>{numUser.length}</h1>
                 </div>
                 <div className='card-admin'>
                     <div className='car-inner'>
                         <h3>doctors</h3>
                         <FaUserDoctor className='card-admin-icon' />
                     </div>
-                    <h1>1</h1>
+                    <h1>{numDoc.length}</h1>
                 </div>
                 <div className='card-admin'>
                     <div className='car-inner'>
                         <h3>Quotes</h3>
                         <BiAccessibility className='card-admin-icon' />
                     </div>
-                    <h1>3</h1>
+                    <h1>{citasT.length}</h1>
                 </div>
+                <div className='card-admin'>
+                    <div className='car-inner'>
+                        <h3>Quotes En revision </h3>
+                        <BiAccessibility className='card-admin-icon' />
+                    </div>
+                    <h1>{citasE.length}</h1>
+                </div>
+                <div className='card-admin'>
+                    <div className='car-inner'>
+                        <h3>Quotes Aprobadas</h3>
+                        <BiAccessibility className='card-admin-icon' />
+                    </div>
+                    <h1>{citasA.length}</h1>
+                </div>
+                
             </div>
 
             <div className='charts'>
@@ -97,7 +182,7 @@ const Home = () => {
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Bar dataKey="tipo1" fill="#4843b0">
+                        <Bar dataKey="tipo1" fill="#008DD8">
                             {data && data.map((entry, index) => (
                                 <Cell key={`cell-${index}`} position="top" value={entry.tipo1} />
                             ))}
