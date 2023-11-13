@@ -3,6 +3,7 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import moment from 'moment';
 import 'moment/locale/es';
+import 'moment-timezone';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Importa el CSS de Bootstrap
 import { useSelector } from 'react-redux/es/hooks/useSelector';
@@ -14,7 +15,11 @@ import { AiOutlineArrowLeft } from 'react-icons/ai';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 
+
+moment.locale('es');
+moment.tz.setDefault('America/Bogota');
 const localizer = momentLocalizer(moment);
+
 
 const CitasDr = () => {
     const { currentUser } = useSelector((state) => state.user);
@@ -33,18 +38,17 @@ const CitasDr = () => {
         };
     }, [currentUser.uid]);
 
-    function extractParamsFromCitas(citasArray) {
-        return citasArray.map((cita) => ({
-            uid: cita.id,
-            title: cita.data.data.cita.name,
-            start: new Date(cita.data.data.cita.date),
-            Tip_Diabe: cita.data.data.cita.typeDiabetes,
-            description: cita.data.data.cita.description,
-            end: new Date(cita.data.data.cita.date),
-            importante: cita.data.data.status,
-        }));
-    }
-
+function extractParamsFromCitas(citasArray) {
+    return citasArray.map((cita) => ({
+        uid: cita.id,
+        title: cita.data.data.cita.name,
+        start: moment(cita.data.data.cita.date).toDate(),  // Parsea la fecha con moment
+        Tip_Diabe: cita.data.data.cita.typeDiabetes,
+        description: cita.data.data.cita.description,
+        end: moment(cita.data.data.cita.date).toDate(),    // Parsea la fecha con moment
+        importante: cita.data.data.status,
+    }));
+}
     const myEventsList = extractParamsFromCitas(citas);
 
     const myEventsListEditable = myEventsList.map((cita) => ({
@@ -90,18 +94,12 @@ const CitasDr = () => {
                 console.error("Error al reagendar la cita:", error);
             });
     };
-
-    const handleGoBack = () => {
-        // Implementa la lógica para regresar a la vista anterior
-        // Puedes usar react-router-dom o cualquier otra solución según tu configuración de navegación
-    };
-
     return (
         <div style={calendarStyle}>
         <div>
         <div className="navbar">
         <Link to="/homedr">
-        <Button variant="primary" style={{ marginTop: '5px' }}>
+        <Button variant="primary" style={{ marginTop: '5px',marginLeft:'5px' }}>
                      <AiOutlineArrowLeft /> Volver
                 </Button>
 

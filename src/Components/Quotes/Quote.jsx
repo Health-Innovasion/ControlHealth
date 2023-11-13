@@ -76,7 +76,7 @@ const Quote = () => {
       minute: 'numeric',
       hour12: true,
     };
-    return formattedDate.toLocaleTimeString('en-US', options);
+    return formattedDate.toLocaleTimeString('es-US', options);
   };
 
   const handledelete = async (id) => {

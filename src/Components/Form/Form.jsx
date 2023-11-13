@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './Form.css' // Asegúrate de que este archivo contenga tus estilos CSS
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Form, Row, Col, Button, Modal } from 'react-bootstrap'
+import { Container, Row, Col, Button, Modal } from 'react-bootstrap'
 import { IoIosAddCircle, IoIosCloseCircle } from 'react-icons/io' // Importa el ícono IoIosCloseCircle
 import { GetDoctors } from '../../redux/action/DoctorAction'
 import { combineData, createAppointment } from '../../redux/action/action'
