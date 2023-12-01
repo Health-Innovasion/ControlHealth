@@ -4,7 +4,6 @@ import './HomeDr.css';
 import logo from '../../Assets/Images/logo.png';
 import doctor from '../../Assets/Images/doctor.png';
 import expedient from '../../Assets/Images/expedient.png';
-import user from '../../Assets/Images/user.png';
 import Dropdown from '../../Components/Dropdown/Dropdown';
 import { OptionButton } from '../../Components/OptionButton/OptionButton';
 
@@ -17,10 +16,10 @@ function HomeDr() {
       </div>
       <Container className="centered-container">
         <Row className="button-container justify-content-between">
-          {/* Botones de opción */}
-          <OptionButton image={doctor} text="Citas" to="/citasdr" />
-          <OptionButton image={expedient} text="Expedientes" to="/expedientes" />
-          <OptionButton image={user} text="Cuenta" to="/cuenta" />
+          {/* Botones de opción */} 
+          <OptionButton image={doctor} text="Calendario de citas" to="/citasdr" />
+          <OptionButton image={expedient} text="Expedientes" to="/expedient" />
+          <OptionButton image={expedient} text="Historial de citas" to="/expedient" />
         </Row>
       </Container>
     </div>

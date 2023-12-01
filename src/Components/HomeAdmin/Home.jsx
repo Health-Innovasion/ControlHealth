@@ -3,7 +3,7 @@ import { FaUser } from 'react-icons/fa';
 import { FaUserDoctor } from 'react-icons/fa6';
 import { BiAccessibility } from "react-icons/bi";
 import { dataUser } from '../../redux/action/DoctorAction';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, Cell, LabelList } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, Cell } from 'recharts';
 import { dataAdminCard, dataAdminCard2, dataAdminCard3 } from '../../redux/action/UserAction';
 
 

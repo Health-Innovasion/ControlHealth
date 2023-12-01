@@ -82,7 +82,7 @@ function Review(props) {
         <td className="result-diagnostic">{famililyMemberDiabetes?.value}</td>
       </tr>
       <hr />
-      {diabetesPregnancy != undefined ? (
+      {diabetesPregnancy !== undefined ? (
         <>
           <tr>
             <td>Diabetes embarazo:</td>

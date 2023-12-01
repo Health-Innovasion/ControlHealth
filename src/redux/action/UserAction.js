@@ -93,7 +93,7 @@ export const GetUsersAdmin = (callback) => {
       // Crear una consulta que filtra los usuarios
       const queryRef = query(
         patientsCollectionRef,
-        where('typeUser', '!=', typeUsers.doctor)
+        where('typeUser', '==', typeUsers.doctor)
       );
   
       return onSnapshot(queryRef, (querySnapshot) => {
