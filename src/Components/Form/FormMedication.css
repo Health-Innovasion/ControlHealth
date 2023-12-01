@@ -131,6 +131,12 @@
     text-align: center;
     margin-top: 10px;
   }
+
+  .error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+  }
   
   /* Media Query para dispositivos móviles */
   @media (max-width: 767px) {

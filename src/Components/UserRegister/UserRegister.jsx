@@ -1,8 +1,6 @@
-import { FaSpinner } from 'react-icons/fa'
-import './UserRegister.css'
-import { InputField } from '../../Utils/functions'
-
-
+import { FaSpinner } from 'react-icons/fa';
+import './UserRegister.css';
+import { InputField } from '../../Utils/functions';
 
 const UserRegister = ({
   isDoctor,
@@ -11,7 +9,7 @@ const UserRegister = ({
   isLoadingRegister,
   formik,
 }) => {
-  const formFields = [
+  let formFields = [
     {
       id: 'nombre',
       type: 'text',
@@ -42,25 +40,46 @@ const UserRegister = ({
       placeholder: 'Confirmar contraseña',
       name: 'passwordConfirm',
     },
-  ]
+  ];
+
+  if (isDoctor) {
+    // Add additional fields for doctors
+    formFields = [
+      ...formFields,
+      {
+        id: 'cedula',
+        type: 'text',
+        placeholder: 'Cedula',
+        name: 'cedula',
+      },
+      {
+        id: 'codigo_minsa',
+        type: 'text',
+        placeholder: 'Codigo MINSA',
+        name: 'codigoMinsa',
+      },
+    ];
+  }
 
   return (
     <form className="form-user" onSubmit={formik.handleSubmit}>
-      {formFields.map((field) => (
-        <InputField
-          key={field.id}
-          id={field.id}
-          type={field.type}
-          placeholder={field.placeholder}
-          value={formik.values[field.name]}
-          name={field.name}
-          handleChange={formik.handleChange}
-          handleBlur={formik.handleBlur}
-          touched={formik.touched[field.name]}
-          error={formik.errors[field.name]}
-          autocomplete="current-password"
-        />
-      ))}
+      <div className="form-fields-container">
+        {formFields.map((field) => (
+          <InputField
+            key={field.id}
+            id={field.id}
+            type={field.type}
+            placeholder={field.placeholder}
+            value={formik.values[field.name]}
+            name={field.name}
+            handleChange={formik.handleChange}
+            handleBlur={formik.handleBlur}
+            touched={formik.touched[field.name]}
+            error={formik.errors[field.name]}
+            autocomplete="current-password"
+          />
+        ))}
+      </div>
 
       {isDoctor && (
         <div className="register-form-group container-input-file">
@@ -70,9 +89,7 @@ const UserRegister = ({
             }`}
           >
             <div className="custom-file-input-container">
-              <p>
-                {selectedFile ? selectedFile.name : 'Código de MINSA'}
-              </p>
+              <p>{selectedFile ? selectedFile.name : 'Código de MINSA'}</p>
               <input
                 type="file"
                 className="custom-file-input"
@@ -93,10 +110,14 @@ const UserRegister = ({
         className="register-btn btn btn-primary"
         disabled={isLoadingRegister}
       >
-        {isLoadingRegister ? <FaSpinner className="spinner" /> : 'Crear cuenta'}
+        {isLoadingRegister ? (
+          <FaSpinner className="spinner" />
+        ) : (
+          'Crear cuenta'
+        )}
       </button>
     </form>
-  )
-}
+  );
+};
 
-export default UserRegister
+export default UserRegister;

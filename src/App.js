@@ -17,6 +17,7 @@ import { typeUsers } from './Utils/constants';
 import ScreenChat from './Views/ScreenChat/ScreenChat';
 import ProtectedRouteMedico from './Utils/ProtectedRouteMedico';
 import CitasDr from './Views/CitasDr/CitasDr';
+import Expedientes from './Views/Expedient/Expedient';
 import Admindoctors from './Views/Admin_doctors/Admindoctors';
 import HomeAdmin from './Views/HomeAdmin/HomeAdmin';
 import AdminUsers from './Views/Admin_users/Adminusers';
@@ -48,6 +49,7 @@ function App() {
         {currentUser && currentUser?.typeUser === typeUsers.doctor && (
           <Switch>
             <ProtectedRouteMedico path="/citasdr" component={CitasDr} />
+            <ProtectedRouteMedico path="/expedient" component={Expedientes} />
             <ProtectedRouteMedico path="/" component={HomeDr} />
           </Switch>
         )}

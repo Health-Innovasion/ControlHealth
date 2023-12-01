@@ -5,18 +5,18 @@ import { statusQuotes } from '../../Utils/constants';
 import { actualizarCita } from '../../redux/action/DoctorAction';
 
 const Modal = ({ event, onClose }) => {
-  const [valueSelected, setValueSelected] = useState('');
+  const [selectedValue, setSelectedValue] = useState(event.importante);
 
   const handleUpdateQuotes = (param) => {
     actualizarCita(event.uid, param, true)
       .then((res) => {
-        console.log(res)
+        console.log(res);
       })
       .catch((error) => {
         console.error("Error al actualizar la cita:", error);
       });
   };
-console.log(event)
+
   return (
     <div className="modal-component">
       <div className="modal-content-component">
@@ -30,12 +30,11 @@ console.log(event)
           <select
             id="statusSelect"
             onChange={(e) => {
-
               const selectedValue = e.target.value;
-              setValueSelected(selectedValue);
+              setSelectedValue(selectedValue);
               handleUpdateQuotes(selectedValue);
             }}
-            value={event.importante}
+            value={selectedValue}
           >
             {Object.values(statusQuotes).map((value, index) => (
               <option key={index} value={value}>
