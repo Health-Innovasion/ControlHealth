@@ -163,3 +163,37 @@ export const GetUsersAdmin = (callback) => {
   };
   
   
+  export const getExpedientesPaciente = (pacienteId, callback) => {
+    try {
+      if (typeof callback !== 'function') {
+        throw new Error('El callback no es una función.');
+      }
+  
+      const expedientesRef = query(
+        collection(db, 'expedientes'),
+        where('expedienteData.id_paciente', '==', pacienteId),
+      );
+  
+      const unsubscribe = onSnapshot(expedientesRef, (querySnapshot) => {
+        const expedientes = [];
+  
+        querySnapshot.forEach((doc) => {
+          expedientes.push({
+            id: doc.id,
+            expedienteData: doc.data().expedienteData,
+          });
+        });
+  
+        callback(expedientes);
+      });
+  
+      // Devolver una función de limpieza para detener la escucha cuando sea necesario
+      return () => {
+        // Detener la escucha de cambios cuando se resuelve la promesa
+        unsubscribe();
+      };
+    } catch (error) {
+      console.error('Error al obtener los expedientes:', error);
+      throw error;
+    }
+  };
