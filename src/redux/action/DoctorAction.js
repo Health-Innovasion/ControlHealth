@@ -16,7 +16,7 @@ import {
 } from 'firebase/firestore'
 import { db } from '../../firebase_config'
 import { statusApplication, typeUsers } from '../../Utils/constants'
-import { getAuth } from 'firebase/auth'
+
 
 const getDoctors = () => ({
   type: GET_DOCTORS,
@@ -195,11 +195,12 @@ export const createExpediente = async (expedienteData) => {
 }
 
 // Modifica la función combineExpedienteData
-export const combineExpedienteData = (expediente, uid, id_paciente) => {
+export const combineExpedienteData = (expediente, id_cita, id_paciente,id_doctor) => {
   return {
     expediente,
-    uid,
-
+    id_cita,
+    id_paciente,
+    id_doctor
   };
 }
 

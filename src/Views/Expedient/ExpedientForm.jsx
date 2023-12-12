@@ -5,8 +5,11 @@ import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import Dropdown from '../../Components/Dropdown/Dropdown';
 import { createExpediente, combineExpedienteData } from '../../redux/action/DoctorAction'; // Ajusta la ruta de importación
-import { getAuth } from 'firebase/auth'; // Importa getAuth desde firebase/auth
 import './Expedient.css';
+import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import { useSelector } from 'react-redux';
+
+
 
 const ExpedienteForm = () => {
   const [nombre, setNombre] = useState('');
@@ -17,6 +20,10 @@ const ExpedienteForm = () => {
   const [tipoDiabetes, setTipoDiabetes] = useState('');
   const [tratamientoActual, setTratamientoActual] = useState('');
 
+  const {idcita, idpaciente} = useParams();
+  const { currentUser } = useSelector((state) => state.user);
+
+  console.log(currentUser.uid)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -32,13 +39,8 @@ const ExpedienteForm = () => {
         tratamientoActual,
       };
 
-      // Obtiene el uid del usuario actual
-      const auth = getAuth();
-      const uid = auth.currentUser.uid;
-
-
       // Combina los datos del expediente con el uid y el id_paciente
-      const expedienteConUid = combineExpedienteData(expedienteData, uid);
+      const expedienteConUid = combineExpedienteData(expedienteData, idcita,idpaciente,currentUser.uid);
 
       // Llama a la función para crear el expediente en Firebase
       await createExpediente(expedienteConUid);
