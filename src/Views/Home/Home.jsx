@@ -14,14 +14,14 @@ function Home() {
   return (
     <div className='home'>
       <div className='container-cardshome'>
-      <h2 className='titulodiabetes'>Alimentos recomendados hoy</h2>
+      <h2 className='titulodiabetes'>Alimentos recomendados Hoy</h2>
       <div className="horizontal-scroll">
         {dietItems.map((item, index) => (
           <CardDieta key={index} item={item} />
         ))}
       </div>
           <br />
-      <h2 className='titulodiabetes'>Ejercicios recomendados hoy</h2>
+      <h2 className='titulodiabetes'>Ejercicios recomendados Hoy</h2>
       <div className="horizontal-scroll">
         {exerciseItems.map((item, index) => (
           <CardDieta key={index} item={item} />

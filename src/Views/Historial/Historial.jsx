@@ -9,6 +9,7 @@ import logo from '../../Assets/Images/logo.png';
 import { getCitasdr } from '../../redux/action/action';
 import { useSelector } from 'react-redux';
 
+
 const Historial = () => {
   const { currentUser } = useSelector((state) => state.user);
   console.log(currentUser.uid);
@@ -25,6 +26,7 @@ const Historial = () => {
     return () => unsubscribe();
   }, [currentUser.uid]);
 
+ 
   return (
     <>
       <div className='container-user'>
@@ -69,7 +71,9 @@ const Historial = () => {
                         <td>{cita.data.data.cita.time}</td>
                         <td>{cita.data.data.cita.typeDiabetes}</td>
                         <td>
-                          <Link className='btn btn-outline-info' to="/expedientform">
+
+                       
+                          <Link className='btn btn-outline-info' to={`/expedientform/${cita.id}/${cita.data.data.uid}`}>
                             <BsFileText size={30} className="mr-2" />
                             Crear Expediente
                           </Link>

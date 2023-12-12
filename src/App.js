@@ -53,7 +53,7 @@ function App() {
             <ProtectedRouteMedico path="/citasdr" component={CitasDr} />
             <ProtectedRouteMedico path="/expedient" component={Expedientes} />
             <ProtectedRouteMedico path="/historial" component={Historial} />
-            <ProtectedRouteMedico path="/expedientform" component={Expedienteform} />
+            <Route path="/expedientform/:idcita/:idpaciente" component={Expedienteform} />
             <ProtectedRouteMedico path="/" component={HomeDr} />
           </Switch>
         )}
