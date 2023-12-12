@@ -11,10 +11,12 @@ import {
   updateDoc,
   getDocs,
   getDoc,
-  onSnapshot
+  onSnapshot,
+  addDoc
 } from 'firebase/firestore'
 import { db } from '../../firebase_config'
 import { statusApplication, typeUsers } from '../../Utils/constants'
+import { getAuth } from 'firebase/auth'
 
 const getDoctors = () => ({
   type: GET_DOCTORS,
@@ -87,7 +89,7 @@ export const actualizarCita = async (citaId, nuevaFecha, cambiarEstado = false) 
   }
 };
 
-
+//Componente de prueba
 export const dataUser = () => {
   const coleccionUsuarios = collection(db, 'users');
 
@@ -182,6 +184,26 @@ export const actualizarValidatedDoctor = async (doctorId, nuevoValidated) => {
     throw error;
   }
 };
+
+export const createExpediente = async (expedienteData) => {
+  try {
+    await addDoc(collection(db, 'expedientes'), { expedienteData });
+  } catch (error) {
+    console.error('Error al crear el expediente en Firebase', error);
+    throw error;
+  }
+}
+
+// Modifica la función combineExpedienteData
+export const combineExpedienteData = (expediente, uid, id_paciente) => {
+  return {
+    expediente,
+    uid,
+
+  };
+}
+
+
 
 
 

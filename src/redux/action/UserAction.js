@@ -135,5 +135,31 @@ export const GetUsersAdmin = (callback) => {
       throw error
     }
   }
+
+  export const getCitas = (setIsLoadingQuotes, callback) => {
+    setIsLoadingQuotes(true);
+  
+    try {
+      const docRef = collection(db, 'quotes');
+  
+      return onSnapshot(docRef, (querySnapshot) => {
+        const citas = [];
+  
+        querySnapshot.forEach((doc) => {
+          citas.push({
+            id: doc.id,
+            data: doc.data(),
+          });
+        });
+  
+        callback(citas);
+        setIsLoadingQuotes(false);
+      });
+    } catch (error) {
+      setIsLoadingQuotes(false);
+      console.error('Error al obtener los documentos:', error);
+      throw error;
+    }
+  };
   
   

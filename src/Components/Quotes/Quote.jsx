@@ -109,10 +109,12 @@ const Quote = () => {
                 <div className="col-quote">
                   <span className="title-quote">Fecha:</span>
                   <span className="title-quote">Hora:</span>
+                  <span className="title-quote">Dirección:</span>
                 </div>
                 <div className="col-quote">
                   <span>{citaData.date}</span>
-                  <span>{formatHour(citaData.time)}</span> {/* Formatear la hora aquí */}
+                  <span>{formatHour(citaData.time)}</span>
+                  <span>{citaData.address}</span>
                 </div>
 
                 <div className="botones">

@@ -42,25 +42,6 @@ const UserRegister = ({
     },
   ];
 
-  if (isDoctor) {
-    // Add additional fields for doctors
-    formFields = [
-      ...formFields,
-      {
-        id: 'cedula',
-        type: 'text',
-        placeholder: 'Cedula',
-        name: 'cedula',
-      },
-      {
-        id: 'codigo_minsa',
-        type: 'text',
-        placeholder: 'Codigo MINSA',
-        name: 'codigoMinsa',
-      },
-    ];
-  }
-
   return (
     <form className="form-user" onSubmit={formik.handleSubmit}>
       <div className="form-fields-container">

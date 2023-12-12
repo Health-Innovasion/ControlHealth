@@ -18,6 +18,8 @@ import ScreenChat from './Views/ScreenChat/ScreenChat';
 import ProtectedRouteMedico from './Utils/ProtectedRouteMedico';
 import CitasDr from './Views/CitasDr/CitasDr';
 import Expedientes from './Views/Expedient/Expedient';
+import Expedienteform from './Views/Expedient/ExpedientForm';
+import Historial from './Views/Historial/Historial';
 import Admindoctors from './Views/Admin_doctors/Admindoctors';
 import HomeAdmin from './Views/HomeAdmin/HomeAdmin';
 import AdminUsers from './Views/Admin_users/Adminusers';
@@ -50,6 +52,8 @@ function App() {
           <Switch>
             <ProtectedRouteMedico path="/citasdr" component={CitasDr} />
             <ProtectedRouteMedico path="/expedient" component={Expedientes} />
+            <ProtectedRouteMedico path="/historial" component={Historial} />
+            <ProtectedRouteMedico path="/expedientform" component={Expedienteform} />
             <ProtectedRouteMedico path="/" component={HomeDr} />
           </Switch>
         )}
