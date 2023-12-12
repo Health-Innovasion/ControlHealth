@@ -315,6 +315,20 @@ export const updateUserDataAndPhoto = async (currentUser, userData, file) => {
   }
 }
 
+export const updateUserAddress = async (uidQuote, newAddress) => {
+  try {
+  
+    // Actualiza el documento del usuario en tu base de datos (por ejemplo, Firestore)
+    // con la nueva dirección
+    // (deberás adaptar esto a tu base de datos específica)
+    const userDocRef = doc(db, 'quotes', uidQuote);
+    await updateDoc(userDocRef, { 'data.cita.address': newAddress });
+
+  } catch (error) {
+    console.error('Error al actualizar la dirección del usuario:', error);
+  }
+};
+
 export const obtenerUsuario = async (id) => {
   try {
     const docRef = doc(db, 'users', id)

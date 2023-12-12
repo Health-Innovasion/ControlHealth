@@ -47,6 +47,7 @@ function extractParamsFromCitas(citasArray) {
         description: cita.data.data.cita.description,
         end: moment(cita.data.data.cita.date).toDate(),    // Parsea la fecha con moment
         importante: cita.data.data.status,
+        direccion: cita.data.data.cita.address,
     }));
 }
     const myEventsList = extractParamsFromCitas(citas);

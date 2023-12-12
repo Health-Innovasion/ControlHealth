@@ -19,7 +19,7 @@ function HomeDr() {
           {/* Botones de opción */} 
           <OptionButton image={doctor} text="Calendario de citas" to="/citasdr" />
           <OptionButton image={expedient} text="Expedientes" to="/expedient" />
-          <OptionButton image={expedient} text="Historial de citas" to="/expedient" />
+          <OptionButton image={expedient} text="Historial de citas" to="/historial" />
         </Row>
       </Container>
     </div>

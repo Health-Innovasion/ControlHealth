@@ -1,23 +1,24 @@
-import React, { useState, useEffect } from 'react'
-import './Form.css' // Asegúrate de que este archivo contenga tus estilos CSS
-import { useDispatch, useSelector } from 'react-redux'
-import { Container, Row, Col, Button, Modal } from 'react-bootstrap'
-import { IoIosAddCircle, IoIosCloseCircle } from 'react-icons/io' // Importa el ícono IoIosCloseCircle
-import { GetDoctors } from '../../redux/action/DoctorAction'
-import { combineData, createAppointment } from '../../redux/action/action'
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
-import { onlyLetters, regexOnlyLetters, required } from '../../Utils/constants'
-import { InputField } from '../../Utils/functions'
-import { FaSpinner } from 'react-icons/fa'
+import React, { useState, useEffect } from 'react';
+import './Form.css'; // Asegúrate de que este archivo contenga tus estilos CSS
+import { useDispatch, useSelector } from 'react-redux';
+import { Container, Row, Col, Button, Modal } from 'react-bootstrap';
+import { IoIosAddCircle, IoIosCloseCircle } from 'react-icons/io'; // Importa el ícono IoIosCloseCircle
+import { GetDoctors } from '../../redux/action/DoctorAction';
+import { combineData, createAppointment } from '../../redux/action/action';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { onlyLetters, regexOnlyLetters, required } from '../../Utils/constants';
+import { InputField } from '../../Utils/functions';
+import { FaSpinner } from 'react-icons/fa';
 
 const FormQuotes = () => {
-  const dispatch = useDispatch()
-  const { doctors } = useSelector((state) => state.doctors)
-  const { currentUser } = useSelector((state) => state.user)
+  const dispatch = useDispatch();
+  const { doctors } = useSelector((state) => state.doctors);
+  const { currentUser } = useSelector((state) => state.user);
 
-  const [isFormModalOpen, setIsFormModalOpen] = useState(false)
-  const [isLoadingCreate, setIsLoadingCreate] = useState(false)
+
+  const [isFormModalOpen, setIsFormModalOpen] = useState(false);
+  const [isLoadingCreate, setIsLoadingCreate] = useState(false);
   const infoForm = {
     name: '',
     date: '',
@@ -27,7 +28,8 @@ const FormQuotes = () => {
     typeDiabetes: '',
     description: '',
     doctor: '',
-  }
+    address: '', // Agrega el campo de dirección
+  };
 
   const formik = useFormik({
     initialValues: infoForm,
@@ -52,54 +54,54 @@ const FormQuotes = () => {
     }),
 
     validate: () => {
-      const errors = {}
+      const errors = {};
 
-      return errors
+      return errors;
     },
     onSubmit: (values) => {
-      values.doctor = JSON.parse(formik.values.doctor)
-      handleSubmit(values)
+      values.doctor = JSON.parse(formik.values.doctor);
+      handleSubmit(values);
     },
-  })
+  });
 
   useEffect(() => {
-    dispatch(GetDoctors())
-  }, [dispatch])
+    dispatch(GetDoctors());
+  }, [dispatch]);
 
   const openFormModal = () => {
-    setIsFormModalOpen(true)
-  }
+    setIsFormModalOpen(true);
+  };
 
   const closeFormModal = () => {
-    setIsFormModalOpen(false)
-  }
+    setIsFormModalOpen(false);
+  };
 
   const handleSubmit = async (values) => {
-    setIsLoadingCreate(true)
-    const data = combineData(values, currentUser.uid)
+    setIsLoadingCreate(true);
+    const data = combineData(values, currentUser.uid);
 
     await createAppointment(
       data,
       setIsLoadingCreate,
       setIsFormModalOpen,
       formik.resetForm,
-    )
-  }
+    );
+  };
 
   const handleDNICheck = (event) => {
-    const value = event.target.value
-    let formattedValue = value.replace(/[^0-9A-Za-z]/g, '')
-    let formattedDNI = ''
+    const value = event.target.value;
+    let formattedValue = value.replace(/[^0-9A-Za-z]/g, '');
+    let formattedDNI = '';
 
     for (let i = 0; i < formattedValue.length; i++) {
       if (i === 3 || i === 9) {
-        formattedDNI += '-'
+        formattedDNI += '-';
       }
-      formattedDNI += formattedValue[i]
+      formattedDNI += formattedValue[i];
     }
 
-    formik.setFieldValue('dni', formattedDNI)
-  }
+    formik.setFieldValue('dni', formattedDNI);
+  };
 
   const formFields = [
     {
@@ -159,12 +161,15 @@ const FormQuotes = () => {
       placeholder: 'Descripción',
       name: 'description',
     },
-  ]
+  ];
 
   return (
     <Container className="formquotes-container">
       <h1 className="formquotes-title">Citas</h1>
-      <IoIosAddCircle className="formquotes-icon-add" onClick={openFormModal} />
+      <IoIosAddCircle
+        className="formquotes-icon-add"
+        onClick={openFormModal}
+      />
       <Modal
         className="formquotes-modal-container"
         show={isFormModalOpen}
@@ -188,12 +193,12 @@ const FormQuotes = () => {
             <Row>
               <Col>
                 {formFields.map((field) => (
-                  <div key={field.id}> 
+                  <div key={field.id}>
                     {field.type === 'time' || field.type === 'date' ? (
                       <div style={{ textAlign: 'justify' }}>
                         <label>{field.placeholder}:</label>
                         <InputField
-                          key={field.id} 
+                          key={field.id}
                           id={field.id}
                           type={field.type}
                           placeholder={field.placeholder}
@@ -204,12 +209,14 @@ const FormQuotes = () => {
                           touched={formik.touched[field.name]}
                           error={formik.errors[field.name]}
                           options={field.options}
-                          autoComplete="current-password" 
+                          autoComplete="current-password"
+                          disabled={field.disabled}
+                          message={field.message}
                         />
                       </div>
                     ) : (
                       <InputField
-                        key={field.id} 
+                        key={field.id}
                         id={field.id}
                         type={field.type}
                         placeholder={field.placeholder}
@@ -224,13 +231,14 @@ const FormQuotes = () => {
                         touched={formik.touched[field.name]}
                         error={formik.errors[field.name]}
                         options={field.options}
-                        autoComplete="current-password" 
+                        autoComplete="current-password"
+                        disabled={field.disabled}
+                        message={field.message}
                       />
                     )}
                   </div>
                 ))}
               </Col>
-
             </Row>
             <Button type="submit" className="formquotes-save-btn">
               {isLoadingCreate ? (
@@ -243,7 +251,7 @@ const FormQuotes = () => {
         </Modal.Body>
       </Modal>
     </Container>
-  )
-}
+  );
+};
 
-export default FormQuotes
+export default FormQuotes;

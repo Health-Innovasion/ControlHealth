@@ -1,46 +1,100 @@
+/* Modal Container */
+.calendarioModalComponent {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999; /* Ajusta este valor según sea necesario para que sea mayor que el de la vista de fondo */
+}
 
-.modal-component {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .modal-content-component {
-    background: #fff;
-    border-radius: 5px;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    max-width: 400px;
-    width: 100%;
-    text-align: left;
-  }
-  
-  .modal-component h2 {
-    font-size: 24px;
-    margin: 0 0 20px;
-  }
-  
-  .modal-component p {
-    margin: 0 0 10px;
-  }
-  
-  .modal-component button {
-    background: #007BFF;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .modal-component button:hover {
-    background: #0056b3;
-  }
+/* Modal Content */
+.calendarioModalContentComponent {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+  z-index: 1000; /* Asegúrate de que este valor sea mayor que el de la vista de fondo y el del modal container */
+  color: #000; /* Cambiado a negro */
+}
+
+.calendarioModalContentComponent h3{
+  color: #000; /* Cambiado a negro */
+  margin-bottom: 15px;
+  font-weight: bold; /* Añadido negrita */
+  text-align: center;
+}
+
+.titulo-calendario{
+  color: #000; /* Cambiado a negro */
+  margin-bottom: 10px;
+  font-weight: bold; /* Añadido negrita */
+}
+
+/* Form Styling */
+.select-calendario {
+  display: block;
+  margin-bottom: 8px;
+  color: #000000;
+  font-weight: bold;
+
+}
+
+.calendarioStatusSelect {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #333;
+}
+
+/* Button Styling */
+.calendarioGuardarButton {
+  background-color: #2196F3; /* Cambiado a azul */
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto; /* Centra el botón horizontalmente */
+}
+
+.calendarioGuardarButton:hover {
+  background-color: #0b7dda; /* Cambiado a un tono más oscuro al hacer hover */
+}
+
+/* Close Icon Styles */
+.icon-calendario {
+  font-size: 40px; /* Ajusta el tamaño según sea necesario */
+  color: #0b7dda;
+  cursor: pointer;
+  transition: color 0.3s ease; /* Transición de color al hacer hover */
+}
+
+.direccion-calendario {
+  display: block;
+  margin-bottom: 8px;
+  color: #555; /* Color del texto de la dirección */
+  font-weight: bold; /* Añade negrita al texto de la dirección */
+}
+
+.direccion-textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #000000;
+  font-size: 16px; /* Tamaño de fuente para la dirección */
+  resize: vertical; /* Permite la redimensión vertical */
+  min-height: 80px; /* Altura mínima inicial */
+  overflow-y: auto; /* Agrega barra de desplazamiento vertical cuando es necesario */
+}
