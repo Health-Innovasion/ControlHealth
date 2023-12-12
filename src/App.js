@@ -5,6 +5,7 @@ import Quotes from './Views/Quotes/Quotes';
 import Diet from './Views/Diet/Diet';
 import Medication from './Views/Medication/Medication';
 import Routines from './Views/Routines/Routines';
+import ExpedienteUser from './Views/Expedient/ExpedienteUser';
 import Login from './Views/Login/Login';
 import HomeDr from './Views/HomeDr/HomeDr';
 import Register from './Views/Register/Register';
@@ -69,6 +70,7 @@ function App() {
               <ProtectedRoute path="/routines" component={Routines} />
               <ProtectedRoute path="/profile" component={Profile} />
               <ProtectedRoute path="/chat" component={ScreenChat} />
+              <ProtectedRoute path="/expedienteuser" component={ExpedienteUser} />
               <ProtectedRoute path="/" component={Home} />
             </Switch>
           </React.Fragment>

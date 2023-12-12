@@ -4,3 +4,9 @@
 .swal-icon--success__line, .swal-icon--success__line--tip {
     left: 2px !important;
 }
+
+.swal-icon--error__line--left {
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    left: 5px;
+}

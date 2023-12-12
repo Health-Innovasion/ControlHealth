@@ -1,15 +1,13 @@
-// ExpedienteForm.js
 import React, { useState } from 'react';
 import { Button, Form, Col, Row, Container } from 'react-bootstrap';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import Dropdown from '../../Components/Dropdown/Dropdown';
-import { createExpediente, combineExpedienteData } from '../../redux/action/DoctorAction'; // Ajusta la ruta de importación
+import { createExpediente, combineExpedienteData } from '../../redux/action/DoctorAction';
 import './Expedient.css';
-import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import swal from 'sweetalert';
+import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-
-
 
 const ExpedienteForm = () => {
   const [nombre, setNombre] = useState('');
@@ -19,16 +17,20 @@ const ExpedienteForm = () => {
   const [nivelGlucosa, setNivelGlucosa] = useState('');
   const [tipoDiabetes, setTipoDiabetes] = useState('');
   const [tratamientoActual, setTratamientoActual] = useState('');
+  const [fecha, setFecha] = useState('');
+  const [diagnostico, setDiagnostico] = useState('');
+  const [motivoConsulta, setMotivoConsulta] = useState('');
+  const [antecedentes, setAntecedentes] = useState('');
+  const [examenesRealizados, setExamenesRealizados] = useState('');
+  const [observaciones, setObservaciones] = useState('');
 
-  const {idcita, idpaciente} = useParams();
+  const { idcita, idpaciente } = useParams();
   const { currentUser } = useSelector((state) => state.user);
 
-  console.log(currentUser.uid)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // Crea un objeto con los datos del expediente
       const expedienteData = {
         nombre,
         apellido,
@@ -37,15 +39,33 @@ const ExpedienteForm = () => {
         nivelGlucosa,
         tipoDiabetes,
         tratamientoActual,
+        fecha,
+        diagnostico,
+        motivoConsulta,
+        antecedentes,
+        examenesRealizados,
+        observaciones,
       };
 
-      // Combina los datos del expediente con el uid y el id_paciente
-      const expedienteConUid = combineExpedienteData(expedienteData, idcita,idpaciente,currentUser.uid);
+      const expedienteConUid = combineExpedienteData(expedienteData, idcita, idpaciente, currentUser.uid);
 
-      // Llama a la función para crear el expediente en Firebase
       await createExpediente(expedienteConUid);
 
-      console.log('Expediente enviado:', expedienteConUid);
+      swal('Expediente creado con éxito');
+
+      setNombre('');
+      setApellido('');
+      setEdad('');
+      setDireccion('');
+      setNivelGlucosa('');
+      setTipoDiabetes('');
+      setTratamientoActual('');
+      setFecha('');
+      setDiagnostico('');
+      setMotivoConsulta('');
+      setAntecedentes('');
+      setExamenesRealizados('');
+      setObservaciones('');
     } catch (error) {
       console.error('Error al enviar el expediente:', error);
     }
@@ -73,6 +93,7 @@ const ExpedienteForm = () => {
                 size="sm"
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
+                required
               />
             </Col>
             <Col>
@@ -83,6 +104,7 @@ const ExpedienteForm = () => {
                 size="sm"
                 value={apellido}
                 onChange={(e) => setApellido(e.target.value)}
+                required
               />
             </Col>
           </Row>
@@ -95,6 +117,7 @@ const ExpedienteForm = () => {
                 size="sm"
                 value={edad}
                 onChange={(e) => setEdad(e.target.value)}
+                required
               />
             </Col>
           </Row>
@@ -107,6 +130,8 @@ const ExpedienteForm = () => {
                 size="sm"
                 value={direccion}
                 onChange={(e) => setDireccion(e.target.value)}
+                placeholder="Chontales"
+                required
               />
             </Col>
           </Row>
@@ -119,6 +144,7 @@ const ExpedienteForm = () => {
                 size="sm"
                 value={nivelGlucosa}
                 onChange={(e) => setNivelGlucosa(e.target.value)}
+                required
               />
             </Col>
           </Row>
@@ -130,6 +156,7 @@ const ExpedienteForm = () => {
                 size="sm"
                 value={tipoDiabetes}
                 onChange={(e) => setTipoDiabetes(e.target.value)}
+                required
               >
                 <option value="">Seleccionar tipo</option>
                 <option value="Tipo 1">Tipo 1</option>
@@ -146,6 +173,85 @@ const ExpedienteForm = () => {
                 size="sm"
                 value={tratamientoActual}
                 onChange={(e) => setTratamientoActual(e.target.value)}
+                required
+              />
+            </Col>
+          </Row>
+          <Row className="mb-3">
+            <Col>
+              <Form.Label className="form-label">Fecha:</Form.Label>
+              <Form.Control
+                className="form-control"
+                type="date"
+                size="sm"
+                value={fecha}
+                onChange={(e) => setFecha(e.target.value)}
+                required
+              />
+            </Col>
+          </Row>
+          <Row className="mb-3">
+            <Col>
+              <Form.Label className="form-label">Diagnóstico:</Form.Label>
+              <Form.Control
+                className="form-control"
+                as="textarea"
+                size="sm"
+                value={diagnostico}
+                onChange={(e) => setDiagnostico(e.target.value)}
+                required
+              />
+            </Col>
+          </Row>
+          <Row className="mb-3">
+            <Col>
+              <Form.Label className="form-label">Motivo de consulta:</Form.Label>
+              <Form.Control
+                className="form-control"
+                as="textarea"
+                size="sm"
+                value={motivoConsulta}
+                onChange={(e) => setMotivoConsulta(e.target.value)}
+                required
+              />
+            </Col>
+          </Row>
+          <Row className="mb-3">
+            <Col>
+              <Form.Label className="form-label">Antecedentes:</Form.Label>
+              <Form.Control
+                className="form-control"
+                as="textarea"
+                size="sm"
+                value={antecedentes}
+                onChange={(e) => setAntecedentes(e.target.value)}
+                required
+              />
+            </Col>
+          </Row>
+          <Row className="mb-3">
+            <Col>
+              <Form.Label className="form-label">Exámenes Realizados:</Form.Label>
+              <Form.Control
+                className="form-control"
+                as="textarea"
+                size="sm"
+                value={examenesRealizados}
+                onChange={(e) => setExamenesRealizados(e.target.value)}
+                required
+              />
+            </Col>
+          </Row>
+          <Row className="mb-3">
+            <Col>
+              <Form.Label className="form-label">Observaciones:</Form.Label>
+              <Form.Control
+                className="form-control"
+                as="textarea"
+                size="sm"
+                value={observaciones}
+                onChange={(e) => setObservaciones(e.target.value)}
+                required
               />
             </Col>
           </Row>
